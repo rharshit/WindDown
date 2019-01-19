@@ -1,9 +1,17 @@
 package com.rharshit.winddown.UI;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.rharshit.winddown.Phone.Phone;
+import com.rharshit.winddown.R;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class AppIcon extends LinearLayout {
 
@@ -11,8 +19,7 @@ public class AppIcon extends LinearLayout {
     private ImageView appIcon;
     private String appName;
 
-
-    public AppIcon(Context context, int width, int height) {
+    public AppIcon(Context context, int width, int height, OnClickListener onClick) {
         super(context);
         mContext = context;
 
@@ -29,5 +36,7 @@ public class AppIcon extends LinearLayout {
 
         this.addView(tmp1);
         this.addView(tmp2);
+
+        tmp1.setOnClickListener(onClick);
     }
 }

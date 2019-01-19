@@ -1,16 +1,21 @@
 package com.rharshit.winddown;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Context mCOntext;
 
     private HorizontalScrollView hsView;
     private LinearLayout llScroll;
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mCOntext = this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         init();
         populate();
@@ -40,7 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void populate(){
         for (int i =0; i<4; i++){
-            llScroll.addView(new AppIcon(this, vWidth/2, vHeight/2));
+            AppIcon tmp = new AppIcon(this, (int) (vWidth*0.75), (int) (vHeight*0.75), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mCOntext, Phone.class);
+                    startActivity(i);
+                }
+            });
+            llScroll.addView(tmp);
         }
     }
 }
