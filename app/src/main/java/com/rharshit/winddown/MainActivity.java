@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < nChild; i++) {
                     AppIcon tmp = (AppIcon) llScroll.getChildAt(i);
                     tmp.updatePos();
+                    tmp.updateView();
                 }
             }
         });

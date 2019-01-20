@@ -65,4 +65,19 @@ public class AppIcon extends LinearLayout {
                 + " " + String.valueOf(pos[1]);
         debug.setText(s);
     }
+
+    public void updateView() {
+        int[] pos = new int[2];
+        this.getLocationInWindow(pos);
+
+        int x = pos[0];
+        int mid = width / 2;
+        x += mid;
+        int d = mid - x;
+        d = d < 0 ? -d : d;
+        d = d > mid ? mid : d;
+        float scale = 1.0f - ((float) d / (float) width);
+        appIcon.setScaleX(scale);
+        appIcon.setScaleY(scale);
+    }
 }
