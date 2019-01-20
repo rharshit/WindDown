@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Gallery.Gallery"></activity>
+        <activity android:name=".Music.Music"></activity>
+        <activity android:name=".Gallery.Gallery" />
         <activity android:name=".Camera.Camera" />
         <activity android:name=".Messages.Messages" />
         <activity android:name=".Contacts.Contacts" />
