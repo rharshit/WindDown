@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
                     tmp.updatePos();
                     tmp.updateView();
                 }
+                Log.d(TAG, "onScrollChange: " + String.valueOf(scrollX) + " " + String.valueOf(oldScrollX));
+                int d = oldScrollX - scrollX;
+                d = d < 0 ? -d : d;
+                if (d < 5) {
+                    hsView.smoothScrollTo(((scrollX + (vWidth / 2)) / vWidth) * vWidth, scrollY);
+                }
             }
         });
     }
