@@ -76,8 +76,15 @@ public class AppIcon extends LinearLayout {
         int d = mid - x;
         d = d < 0 ? -d : d;
         d = d > mid ? mid : d;
-        float scale = 1.0f - ((float) d / (float) width);
+        float scale = (float) java.lang.Math.sqrt(1.0f - ((float) d / (float) width));
+        scale += 0.05;
+        scale = scale > 1 ? 1 : scale;
+
         appIcon.setScaleX(scale);
         appIcon.setScaleY(scale);
+        tvAppName.setScaleX(scale);
+        tvAppName.setScaleY(scale);
+        appIcon.setAlpha(scale);
+        tvAppName.setAlpha(scale);
     }
 }
