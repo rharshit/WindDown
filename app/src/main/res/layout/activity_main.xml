@@ -12,12 +12,12 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textSize="60sp"
-        android:paddingTop="40dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/hsMainScrollView"/>
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
