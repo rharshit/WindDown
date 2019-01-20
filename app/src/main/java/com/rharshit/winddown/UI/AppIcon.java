@@ -23,10 +23,14 @@ public class AppIcon extends LinearLayout {
     private final ImageView appIcon;
     private final String appName;
     private final TextView tvAppName;
+    private static int width = 0;
 
-    public AppIcon(Context context, int width, int height, Drawable icon, String name, OnClickListener onClick) {
+    public TextView debug;
+
+    public AppIcon(Context context, int w, int h, Drawable icon, String name, OnClickListener onClick) {
         super(context);
         mContext = context;
+        width = w;
 
         this.setOrientation(LinearLayout.VERTICAL);
         this.setLayoutParams(new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -44,5 +48,21 @@ public class AppIcon extends LinearLayout {
         this.addView(appIcon);
         this.addView(tvAppName);
         this.setOnClickListener(onClick);
+
+        debug = new TextView(mContext);
+        this.addView(debug);
+        updatePos();
+    }
+
+    public static int getLayoutWidth() {
+        return width;
+    }
+
+    public void updatePos() {
+        int[] pos = new int[2];
+        this.getLocationInWindow(pos);
+        String s = String.valueOf(pos[0])
+                + " " + String.valueOf(pos[1]);
+        debug.setText(s);
     }
 }
