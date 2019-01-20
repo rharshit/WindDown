@@ -10,6 +10,11 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import com.rharshit.winddown.Camera.Camera;
+import com.rharshit.winddown.Contacts.Contacts;
+import com.rharshit.winddown.Gallery.Gallery;
+import com.rharshit.winddown.Messages.Messages;
+import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
 
@@ -45,16 +50,65 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populate(){
-        for (int i =0; i<4; i++){
-            AppIcon tmp = new AppIcon(this, vWidth, vHeight,
+        llScroll.addView(
+                new AppIcon(this, vWidth, vHeight,
                     getResources().getDrawable(R.drawable.ic_phone), "Phone", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(mCOntext, Phone.class);
                     startActivity(i);
                 }
-            });
-            llScroll.addView(tmp);
-        }
+            })
+        );
+        llScroll.addView(
+                new AppIcon(this, vWidth, vHeight,
+                        getResources().getDrawable(R.drawable.ic_contacts), "Contacts", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mCOntext, Contacts.class);
+                        startActivity(i);
+                    }
+                })
+        );
+        llScroll.addView(
+                new AppIcon(this, vWidth, vHeight,
+                        getResources().getDrawable(R.drawable.ic_message), "Messages", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mCOntext, Messages.class);
+                        startActivity(i);
+                    }
+                })
+        );
+        llScroll.addView(
+                new AppIcon(this, vWidth, vHeight,
+                        getResources().getDrawable(R.drawable.ic_camera), "Camera", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mCOntext, Camera.class);
+                        startActivity(i);
+                    }
+                })
+        );
+        llScroll.addView(
+                new AppIcon(this, vWidth, vHeight,
+                        getResources().getDrawable(R.drawable.ic_gallery), "Gallery", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mCOntext, Gallery.class);
+                        startActivity(i);
+                    }
+                })
+        );
+        llScroll.addView(
+                new AppIcon(this, vWidth, vHeight,
+                        getResources().getDrawable(R.drawable.ic_music), "Music", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mCOntext, Music.class);
+                        startActivity(i);
+                    }
+                })
+        );
     }
 }
