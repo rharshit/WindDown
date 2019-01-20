@@ -20,7 +20,7 @@ import com.rharshit.winddown.UI.AppIcon;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Context mCOntext;
+    private Context mContext;
 
     private HorizontalScrollView hsView;
     private LinearLayout llScroll;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mCOntext = this;
+        mContext = this;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         init();
         populate();
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     getResources().getDrawable(R.drawable.ic_phone), "Phone", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(mCOntext, Phone.class);
+                    Intent i = new Intent(mContext, Phone.class);
                     startActivity(i);
                 }
             })
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.ic_contacts), "Contacts", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(mCOntext, Contacts.class);
+                        Intent i = new Intent(mContext, Contacts.class);
                         startActivity(i);
                     }
                 })
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.ic_message), "Messages", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(mCOntext, Messages.class);
+                        Intent i = new Intent(mContext, Messages.class);
                         startActivity(i);
                     }
                 })
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.ic_camera), "Camera", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(mCOntext, Camera.class);
+                        Intent i = new Intent(mContext, Camera.class);
                         startActivity(i);
                     }
                 })
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.ic_gallery), "Gallery", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(mCOntext, Gallery.class);
+                        Intent i = new Intent(mContext, Gallery.class);
                         startActivity(i);
                     }
                 })
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.ic_music), "Music", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(mCOntext, Music.class);
+                        Intent i = new Intent(mContext, Music.class);
                         startActivity(i);
                     }
                 })
