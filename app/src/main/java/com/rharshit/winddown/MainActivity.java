@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.rharshit.winddown.Camera.Camera;
 import com.rharshit.winddown.Contacts.Contacts;
@@ -23,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAG = "MainActivity";
     private Context mContext;
+
+    private static int theme = R.style.AppThemeLight;
+    private TextView tvWindDown;
 
     private HorizontalScrollView hsView;
     private LinearLayout llScroll;
@@ -40,10 +44,22 @@ public class MainActivity extends AppCompatActivity {
 
         hsView = findViewById(R.id.hsMainScrollView);
         llScroll = findViewById(R.id.llHorizintalScroll);
+        tvWindDown = findViewById(R.id.tvWindDown);
+
+        tvWindDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: Switching");
+                theme = theme == R.style.AppThemeLight ?
+                        R.style.AppThemeDark : R.style.AppThemeLight;
+                recreate();
+            }
+        });
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(theme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

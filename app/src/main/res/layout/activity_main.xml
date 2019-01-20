@@ -14,6 +14,7 @@
         android:textSize="60sp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
+        android:id="@+id/tvWindDown"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
