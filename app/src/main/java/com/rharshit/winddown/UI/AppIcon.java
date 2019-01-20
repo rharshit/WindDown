@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,16 +29,17 @@ public class AppIcon extends LinearLayout {
         mContext = context;
 
         this.setOrientation(LinearLayout.VERTICAL);
-        this.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+        this.setLayoutParams(new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         appIcon = new ImageView(mContext);
-        appIcon.setLayoutParams(new LinearLayoutCompat.LayoutParams(width/2, width/2));
+        appIcon.setLayoutParams(new LinearLayoutCompat.LayoutParams(width, width));
         appIcon.setImageDrawable(icon);
 
         appName = name;
         tvAppName = new TextView(mContext);
         tvAppName.setText(appName);
         tvAppName.setTextSize(40.0f);
+        tvAppName.setGravity(Gravity.CENTER_HORIZONTAL);
 
         this.addView(appIcon);
         this.addView(tvAppName);

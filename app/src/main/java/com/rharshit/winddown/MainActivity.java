@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void populate(){
         for (int i =0; i<4; i++){
-            AppIcon tmp = new AppIcon(this, (int) (vWidth*0.75), (int) (vHeight*0.75),
+            AppIcon tmp = new AppIcon(this, vWidth, vHeight,
                     getResources().getDrawable(R.drawable.ic_phone), "Phone", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
