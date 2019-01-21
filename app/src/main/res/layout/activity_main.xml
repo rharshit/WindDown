@@ -6,36 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="60sp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:id="@+id/tvWindDown"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/hsMainScrollView"/>
-
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbarSize="0dp"
-        android:id="@+id/hsMainScrollView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/llVerticalScroll"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/llHorizintalScroll"/>
+            android:orientation="vertical"
+            android:weightSum="100">
 
-    </HorizontalScrollView>
+            <TextView
+                android:id="@+id/tvWindDown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:paddingTop="40dp"
+                android:paddingBottom="40dp"
+                android:text="@string/app_name"
+                android:textSize="60sp" />
 
+            <HorizontalScrollView
+                android:id="@+id/hsMainScrollView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbarSize="0dp">
+
+                <LinearLayout
+                    android:id="@+id/llHorizintalScroll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>
