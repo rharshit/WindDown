@@ -1,7 +1,9 @@
 package com.rharshit.winddown;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -25,11 +27,15 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "MainActivity";
     private Context mContext;
 
+    private TextView tvNotification;
+    private NotificationReceiver nReceiver;
+
     private static int theme = R.style.AppThemeLight;
     private TextView tvWindDown;
 
     private HorizontalScrollView hsView;
     private LinearLayout llScroll;
+    private LinearLayout llMainScroll;
 
     private int vHeight;
     private int vWidth;
@@ -44,17 +50,30 @@ public class MainActivity extends AppCompatActivity {
 
         hsView = findViewById(R.id.hsMainScrollView);
         llScroll = findViewById(R.id.llHorizintalScroll);
+        llMainScroll = findViewById(R.id.llVerticalScroll);
         tvWindDown = findViewById(R.id.tvWindDown);
+
+        tvNotification = new TextView(mContext);
+        tvNotification.setText("Notifications");
+        llMainScroll.addView(tvNotification);
 
         tvWindDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Switching");
+                getNotifications();
                 theme = theme == R.style.AppThemeLight ?
                         R.style.AppThemeDark : R.style.AppThemeLight;
                 recreate();
             }
         });
+    }
+
+    private void notificationListener() {
+        nReceiver = new NotificationReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.rharshit.winddown.NOTIFICATION_LISTENER");
+        registerReceiver(nReceiver, filter);
     }
 
     @Override
@@ -67,8 +86,21 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         init();
         populate();
+        notificationListener();
 
         debug();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(nReceiver);
+    }
+
+    private void getNotifications() {
+        Intent i = new Intent("com.rharshit.winddown.NOTIFICATION_LISTENER_SERVICE");
+        i.putExtra("EXTRA_ACTION", "getNotificaitons");
+        sendBroadcast(i);
     }
 
     private void debug() {
@@ -153,5 +185,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
+    }
+
+    class NotificationReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: " + intent.getStringExtra("NOTIFICATION_EVENT"));
+            TextView tvNotif = new TextView(mContext);
+            tvNotif.setText(intent.getStringExtra("NOTIFICATION_EVENT"));
+            llMainScroll.addView(tvNotif);
+        }
     }
 }

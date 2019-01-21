@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Wind Down</string>
+    <string name="service_name">Notification Listner</string>
 </resources>
