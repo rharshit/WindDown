@@ -22,6 +22,7 @@ import com.rharshit.winddown.Messages.Messages;
 import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
+import com.rharshit.winddown.UI.NotificationView;
 import com.rharshit.winddown.Util.Notification;
 import com.rharshit.winddown.Util.Theme;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private HorizontalScrollView hsView;
     private LinearLayout llScroll;
     private LinearLayout llMainScroll;
+    private LinearLayout llNotification;
 
     private int vHeight;
     private int vWidth;
@@ -54,11 +56,8 @@ public class MainActivity extends AppCompatActivity {
         hsView = findViewById(R.id.hsMainScrollView);
         llScroll = findViewById(R.id.llHorizintalScroll);
         llMainScroll = findViewById(R.id.llVerticalScroll);
+        llNotification = findViewById(R.id.llNotifivationView);
         tvWindDown = findViewById(R.id.tvWindDown);
-
-        tvNotification = new TextView(mContext);
-        tvNotification.setText("Notifications");
-        llMainScroll.addView(tvNotification);
 
         tvWindDown.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,10 +195,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
             Log.d(TAG, "onReceive: " + n.getPackageName());
-            TextView tvNotif = new TextView(mContext);
-            tvNotif.setText(n.getPackageName());
-            tvNotif.setTextSize(20.0f);
-            llMainScroll.addView(tvNotif);
+            llNotification.addView(new NotificationView(mContext, n));
         }
     }
 }

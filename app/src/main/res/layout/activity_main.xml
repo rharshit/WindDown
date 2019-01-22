@@ -15,6 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingBottom="?android:attr/actionBarSize"
+            android:clipToPadding="false"
             android:weightSum="100">
 
             <TextView
@@ -45,6 +47,10 @@
                 android:id="@+id/llNotifivationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:layout_margin="8dp"
+                android:elevation="12dp"
+                android:background="@drawable/notification_panel_bg"
                 android:orientation="vertical" />
         </LinearLayout>
     </ScrollView>
