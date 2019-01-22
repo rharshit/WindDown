@@ -23,6 +23,7 @@ import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
 import com.rharshit.winddown.Util.Notification;
+import com.rharshit.winddown.Util.Theme;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,8 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Switching");
-                theme = theme == R.style.AppThemeLight ?
-                        R.style.AppThemeDark : R.style.AppThemeLight;
+                Theme.switchTheme();
                 recreate();
             }
         });
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(theme);
+        setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
