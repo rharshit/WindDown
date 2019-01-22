@@ -21,6 +21,7 @@ import com.rharshit.winddown.Messages.Messages;
 import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
+import com.rharshit.winddown.Util.Notification;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -191,9 +192,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive: " + intent.getStringExtra("NOTIFICATION_EVENT"));
+            Bundle bundle = intent.getExtras();
+            Notification n = bundle.getParcelable("NOTIFICATION");
             TextView tvNotif = new TextView(mContext);
-            tvNotif.setText(intent.getStringExtra("NOTIFICATION_EVENT"));
+            tvNotif.setText(n.getPackageName());
             llMainScroll.addView(tvNotif);
         }
     }
