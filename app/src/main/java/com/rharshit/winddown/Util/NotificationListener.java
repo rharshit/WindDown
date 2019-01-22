@@ -9,25 +9,29 @@ import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 public class NotificationListener extends NotificationListenerService {
     private String TAG = this.getClass().getSimpleName();
     private NotificationListenerReceiver notificationListenerReciver;
 
+    private Context mContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = this;
         notificationListenerReciver = new NotificationListenerReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.rharshit.winddown.NOTIFICATION_LISTENER_SERVICE");
-        registerReceiver(notificationListenerReciver, filter);
+        LocalBroadcastManager.getInstance(mContext).registerReceiver(notificationListenerReciver, filter);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(notificationListenerReciver);
+        LocalBroadcastManager.getInstance(mContext).unregisterReceiver(notificationListenerReciver);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -41,7 +45,7 @@ public class NotificationListener extends NotificationListenerService {
         Bundle bundle = new Bundle();
         bundle.putParcelable("NOTIFICATION", n);
         i.putExtras(bundle);
-        sendBroadcast(i);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 
     }
 
@@ -55,7 +59,7 @@ public class NotificationListener extends NotificationListenerService {
         Bundle bundle = new Bundle();
         bundle.putParcelable("NOTIFICATION", n);
         i.putExtras(bundle);
-        sendBroadcast(i);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
     }
 
     class NotificationListenerReceiver extends BroadcastReceiver {
@@ -65,12 +69,14 @@ public class NotificationListener extends NotificationListenerService {
         public void onReceive(Context context, Intent intent) {
             if (intent.getStringExtra("EXTRA_ACTION").equals("getNotificaitons")) {
                 for (StatusBarNotification sbn : NotificationListener.this.getActiveNotifications()) {
+                    Log.i(TAG, "onNotificationListed");
                     Intent i = new Intent("com.rharshit.winddown.NOTIFICATION_LISTENER");
                     Notification n = new Notification(sbn);
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("NOTIFICATION", n);
                     i.putExtras(bundle);
-                    sendBroadcast(i);
+                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
+                    Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + n.getPackageName());
                 }
             }
         }

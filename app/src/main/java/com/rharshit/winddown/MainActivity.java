@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         nReceiver = new NotificationReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.rharshit.winddown.NOTIFICATION_LISTENER");
-        registerReceiver(nReceiver, filter);
+        LocalBroadcastManager.getInstance(mContext).registerReceiver(nReceiver, filter);
     }
 
     @Override
@@ -95,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(nReceiver);
+        LocalBroadcastManager.getInstance(mContext).unregisterReceiver(nReceiver);
     }
 
     private void getNotifications() {
         Intent i = new Intent("com.rharshit.winddown.NOTIFICATION_LISTENER_SERVICE");
         i.putExtra("EXTRA_ACTION", "getNotificaitons");
-        sendBroadcast(i);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
     }
 
     private void debug() {
@@ -194,8 +195,10 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
+            Log.d(TAG, "onReceive: " + n.getPackageName());
             TextView tvNotif = new TextView(mContext);
             tvNotif.setText(n.getPackageName());
+            tvNotif.setTextSize(20.0f);
             llMainScroll.addView(tvNotif);
         }
     }
