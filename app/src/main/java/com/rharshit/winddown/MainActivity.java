@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Switching");
-                getNotifications();
                 theme = theme == R.style.AppThemeLight ?
                         R.style.AppThemeDark : R.style.AppThemeLight;
                 recreate();
@@ -89,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         init();
         populate();
         notificationListener();
+        getNotifications();
 
         debug();
     }
