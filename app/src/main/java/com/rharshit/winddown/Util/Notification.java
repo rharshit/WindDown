@@ -122,4 +122,8 @@ public class Notification implements Parcelable {
     public String getPackageName() {
         return packageName;
     }
+
+    public boolean isOngoing() {
+        return ongoing;
+    }
 }

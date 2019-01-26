@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Switching");
-                getNotifications();
                 theme = theme == R.style.AppThemeLight ?
                         R.style.AppThemeDark : R.style.AppThemeLight;
                 recreate();
@@ -91,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         notificationListener();
 
         debug();
+        getNotifications();
     }
 
     @Override
@@ -196,10 +196,12 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
             Log.d(TAG, "onReceive: " + n.getPackageName());
-            TextView tvNotif = new TextView(mContext);
-            tvNotif.setText(n.getPackageName());
-            tvNotif.setTextSize(20.0f);
-            llMainScroll.addView(tvNotif);
+            if (!n.isOngoing()) {
+                TextView tvNotif = new TextView(mContext);
+                tvNotif.setText(n.getPackageName());
+                tvNotif.setTextSize(20.0f);
+                llMainScroll.addView(tvNotif);
+            }
         }
     }
 }
