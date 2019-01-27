@@ -33,8 +33,7 @@
             <HorizontalScrollView
                 android:id="@+id/hsMainScrollView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scrollbarSize="0dp">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/llHorizintalScroll"
