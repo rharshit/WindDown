@@ -26,4 +26,12 @@ public class NotificationView extends LinearLayout {
         packageName.setTextSize(16.0f);
         this.addView(packageName);
     }
+
+    public String getGroupKey(){
+        return notification.getGroupKey();
+    }
+
+    public String getKey(){
+        return notification.getKey();
+    }
 }

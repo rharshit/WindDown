@@ -188,18 +188,29 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    private void addNotification(Notification n) {
+        for(int i=0; i<llNotification.getChildCount(); i++){
+            NotificationView nv = (NotificationView) llNotification.getChildAt(i);
+            if(nv.getGroupKey().equals(n.getGroupKey())){
+                Log.d(TAG, "Update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+                        + " Channel ID: " + n.getChannelId());
+                return;
+            }
+        }
+        Log.d(TAG, "New notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+                + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+                + " Channel ID: " + n.getChannelId());
+        llNotification.addView(new NotificationView(mContext, n));
+    }
+
     class NotificationReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
-            Log.d(TAG, "onReceive: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
-                    + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
-                    + " Channel ID: " + n.getChannelId());
-            if(!n.isOngoing()){
-                llNotification.addView(new NotificationView(mContext, n));
-            }
+            addNotification(n);
         }
     }
 }

@@ -57,14 +57,15 @@ public class Notification implements Parcelable {
         group = in.isGroup();
         ongoing = in.isOngoing();
 
-        nBadgeIconType = in.getNotification().getBadgeIconType();
-        nChannelId = in.getNotification().getChannelId();
-        nGroup = in.getNotification().getGroup();
-        nLargeIcon = in.getNotification().getLargeIcon();
-        nShortcutId = in.getNotification().getShortcutId();
-        nSmallIcon = in.getNotification().getSmallIcon();
-        nSortKey = in.getNotification().getSortKey();
-        nTimeoutAfter = in.getNotification().getTimeoutAfter();
+        android.app.Notification notification = in.getNotification();
+        nBadgeIconType = notification.getBadgeIconType();
+        nChannelId = notification.getChannelId();
+        nGroup = notification.getGroup();
+        nLargeIcon = notification.getLargeIcon();
+        nShortcutId = notification.getShortcutId();
+        nSmallIcon = notification.getSmallIcon();
+        nSortKey = notification.getSortKey();
+        nTimeoutAfter = notification.getTimeoutAfter();
     }
 
     protected Notification(Parcel in) {
