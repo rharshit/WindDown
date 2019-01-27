@@ -28,7 +28,7 @@ public class NotificationView extends LinearLayout {
                             String appName, String ticker){
         this(context, notification, icon, appName);
         groupNotifications = new HashMap<>();
-        addToHashMap(notification.getKey(), ticker);
+        addToHashMap(notification.getKey(), ticker, notification.isOngoing());
     }
 
     public NotificationView(Context context, Notification notification, Drawable icon,
@@ -61,12 +61,16 @@ public class NotificationView extends LinearLayout {
         this.addView(packageName);
     }
 
-    private void addToHashMap(String key, String ticker) {
+    private void addToHashMap(String key, String ticker, boolean ongoing) {
         ArrayList<String> notifs = groupNotifications.get(key);
         if(notifs == null){
             notifs = new ArrayList<>();
         }
-        notifs.add(ticker);
+        if(ongoing && notifs.size()>0){
+            notifs.set(0, ticker);
+        } else {
+            notifs.add(ticker);
+        }
         groupNotifications.put(key, notifs);
     }
 
@@ -83,7 +87,7 @@ public class NotificationView extends LinearLayout {
     }
 
     public void updateNotification(Notification n, String ticker) {
-        addToHashMap(n.getKey(), ticker);
+        addToHashMap(n.getKey(), ticker, n.isOngoing());
     }
 
     public ArrayList<String> getNotifications() {

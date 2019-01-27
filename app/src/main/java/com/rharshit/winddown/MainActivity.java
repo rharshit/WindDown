@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<String> notifications = ((NotificationView)v).getNotifications();
                 String msg = "";
                 for (String notification : notifications){
-                    msg+=notifications+"\n";
+                    msg+=notification+"\n";
                 }
                 Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
             }
