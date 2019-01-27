@@ -21,6 +21,8 @@ import static android.content.ContentValues.TAG;
 public class NotificationView extends LinearLayout {
 
     private Notification notification;
+    private final String appName;
+    private final Drawable icon;
 
     private HashMap<String, ArrayList<String>> groupNotifications;
 
@@ -38,6 +40,9 @@ public class NotificationView extends LinearLayout {
         this.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         this.setOrientation(VERTICAL);
         this.notification = notification;
+
+        this.appName = appName;
+        this.icon = icon;
 
         float dimen = getResources().getDimension(R.dimen.notification_icon_dimen);
         float pad = getResources().getDimension(R.dimen.notification_icon_padding);
@@ -98,6 +103,14 @@ public class NotificationView extends LinearLayout {
 
     public String getPackageName(){
         return notification.getPackageName();
+    }
+
+    public String getAppName(){
+        return appName;
+    }
+
+    public Drawable getIcon(){
+        return icon;
     }
 
     public void updateNotification(Notification n, String ticker) {

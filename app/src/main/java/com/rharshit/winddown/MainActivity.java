@@ -1,12 +1,17 @@
 package com.rharshit.winddown;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -278,14 +283,40 @@ public class MainActivity extends AppCompatActivity {
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> notifications = ((NotificationView)v).getNotifications();
-                String msg = "";
-                for (String notification : notifications){
-                    msg+=notification+"\n";
-                }
-                Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
+                NotificationView nv = ((NotificationView)v);
+                showNotifications(nv);
             }
         });
+    }
+
+    private void showNotifications(NotificationView nv) {
+        ArrayList<String> notifications = nv.getNotifications();
+        String msg = "";
+        for (String notification : notifications){
+            msg+="\n"+notification+"\n";
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(msg)
+                .setIcon(nv.getIcon())
+                .setCancelable(false)
+                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+                        Toast.makeText(getApplicationContext(),"Dismissed",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.setTitle(nv.getAppName());
+        alert.show();
     }
 
     private void removeNotification(Notification n, String ticker){
