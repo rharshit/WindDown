@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -220,7 +221,17 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        gvNotification.addView(new NotificationView(mContext, n, icon), gvNotification.getChildCount());
+        String appName = n.getPackageName();
+        ApplicationInfo appInfo = null;
+        try {
+            appInfo = getPackageManager().getApplicationInfo(n.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        appName = appInfo == null ?
+                n.getPackageName() :
+                getPackageManager().getApplicationLabel(appInfo).toString();
+        gvNotification.addView(new NotificationView(mContext, n, icon, appName), gvNotification.getChildCount());
     }
 
     class NotificationReceiver extends BroadcastReceiver {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,11 +19,11 @@ public class NotificationView extends LinearLayout {
 
     private Notification notification;
 
-    public NotificationView(Context context, Notification notification, Drawable icon) {
+    public NotificationView(Context context, Notification notification, Drawable icon, String appName) {
         super(context);
 
         this.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        this.setOrientation(HORIZONTAL);
+        this.setOrientation(VERTICAL);
         this.notification = notification;
 
         float dimen = getResources().getDimension(R.dimen.notification_icon_dimen);
@@ -39,10 +40,12 @@ public class NotificationView extends LinearLayout {
         }
         this.addView(ivIcon);
 
-//        TextView packageName = new TextView(context);
-//        packageName.setText(notification.getPackageName());
-//        packageName.setTextSize(16.0f);
-//        this.addView(packageName);
+        TextView packageName = new TextView(context);
+        packageName.setText(appName);
+        packageName.setGravity(Gravity.CENTER_HORIZONTAL);
+        packageName.setPadding(0, 0, 0, (int) pad);
+        packageName.setTextSize(12.0f);
+        this.addView(packageName);
     }
 
     public String getGroupKey(){
