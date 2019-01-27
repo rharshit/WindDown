@@ -55,4 +55,8 @@ public class NotificationView extends LinearLayout {
     public String getKey(){
         return notification.getKey();
     }
+
+    public String getPackageName(){
+        return notification.getPackageName();
+    }
 }

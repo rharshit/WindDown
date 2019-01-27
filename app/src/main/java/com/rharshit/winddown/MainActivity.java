@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
     private void addNotification(Notification n) {
         for(int i=0; i<gvNotification.getChildCount(); i++){
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
-            if(nv.getGroupKey().equals(n.getGroupKey())){
+            if(nv.getPackageName().equals(nv.getPackageName())){
                 Log.d(TAG, "Update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
                         + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
                         + " Channel ID: " + n.getChannelId());
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
     private void removeNotification(Notification n){
         for(int i=0; i<gvNotification.getChildCount(); i++){
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
-            if(nv.getGroupKey().equals(n.getGroupKey())){
+            if(nv.getPackageName().equals(nv.getPackageName())){
                 Log.d(TAG, "Remove notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
                         + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
                         + " Channel ID: " + n.getChannelId());
