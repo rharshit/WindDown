@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Notification;
 
 import static android.content.ContentValues.TAG;
@@ -24,11 +25,11 @@ public class NotificationView extends LinearLayout {
         this.setOrientation(HORIZONTAL);
         this.notification = notification;
 
-        float dimen = 64 * getResources().getDisplayMetrics().density;
+        float dimen = getResources().getDimension(R.dimen.notification_icon_dimen);
 
         ImageView ivIcon = new ImageView(context);
         ivIcon.setLayoutParams(new LayoutParams((int) dimen, (int) dimen));
-        ivIcon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         ivIcon.setPadding(8,8,8,8);
         if(icon!=null){
             ivIcon.setImageDrawable(icon);
