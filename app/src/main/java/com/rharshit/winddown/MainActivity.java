@@ -194,7 +194,9 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
-            Log.d(TAG, "onReceive: " + n.getPackageName());
+            Log.d(TAG, "onReceive: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+                    + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+                    + " Channel ID: " + n.getChannelId());
             if(!n.isOngoing()){
                 llNotification.addView(new NotificationView(mContext, n));
             }

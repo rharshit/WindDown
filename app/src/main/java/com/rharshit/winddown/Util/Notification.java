@@ -119,11 +119,79 @@ public class Notification implements Parcelable {
         return 0;
     }
 
+    public String getGroupKey(){
+        return groupKey;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getKey(){
+        return key;
+    }
+
+    public String getOverrideGroupKey(){
+        return overrideGroupKey;
+    }
+
     public String getPackageName() {
         return packageName;
     }
 
+    public long getPostTime(){
+        return postTime;
+    }
+
+    public String getTag(){
+        return tag;
+    }
+
+    public UserHandle getUser(){
+        return user;
+    }
+
+    public int getUserId(){
+        return userId;
+    }
+
+    public boolean isClearable(){
+        return clearable;
+    }
+
+    public boolean isGroup(){
+        return group;
+    }
+
     public boolean isOngoing() {
         return ongoing;
+    }
+
+    public String getChannelId(){
+        return nChannelId;
+    }
+
+    public String getGroup(){
+        return nGroup;
+    }
+
+    public Icon getLargeIcon(){
+        return nLargeIcon;
+    }
+
+    public String getShortcutId(){
+        return nShortcutId;
+    }
+
+    public Icon getSmallIcon(){
+        return nSmallIcon;
+    }
+
+    public String getSortKey(){
+        return nSortKey;
+    }
+
+    public long getTimeoutAfter(){
+        return nTimeoutAfter;
     }
 }
