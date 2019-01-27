@@ -21,16 +21,17 @@ public class NotificationView extends LinearLayout {
     public NotificationView(Context context, Notification notification, Drawable icon) {
         super(context);
 
-        this.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        this.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         this.setOrientation(HORIZONTAL);
         this.notification = notification;
 
         float dimen = getResources().getDimension(R.dimen.notification_icon_dimen);
+        float pad = getResources().getDimension(R.dimen.notification_icon_padding);
 
         ImageView ivIcon = new ImageView(context);
         ivIcon.setLayoutParams(new LayoutParams((int) dimen, (int) dimen));
         ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        ivIcon.setPadding(8,8,8,8);
+        ivIcon.setPadding((int) pad, (int) pad, (int) pad, (int) pad);
         if(icon!=null){
             ivIcon.setImageDrawable(icon);
         } else {

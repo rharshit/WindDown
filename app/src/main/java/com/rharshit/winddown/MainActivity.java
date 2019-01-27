@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llScroll;
     private LinearLayout llMainScroll;
     private LinearLayout llNotification;
+    private GridLayout gvNotification;
 
     private int vHeight;
     private int vWidth;
@@ -59,8 +61,17 @@ public class MainActivity extends AppCompatActivity {
         llScroll = findViewById(R.id.llHorizintalScroll);
         llMainScroll = findViewById(R.id.llVerticalScroll);
         llNotification = findViewById(R.id.llNotifivationView);
-        tvWindDown = findViewById(R.id.tvWindDown);
+        gvNotification = findViewById(R.id.gvNotificaiton);
 
+        int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_dimen)
+                + getResources().getDimension(R.dimen.notification_icon_padding));
+        int llWidth = vWidth - ((int) (2*(getResources().getDimension(R.dimen.notification_bg_padding)
+                + getResources().getDimension(R.dimen.notification_bg_margin))));
+        int nCol = llWidth/nIconWidth;
+        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol);
+        gvNotification.setColumnCount(nCol);
+
+        tvWindDown = findViewById(R.id.tvWindDown);
         tvWindDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,8 +202,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addNotification(Notification n) {
-        for(int i=0; i<llNotification.getChildCount(); i++){
-            NotificationView nv = (NotificationView) llNotification.getChildAt(i);
+        for(int i=0; i<gvNotification.getChildCount(); i++){
+            NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
             if(nv.getGroupKey().equals(n.getGroupKey())){
                 Log.d(TAG, "Update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
                         + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
@@ -209,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        llNotification.addView(new NotificationView(mContext, n, icon));
+        gvNotification.addView(new NotificationView(mContext, n, icon), gvNotification.getChildCount());
     }
 
     class NotificationReceiver extends BroadcastReceiver {
