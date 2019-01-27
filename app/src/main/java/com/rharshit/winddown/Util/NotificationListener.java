@@ -45,6 +45,7 @@ public class NotificationListener extends NotificationListenerService {
         Bundle bundle = new Bundle();
         bundle.putParcelable("NOTIFICATION", n);
         i.putExtras(bundle);
+        i.putExtra("ACTION", 1);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 
     }
@@ -59,6 +60,7 @@ public class NotificationListener extends NotificationListenerService {
         Bundle bundle = new Bundle();
         bundle.putParcelable("NOTIFICATION", n);
         i.putExtras(bundle);
+        i.putExtra("ACTION", 2);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
     }
 
@@ -75,6 +77,7 @@ public class NotificationListener extends NotificationListenerService {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("NOTIFICATION", n);
                     i.putExtras(bundle);
+                    i.putExtra("ACTION", 0);
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
                     Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + n.getPackageName());
                 }

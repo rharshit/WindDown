@@ -221,17 +221,29 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        String appName = n.getPackageName();
         ApplicationInfo appInfo = null;
         try {
             appInfo = getPackageManager().getApplicationInfo(n.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        appName = appInfo == null ?
+        String appName = appInfo == null ?
                 n.getPackageName() :
                 getPackageManager().getApplicationLabel(appInfo).toString();
         gvNotification.addView(new NotificationView(mContext, n, icon, appName), gvNotification.getChildCount());
+    }
+
+    private void removeNotification(Notification n){
+        for(int i=0; i<gvNotification.getChildCount(); i++){
+            NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
+            if(nv.getGroupKey().equals(n.getGroupKey())){
+                Log.d(TAG, "Remove notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+                        + " Channel ID: " + n.getChannelId());
+                gvNotification.removeViewAt(i);
+                return;
+            }
+        }
     }
 
     class NotificationReceiver extends BroadcastReceiver {
@@ -240,7 +252,22 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
-            addNotification(n);
+            int action = intent.getIntExtra("ACTION", 3);
+            switch (action){
+                case 0:
+                    Log.d(TAG, "onReceive: Notificaiton List");
+                case 1:
+                    Log.d(TAG, "onReceive: Notificaiton Add");
+                    addNotification(n);
+                    break;
+                case 2:
+                    Log.d(TAG, "onReceive: Notificaiton Remove");
+                    removeNotification(n);
+                    break;
+                case 3:
+                    Log.e(TAG, "onReceive: Notification intent action" );
+                    break;
+            }
         }
     }
 }
