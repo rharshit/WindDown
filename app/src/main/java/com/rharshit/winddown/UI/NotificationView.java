@@ -81,15 +81,7 @@ public class NotificationView extends LinearLayout {
 
     private boolean removeFromHashMap(String key, String ticker, boolean ongoing) {
         ArrayList<String> notifs = groupNotifications.get(key);
-        if(notifs == null){
-            groupNotifications.remove(key);
-        }
-        notifs.remove(ticker);
-        if(notifs.size()==0){
-            groupNotifications.remove(key);
-        } else {
-            groupNotifications.put(key, notifs);
-        }
+        groupNotifications.remove(key);
         return groupNotifications.isEmpty();
     }
 
