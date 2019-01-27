@@ -74,6 +74,20 @@ public class NotificationView extends LinearLayout {
         groupNotifications.put(key, notifs);
     }
 
+    private boolean removeFromHashMap(String key, String ticker, boolean ongoing) {
+        ArrayList<String> notifs = groupNotifications.get(key);
+        if(notifs == null){
+            groupNotifications.remove(key);
+        }
+        notifs.remove(ticker);
+        if(notifs.size()==0){
+            groupNotifications.remove(key);
+        } else {
+            groupNotifications.put(key, notifs);
+        }
+        return groupNotifications.isEmpty();
+    }
+
     public String getGroupKey(){
         return notification.getGroupKey();
     }
@@ -88,6 +102,10 @@ public class NotificationView extends LinearLayout {
 
     public void updateNotification(Notification n, String ticker) {
         addToHashMap(n.getKey(), ticker, n.isOngoing());
+    }
+
+    public boolean removeNotification(Notification n, String ticker) {
+        return removeFromHashMap(n.getKey(), ticker, n.isOngoing());
     }
 
     public ArrayList<String> getNotifications() {

@@ -288,14 +288,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void removeNotification(Notification n){
+    private void removeNotification(Notification n, String ticker){
         for(int i=0; i<gvNotification.getChildCount(); i++){
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
             if(n.getPackageName().equals(nv.getPackageName())){
                 Log.d(TAG, "Remove notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
                         + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
                         + " Channel ID: " + n.getChannelId());
-                gvNotification.removeViewAt(i);
+                boolean remove = nv.removeNotification(n, ticker);
+                if(remove){
+                    gvNotification.removeViewAt(i);
+                }
                 return;
             }
         }
@@ -308,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
             int action = intent.getIntExtra("ACTION", 3);
+            String ticker = "null";
             switch (action){
                 case 0:
                     Log.d(TAG, "onReceive: Notificaiton List");
@@ -315,12 +319,13 @@ public class MainActivity extends AppCompatActivity {
 //                    break;
                 case 1:
                     Log.d(TAG, "onReceive: Notificaiton Add");
-                    String ticker = intent.getStringExtra("TICKER_TEXT");
+                    ticker = intent.getStringExtra("TICKER_TEXT");
                     addNotification(n, ticker);
                     break;
                 case 2:
                     Log.d(TAG, "onReceive: Notificaiton Remove");
-                    removeNotification(n);
+                    ticker = intent.getStringExtra("TICKER_TEXT");
+                    removeNotification(n, ticker);
                     break;
                 case 3:
                     Log.e(TAG, "onReceive: Notification intent action" );
