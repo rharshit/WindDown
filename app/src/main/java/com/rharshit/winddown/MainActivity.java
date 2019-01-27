@@ -18,6 +18,7 @@ import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rharshit.winddown.Camera.Camera;
 import com.rharshit.winddown.Contacts.Contacts;
@@ -29,6 +30,8 @@ import com.rharshit.winddown.UI.AppIcon;
 import com.rharshit.winddown.UI.NotificationView;
 import com.rharshit.winddown.Util.Notification;
 import com.rharshit.winddown.Util.Theme;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -202,13 +205,53 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    private void addNotification(Notification n) {
+    /*
+    private void listNotification(Notification n) {
         for(int i=0; i<gvNotification.getChildCount(); i++){
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
-            if(nv.getPackageName().equals(nv.getPackageName())){
+            if(n.getPackageName().equals(nv.getPackageName())){
+                Log.d(TAG, "List update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+                        + " Channel ID: " + n.getChannelId());
+                return;
+            }
+        }
+        Log.d(TAG, "List new notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+                + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+                + " Channel ID: " + n.getChannelId());
+        Drawable icon = null;
+        try {
+            icon = getPackageManager().getApplicationIcon(n.getPackageName());
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        ApplicationInfo appInfo = null;
+        try {
+            appInfo = getPackageManager().getApplicationInfo(n.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String appName = appInfo == null ?
+                n.getPackageName() :
+                getPackageManager().getApplicationLabel(appInfo).toString();
+        NotificationView notificationView = new NotificationView(mContext, n, icon, appName);
+        gvNotification.addView(notificationView, gvNotification.getChildCount());
+        notificationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NotificationView)v).getNotifications();
+            }
+        });
+    }*/
+
+    private void addNotification(Notification n, String ticker) {
+        for(int i=0; i<gvNotification.getChildCount(); i++){
+            NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
+            if(n.getPackageName().equals(nv.getPackageName())){
                 Log.d(TAG, "Update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
                         + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
                         + " Channel ID: " + n.getChannelId());
+                nv.updateNotification(n, ticker);
                 return;
             }
         }
@@ -230,13 +273,25 @@ public class MainActivity extends AppCompatActivity {
         String appName = appInfo == null ?
                 n.getPackageName() :
                 getPackageManager().getApplicationLabel(appInfo).toString();
-        gvNotification.addView(new NotificationView(mContext, n, icon, appName), gvNotification.getChildCount());
+        NotificationView notificationView = new NotificationView(mContext, n, icon, appName, ticker);
+        gvNotification.addView(notificationView, gvNotification.getChildCount());
+        notificationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> notifications = ((NotificationView)v).getNotifications();
+                String msg = "";
+                for (String notification : notifications){
+                    msg+=notifications+"\n";
+                }
+                Toast.makeText(mContext, msg, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void removeNotification(Notification n){
         for(int i=0; i<gvNotification.getChildCount(); i++){
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
-            if(nv.getPackageName().equals(nv.getPackageName())){
+            if(n.getPackageName().equals(nv.getPackageName())){
                 Log.d(TAG, "Remove notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
                         + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
                         + " Channel ID: " + n.getChannelId());
@@ -256,9 +311,12 @@ public class MainActivity extends AppCompatActivity {
             switch (action){
                 case 0:
                     Log.d(TAG, "onReceive: Notificaiton List");
+//                    listNotification(n, ticker);
+//                    break;
                 case 1:
                     Log.d(TAG, "onReceive: Notificaiton Add");
-                    addNotification(n);
+                    String ticker = intent.getStringExtra("TICKER_TEXT");
+                    addNotification(n, ticker);
                     break;
                 case 2:
                     Log.d(TAG, "onReceive: Notificaiton Remove");

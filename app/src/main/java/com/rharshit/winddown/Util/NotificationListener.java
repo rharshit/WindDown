@@ -46,6 +46,8 @@ public class NotificationListener extends NotificationListenerService {
         bundle.putParcelable("NOTIFICATION", n);
         i.putExtras(bundle);
         i.putExtra("ACTION", 1);
+        CharSequence csTicker = sbn.getNotification().tickerText;
+        i.putExtra("TICKER_TEXT", csTicker==null? "null" : csTicker.toString());
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 
     }
@@ -61,6 +63,8 @@ public class NotificationListener extends NotificationListenerService {
         bundle.putParcelable("NOTIFICATION", n);
         i.putExtras(bundle);
         i.putExtra("ACTION", 2);
+        CharSequence csTicker = sbn.getNotification().tickerText;
+        i.putExtra("TICKER_TEXT", csTicker==null? "null" : csTicker.toString());
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
     }
 
@@ -78,6 +82,8 @@ public class NotificationListener extends NotificationListenerService {
                     bundle.putParcelable("NOTIFICATION", n);
                     i.putExtras(bundle);
                     i.putExtra("ACTION", 0);
+                    CharSequence csTicker = sbn.getNotification().tickerText;
+                    i.putExtra("TICKER_TEXT", csTicker==null? "null" : csTicker.toString());
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
                     Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + n.getPackageName());
                 }

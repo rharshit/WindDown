@@ -13,13 +13,26 @@ import android.widget.TextView;
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Notification;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static android.content.ContentValues.TAG;
 
 public class NotificationView extends LinearLayout {
 
     private Notification notification;
 
-    public NotificationView(Context context, Notification notification, Drawable icon, String appName) {
+    private HashMap<String, ArrayList<String>> groupNotifications;
+
+    public NotificationView(Context context, Notification notification, Drawable icon,
+                            String appName, String ticker){
+        this(context, notification, icon, appName);
+        groupNotifications = new HashMap<>();
+        addToHashMap(notification.getKey(), ticker);
+    }
+
+    public NotificationView(Context context, Notification notification, Drawable icon,
+                            String appName) {
         super(context);
 
         this.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -48,6 +61,15 @@ public class NotificationView extends LinearLayout {
         this.addView(packageName);
     }
 
+    private void addToHashMap(String key, String ticker) {
+        ArrayList<String> notifs = groupNotifications.get(key);
+        if(notifs == null){
+            notifs = new ArrayList<>();
+        }
+        notifs.add(ticker);
+        groupNotifications.put(key, notifs);
+    }
+
     public String getGroupKey(){
         return notification.getGroupKey();
     }
@@ -58,5 +80,20 @@ public class NotificationView extends LinearLayout {
 
     public String getPackageName(){
         return notification.getPackageName();
+    }
+
+    public void updateNotification(Notification n, String ticker) {
+        addToHashMap(n.getKey(), ticker);
+    }
+
+    public ArrayList<String> getNotifications() {
+        ArrayList<String> notifications = new ArrayList<>();
+        for(String key : groupNotifications.keySet()){
+            for(String ticker : groupNotifications.get(key)){
+                Log.d(TAG, "getNotifications: Key: " + key + " Ticker: " + ticker);
+                notifications.add(ticker);
+            }
+        }
+        return notifications;
     }
 }
