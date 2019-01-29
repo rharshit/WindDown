@@ -12,13 +12,13 @@ import android.renderscript.ScriptIntrinsicBlur;
 import com.rharshit.winddown.R;
 
 public class Blur {
-    private static float SCALE = 0.75f;
+    private static float SCALE = 0.50f;
 
     public static Bitmap transform(Context context, Bitmap source, float radius) {
         float dimen = context.getResources().getDimension(R.dimen.notification_icon_dimen);
         Bitmap sourceBitmap = Bitmap.createScaledBitmap(source,
-                (int) (dimen*SCALE + 0*radius),
-                (int) (dimen*SCALE + 0*radius), false);
+                (int) (dimen*SCALE),
+                (int) (dimen*SCALE), false);
 
         Bitmap blurredBitmap;
         blurredBitmap = Bitmap.createBitmap(sourceBitmap);
@@ -39,7 +39,8 @@ public class Blur {
         output.copyTo(blurredBitmap);
         source.recycle();
 
-        return blurredBitmap;
+        return Bitmap.createScaledBitmap(blurredBitmap, (int) (dimen + 2*radius),
+                (int) (dimen + 2*radius), false);
     }
 
     public static Bitmap transform(Context context, Drawable source, float radius) {
