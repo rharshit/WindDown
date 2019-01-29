@@ -133,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
         llDateTime.addView(new DateTime(mContext));
     }
 
+    public void scrollUp(View view) {
+        svMain.smoothScrollTo(0, 0);
+    }
+
     private void notificationListener() {
         nReceiver = new NotificationReceiver();
         IntentFilter filter = new IntentFilter();
