@@ -51,20 +51,8 @@ public class AppIcon extends LinearLayout {
 
         debug = new TextView(mContext);
         this.addView(debug);
-        updatePos();
     }
 
-    public static int getLayoutWidth() {
-        return width;
-    }
-
-    public void updatePos() {
-        int[] pos = new int[2];
-        this.getLocationInWindow(pos);
-        String s = String.valueOf(pos[0])
-                + " " + String.valueOf(pos[1]);
-        debug.setText(s);
-    }
 
     public void updateView() {
         int[] pos = new int[2];

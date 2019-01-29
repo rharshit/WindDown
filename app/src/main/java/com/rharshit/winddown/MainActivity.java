@@ -17,7 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridLayout;
-import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -32,6 +32,7 @@ import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
 import com.rharshit.winddown.UI.DateTime;
 import com.rharshit.winddown.UI.NotificationView;
+import com.rharshit.winddown.UI.Scroll;
 import com.rharshit.winddown.Util.Notification;
 import com.rharshit.winddown.Util.Theme;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private static int theme = R.style.AppThemeLight;
     private TextView tvWindDown;
 
-    private HorizontalScrollView hsView;
+    private Scroll hsView;
     private LinearLayout llScroll;
     private LinearLayout llMainScroll;
     private LinearLayout llNotification;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvNotificationText;
     private ScrollView svMain;
     private LinearLayout llDateTime;
+    private ImageView scrollL;
+    private ImageView scrollR;
 
     private int vHeight;
     private int vWidth;
@@ -76,6 +79,31 @@ public class MainActivity extends AppCompatActivity {
         tvNotificationText = findViewById(R.id.tvNotificaiton);
         svMain = findViewById(R.id.svMain);
         llDateTime = findViewById(R.id.llDateTime);
+        scrollL = findViewById(R.id.scrollLeft);
+        scrollR = findViewById(R.id.scrollRight);
+
+        scrollL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hsView.smoothScrollBy(-vWidth, 0);
+            }
+        });
+        scrollR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hsView.smoothScrollBy(vWidth, 0);
+            }
+        });
+
+        hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                for (int i = 0; i < nChild; i++) {
+                    AppIcon tmp = (AppIcon) llScroll.getChildAt(i);
+                    tmp.updateView();
+                }
+            }
+        });
 
         int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_blur_dimen)
                 + 2*getResources().getInteger(R.integer.notification_icon_blur_radius));
@@ -124,8 +152,6 @@ public class MainActivity extends AppCompatActivity {
         populate();
         notificationListener();
         getNotifications();
-
-        debug();
     }
 
     @Override
@@ -140,26 +166,6 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
     }
 
-    private void debug() {
-        nChild = llScroll.getChildCount();
-        Log.d(TAG, "width: " + vWidth);
-        hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                for (int i = 0; i < nChild; i++) {
-                    AppIcon tmp = (AppIcon) llScroll.getChildAt(i);
-                    tmp.updatePos();
-                    tmp.updateView();
-                }
-                Log.d(TAG, "onScrollChange: " + String.valueOf(scrollX) + " " + String.valueOf(oldScrollX));
-                int d = oldScrollX - scrollX;
-                d = d < 0 ? -d : d;
-                if (d < 5) {
-                    hsView.smoothScrollTo(((scrollX + (vWidth / 2)) / vWidth) * vWidth, scrollY);
-                }
-            }
-        });
-    }
 
     private void populate(){
         llScroll.addView(
