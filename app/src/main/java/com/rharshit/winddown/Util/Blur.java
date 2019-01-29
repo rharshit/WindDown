@@ -16,6 +16,7 @@ public class Blur {
 
     public static Bitmap transform(Context context, Bitmap source, float radius) {
         float dimen = context.getResources().getDimension(R.dimen.notification_icon_dimen);
+        float dimenBlur = context.getResources().getDimension(R.dimen.notification_icon_blur_dimen);
         Bitmap sourceBitmap = Bitmap.createScaledBitmap(source,
                 (int) (dimen*SCALE),
                 (int) (dimen*SCALE), false);
@@ -39,8 +40,8 @@ public class Blur {
         output.copyTo(blurredBitmap);
         source.recycle();
 
-        return Bitmap.createScaledBitmap(blurredBitmap, (int) (dimen + 2*radius),
-                (int) (dimen + 2*radius), false);
+        return Bitmap.createScaledBitmap(blurredBitmap, (int) (dimenBlur + 2*radius),
+                (int) (dimenBlur + 2*radius), false);
     }
 
     public static Bitmap transform(Context context, Drawable source, float radius) {

@@ -48,20 +48,22 @@ public class NotificationView extends LinearLayout {
         this.icon = icon;
 
         float dimen = getResources().getDimension(R.dimen.notification_icon_dimen);
+        float dimenBlur = getResources().getDimension(R.dimen.notification_icon_blur_dimen);
+        float dimenDiff = dimenBlur - dimen;
         float radius = getResources().getInteger(R.integer.notification_icon_blur_radius);
         int elevation = getResources().getInteger(R.integer.notification_icon_blur_elevation);
         float pad = getResources().getDimension(R.dimen.notification_icon_padding);
 
         RelativeLayout rvIcon = new RelativeLayout(context);
-        rvIcon.setLayoutParams(new LayoutParams((int) (dimen + 2*radius),
+        rvIcon.setLayoutParams(new LayoutParams((int) (dimenBlur + 2*radius),
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         ImageView ivIcon = new ImageView(context);
         ImageView ivIconBlur = new ImageView(context);
 
-        ivIcon.setLayoutParams(new LayoutParams((int) (dimen + 2*radius), (int) dimen));
-        ivIconBlur.setLayoutParams(new LayoutParams((int) (dimen + 2*radius),
-                (int) (dimen + 2*radius)));
+        ivIcon.setLayoutParams(new LayoutParams((int) (dimenBlur + 2*radius), (int) dimenBlur));
+        ivIconBlur.setLayoutParams(new LayoutParams((int) (dimenBlur + 2*radius),
+                (int) (dimenBlur + 2*radius)));
 
         if(icon!=null){
             ivIcon.setImageDrawable(icon);
@@ -72,9 +74,8 @@ public class NotificationView extends LinearLayout {
 
         ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         ivIconBlur.setScaleType(ImageView.ScaleType.CENTER);
-        ivIcon.setPadding((int) pad, 0, (int) pad, 0);
+        ivIcon.setPadding((int) (pad + dimenDiff/2), 0, (int) (pad + dimenDiff/2), 0);
         ivIconBlur.setPadding(0, elevation, 0, 0);
-        ivIconBlur.setAlpha(0.75f);
 
         rvIcon.addView(ivIconBlur);
         rvIcon.addView(ivIcon);

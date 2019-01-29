@@ -77,14 +77,17 @@ public class MainActivity extends AppCompatActivity {
         tvNotificationText = findViewById(R.id.tvNotificaiton);
         svMain = findViewById(R.id.svMain);
 
-        int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_dimen)
-                + getResources().getDimension(R.dimen.notification_icon_padding))
-                + 2*getResources().getInteger(R.integer.notification_icon_blur_radius);
+        int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_blur_dimen)
+                + 2*getResources().getInteger(R.integer.notification_icon_blur_radius));
         int llWidth = vWidth - ((int) (2*(getResources().getDimension(R.dimen.notification_bg_padding)
                 + getResources().getDimension(R.dimen.notification_bg_margin))));
         int nCol = llWidth/nIconWidth;
-        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol);
         gvNotification.setColumnCount(nCol);
+
+        float scale = (float) llWidth/(float) (nCol*nIconWidth);
+        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol+ " " + scale);
+        gvNotification.setScaleX(scale);
+        gvNotification.setScaleY(scale);
 
         tvWindDown = findViewById(R.id.tvWindDown);
         tvWindDown.setOnClickListener(new View.OnClickListener() {
