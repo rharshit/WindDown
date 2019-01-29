@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llMainScroll;
     private LinearLayout llNotification;
     private GridLayout gvNotification;
+    private TextView tvNotificationText;
+    private ScrollView svMain;
 
     private int vHeight;
     private int vWidth;
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         llMainScroll = findViewById(R.id.llVerticalScroll);
         llNotification = findViewById(R.id.llNotifivationView);
         gvNotification = findViewById(R.id.gvNotificaiton);
+        tvNotificationText = findViewById(R.id.tvNotificaiton);
+        svMain = findViewById(R.id.svMain);
 
         int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_dimen)
                 + getResources().getDimension(R.dimen.notification_icon_padding))
@@ -88,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: Switching");
                 Theme.switchTheme();
                 recreate();
+            }
+        });
+
+        tvNotificationText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                svMain.smoothScrollBy(0, llNotification.getHeight());
             }
         });
     }

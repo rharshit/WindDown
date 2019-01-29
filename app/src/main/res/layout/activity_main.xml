@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/svMain">
 
         <LinearLayout
             android:id="@+id/llVerticalScroll"
@@ -41,6 +42,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" />
             </HorizontalScrollView>
+            
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="120dp"/>
 
             <LinearLayout
                 android:id="@+id/llNotifivationView"
@@ -54,10 +59,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="12dp"
+                    android:padding="12dp"
                     android:paddingEnd="0dp"
                     android:textSize="20sp"
-                    android:text="@string/notification_panel_header"/>
+                    android:text="@string/notification_panel_header"
+                    android:id="@+id/tvNotificaiton"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp" />
                 <GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
