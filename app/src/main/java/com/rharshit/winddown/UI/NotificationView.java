@@ -1,6 +1,7 @@
 package com.rharshit.winddown.UI;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
@@ -8,9 +9,11 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.rharshit.winddown.R;
+import com.rharshit.winddown.Util.Blur;
 import com.rharshit.winddown.Util.Notification;
 
 import java.util.ArrayList;
@@ -45,25 +48,47 @@ public class NotificationView extends LinearLayout {
         this.icon = icon;
 
         float dimen = getResources().getDimension(R.dimen.notification_icon_dimen);
+        float raduis = getResources().getInteger(R.integer.notification_icon_blur_radius);
+        int elevation = getResources().getInteger(R.integer.notification_icon_blur_elevation);
         float pad = getResources().getDimension(R.dimen.notification_icon_padding);
 
+        RelativeLayout rvIcon = new RelativeLayout(context);
+        rvIcon.setLayoutParams(new LayoutParams((int) (dimen + 2*raduis),
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+
         ImageView ivIcon = new ImageView(context);
-        ivIcon.setLayoutParams(new LayoutParams((int) dimen, (int) dimen));
-        ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        ivIcon.setPadding((int) pad, (int) pad, (int) pad, (int) pad);
+        ImageView ivIconBlur = new ImageView(context);
+
+        ivIcon.setLayoutParams(new LayoutParams((int) (dimen + 2*raduis), (int) dimen));
+        ivIconBlur.setLayoutParams(new LayoutParams((int) (dimen + 2*raduis),
+                (int) (dimen + 2*raduis)));
+
         if(icon!=null){
             ivIcon.setImageDrawable(icon);
+            ivIconBlur.setImageBitmap(Blur.transform(context, icon, raduis));
         } else {
             Log.e(TAG, "NotificationView: NULL Icon");
         }
-        this.addView(ivIcon);
+
+        ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        ivIconBlur.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        ivIconBlur.setPadding(0, elevation, 0, 0);
+        ivIconBlur.setAlpha(0.75f);
+
+        rvIcon.setPadding((int) pad, 0, (int) pad, 0);
+        rvIcon.addView(ivIconBlur);
+        rvIcon.addView(ivIcon);
+
+        this.addView(rvIcon);
 
         TextView packageName = new TextView(context);
         packageName.setText(appName);
         packageName.setGravity(Gravity.CENTER_HORIZONTAL);
         packageName.setPadding(0, 0, 0, (int) pad);
         packageName.setTextSize(12.0f);
+        packageName.setBackgroundColor(Color.argb(0,0,0,0));
         this.addView(packageName);
+        packageName.setTranslationY(-raduis);
     }
 
     private void addToHashMap(String key, String ticker, boolean ongoing) {

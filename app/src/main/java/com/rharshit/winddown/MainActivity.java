@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
         gvNotification = findViewById(R.id.gvNotificaiton);
 
         int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_dimen)
-                + getResources().getDimension(R.dimen.notification_icon_padding));
+                + getResources().getDimension(R.dimen.notification_icon_padding))
+                + 2*getResources().getInteger(R.integer.notification_icon_blur_radius);
         int llWidth = vWidth - ((int) (2*(getResources().getDimension(R.dimen.notification_bg_padding)
                 + getResources().getDimension(R.dimen.notification_bg_margin))));
         int nCol = llWidth/nIconWidth;
