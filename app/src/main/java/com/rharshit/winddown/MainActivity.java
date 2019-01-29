@@ -33,6 +33,7 @@ import com.rharshit.winddown.Messages.Messages;
 import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
+import com.rharshit.winddown.UI.DateTime;
 import com.rharshit.winddown.UI.NotificationView;
 import com.rharshit.winddown.Util.Notification;
 import com.rharshit.winddown.Util.Theme;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private GridLayout gvNotification;
     private TextView tvNotificationText;
     private ScrollView svMain;
+    private LinearLayout llDateTime;
 
     private int vHeight;
     private int vWidth;
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         gvNotification = findViewById(R.id.gvNotificaiton);
         tvNotificationText = findViewById(R.id.tvNotificaiton);
         svMain = findViewById(R.id.svMain);
+        llDateTime = findViewById(R.id.llDateTime);
 
         int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_blur_dimen)
                 + 2*getResources().getInteger(R.integer.notification_icon_blur_radius));
@@ -101,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
                 svMain.smoothScrollBy(0, llNotification.getHeight());
             }
         });
+
+        llDateTime.addView(new DateTime(mContext));
     }
 
     private void notificationListener() {
