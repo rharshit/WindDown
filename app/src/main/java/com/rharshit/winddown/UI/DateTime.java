@@ -14,18 +14,10 @@ import java.util.HashMap;
 public class DateTime extends LinearLayout {
 
     private String date;
-    private String hour;
-    private String minute;
     private String day;
     private String month;
-    private String year;
 
-    private TextView tvDate;
-    private TextView tvHour;
-    private TextView tvMinute;
     private TextView tvDay;
-    private TextView tvMonth;
-    private TextView tvYear;
 
     HashMap<Integer, String> days = new HashMap<Integer, String>(){{
         put(2, "Mon");
@@ -76,11 +68,8 @@ public class DateTime extends LinearLayout {
         Calendar c = Calendar.getInstance();
 
         date = "" + c.get(Calendar.DAY_OF_MONTH);
-        hour = "" + c.get(Calendar.HOUR_OF_DAY);
-        minute = "" + c.get(Calendar.MINUTE);
         day = days.get(c.get(Calendar.DAY_OF_WEEK));
         month = months.get(c.get(Calendar.MONTH));
-        year = "" + c.get(Calendar.YEAR);
 
         tvDay.setText(day + ", " + date + " " + month);
     }

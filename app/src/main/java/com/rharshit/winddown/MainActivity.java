@@ -1,8 +1,6 @@
 package com.rharshit.winddown;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -226,45 +223,6 @@ public class MainActivity extends AppCompatActivity {
                 })
         );
     }
-
-    /*
-    private void listNotification(Notification n) {
-        for(int i=0; i<gvNotification.getChildCount(); i++){
-            NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
-            if(n.getPackageName().equals(nv.getPackageName())){
-                Log.d(TAG, "List update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
-                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
-                        + " Channel ID: " + n.getChannelId());
-                return;
-            }
-        }
-        Log.d(TAG, "List new notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
-                + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
-                + " Channel ID: " + n.getChannelId());
-        Drawable icon = null;
-        try {
-            icon = getPackageManager().getApplicationIcon(n.getPackageName());
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        ApplicationInfo appInfo = null;
-        try {
-            appInfo = getPackageManager().getApplicationInfo(n.getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        String appName = appInfo == null ?
-                n.getPackageName() :
-                getPackageManager().getApplicationLabel(appInfo).toString();
-        NotificationView notificationView = new NotificationView(mContext, n, icon, appName);
-        gvNotification.addView(notificationView, gvNotification.getChildCount());
-        notificationView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NotificationView)v).getNotifications();
-            }
-        });
-    }*/
 
     private void addNotification(Notification n, String ticker) {
         for(int i=0; i<gvNotification.getChildCount(); i++){
