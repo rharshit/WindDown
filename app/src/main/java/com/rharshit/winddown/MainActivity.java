@@ -83,11 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 + getResources().getDimension(R.dimen.notification_bg_margin))));
         int nCol = llWidth/nIconWidth;
         gvNotification.setColumnCount(nCol);
-
-        float scale = (float) llWidth/(float) (nCol*nIconWidth);
-        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol+ " " + scale);
-        gvNotification.setScaleX(scale);
-        gvNotification.setScaleY(scale);
+        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol);
 
         tvWindDown = findViewById(R.id.tvWindDown);
         tvWindDown.setOnClickListener(new View.OnClickListener() {
