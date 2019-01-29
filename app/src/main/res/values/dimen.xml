@@ -4,6 +4,6 @@
     <dimen name="notification_bg_padding">12dp</dimen>
     <dimen name="notification_bg_margin">8dp</dimen>
     <dimen name="notification_icon_dimen">64dp</dimen>
-    <dimen name="notification_icon_blur_dimen">80dp</dimen>
+    <dimen name="notification_icon_blur_dimen">96dp</dimen>
     <dimen name="notification_icon_padding">12dp</dimen>
 </resources>
