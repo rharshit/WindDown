@@ -28,6 +28,7 @@ import com.rharshit.winddown.Contacts.Contacts;
 import com.rharshit.winddown.Gallery.Gallery;
 import com.rharshit.winddown.Messages.Messages;
 import com.rharshit.winddown.Music.Music;
+import com.rharshit.winddown.Notes.Notes;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
 import com.rharshit.winddown.UI.DateTime;
@@ -198,6 +199,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Messages.class);
+                        startActivity(i);
+                    }
+                })
+        );
+        llScroll.addView(
+                new AppIcon(this, vWidth, vHeight,
+                        getResources().getDrawable(R.drawable.ic_notes), "Notes", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mContext, Notes.class);
                         startActivity(i);
                     }
                 })

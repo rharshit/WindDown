@@ -9,13 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
-        <activity android:name=".Music.Music"></activity>
+        <activity
+            android:name=".Notes.Notes"
+            android:label="@string/title_activity_notes"
+            android:theme="@style/AppThemeLight.NoActionBar"></activity>
+        <activity android:name=".Music.Music" />
         <activity android:name=".Gallery.Gallery" />
         <activity android:name=".Camera.Camera" />
         <activity android:name=".Messages.Messages" />
         <activity android:name=".Contacts.Contacts" />
         <activity android:name=".Phone.Phone" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
