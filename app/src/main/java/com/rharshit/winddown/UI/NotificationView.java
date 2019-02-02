@@ -2,7 +2,10 @@ package com.rharshit.winddown.UI;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -36,6 +39,7 @@ public class NotificationView extends LinearLayout {
         addToHashMap(notification.getKey(), ticker, notification.isOngoing());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public NotificationView(Context context, Notification notification, Drawable icon,
                             String appName) {
         super(context);
@@ -82,11 +86,13 @@ public class NotificationView extends LinearLayout {
 
         this.addView(rvIcon);
 
+        Typeface typeface = getResources().getFont(R.font.light);
         TextView packageName = new TextView(context);
         packageName.setText(appName);
         packageName.setGravity(Gravity.CENTER_HORIZONTAL);
         packageName.setPadding(0, 0, 0, (int) pad);
-        packageName.setTextSize(12.0f);
+        packageName.setTextSize(16.0f);
+        packageName.setTypeface(typeface);
         packageName.setBackgroundColor(Color.argb(0,0,0,0));
         this.addView(packageName);
         packageName.setTranslationY(-radius);
