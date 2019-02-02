@@ -55,7 +55,6 @@ public class NotificationView extends LinearLayout {
         float dimenBlur = getResources().getDimension(R.dimen.notification_icon_blur_dimen);
         float dimenDiff = dimenBlur - dimen;
         float radius = getResources().getInteger(R.integer.notification_icon_blur_radius);
-        int elevation = getResources().getInteger(R.integer.notification_icon_blur_elevation);
         float pad = getResources().getDimension(R.dimen.notification_icon_padding);
 
         RelativeLayout rvIcon = new RelativeLayout(context);
@@ -79,7 +78,7 @@ public class NotificationView extends LinearLayout {
         ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         ivIconBlur.setScaleType(ImageView.ScaleType.CENTER);
         ivIcon.setPadding((int) (pad + dimenDiff/2), 0, (int) (pad + dimenDiff/2), 0);
-        ivIconBlur.setPadding(0, elevation, 0, 0);
+        ivIconBlur.setPadding(0, 0, 0, 0);
 
         rvIcon.addView(ivIconBlur);
         rvIcon.addView(ivIcon);
@@ -88,14 +87,16 @@ public class NotificationView extends LinearLayout {
 
         Typeface typeface = getResources().getFont(R.font.light);
         TextView packageName = new TextView(context);
+        packageName.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         packageName.setText(appName);
         packageName.setGravity(Gravity.CENTER_HORIZONTAL);
-        packageName.setPadding(0, 0, 0, (int) pad);
+        packageName.setPadding(0, 0, 0, 0);
         packageName.setTextSize(16.0f);
         packageName.setTypeface(typeface);
+        packageName.setLines(2);
         packageName.setBackgroundColor(Color.argb(0,0,0,0));
         this.addView(packageName);
-        packageName.setTranslationY(-radius);
+        packageName.setTranslationY(-2*radius);
     }
 
     private void addToHashMap(String key, String ticker, boolean ongoing) {
