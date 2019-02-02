@@ -21,6 +21,7 @@ public class Notes extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
