@@ -14,11 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.rharshit.winddown.Notes.db.DBHandler;
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
 
 public class Notes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DBHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,12 @@ public class Notes extends AppCompatActivity
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        init();
+    }
+
+    private void init() {
+        db = new DBHandler(this);
     }
 
     @Override
