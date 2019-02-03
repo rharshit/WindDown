@@ -1,10 +1,12 @@
 package com.rharshit.winddown.Notes;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +21,9 @@ import android.widget.Toast;
 import com.rharshit.winddown.Notes.db.DBHandler;
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
+
+import java.nio.charset.Charset;
+import java.util.Random;
 
 public class Notes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,7 +67,14 @@ public class Notes extends AppCompatActivity
 
         init();
 
-        createUser("User", "pass");
+        getUsers();
+        createUser(randomString(), randomString());
+    }
+
+    private String randomString() {
+        byte[] array = new byte[7];
+        new Random().nextBytes(array);
+        return new String(array, Charset.forName("UTF-8"));
     }
 
     private void createUser(String u, String p) {
@@ -74,6 +86,13 @@ public class Notes extends AppCompatActivity
         } else {
             Toast.makeText(mContext,
                     "New user failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getUsers(){
+        Cursor users = db.getAllUsernames();
+        while(users.moveToNext()){
+            Log.d("Notes", "getUsers: " + users.getString(0));
         }
     }
 

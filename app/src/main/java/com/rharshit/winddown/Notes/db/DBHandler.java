@@ -2,6 +2,7 @@ package com.rharshit.winddown.Notes.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -61,5 +62,11 @@ public class DBHandler extends SQLiteOpenHelper {
         contentValues.put(USERS_PASSWORD, password);
         long result = db.insert(TABLE_USERS, null, contentValues);
         return result != -1;
+    }
+
+    public Cursor getAllUsernames(){
+        return db.rawQuery("SELECT " +
+                USERS_USERNAME + " FROM " +
+                TABLE_USERS, null);
     }
 }
