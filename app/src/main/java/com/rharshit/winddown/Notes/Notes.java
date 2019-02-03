@@ -1,5 +1,6 @@
 package com.rharshit.winddown.Notes;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.rharshit.winddown.Notes.db.DBHandler;
 import com.rharshit.winddown.R;
@@ -22,6 +24,9 @@ public class Notes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DBHandler db;
+    private String user;
+
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,8 @@ public class Notes extends AppCompatActivity
         setContentView(R.layout.activity_notes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mContext = this;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +61,20 @@ public class Notes extends AppCompatActivity
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         init();
+
+        createUser("User", "pass");
+    }
+
+    private void createUser(String u, String p) {
+        boolean res = db.insertUser(u, p);
+        if(res){
+            Toast.makeText(mContext,
+                    "Created new user", Toast.LENGTH_SHORT).show();
+            user = u;
+        } else {
+            Toast.makeText(mContext,
+                    "New user failed", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void init() {

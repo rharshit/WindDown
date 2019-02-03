@@ -1,5 +1,6 @@
 package com.rharshit.winddown.Notes.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,6 +9,8 @@ import android.util.Log;
 import static android.content.ContentValues.TAG;
 
 public class DBHandler extends SQLiteOpenHelper {
+
+    private final SQLiteDatabase db;
 
     public static final String DB_NAME = "notes.db";
 
@@ -24,7 +27,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public DBHandler(Context context) {
         super(context, DB_NAME, null, 1);
-        SQLiteDatabase db = this.getWritableDatabase();
+        db = this.getWritableDatabase();
     }
 
     @Override
@@ -50,5 +53,13 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+    }
+
+    public boolean insertUser(String username, String password){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USERS_USERNAME, username);
+        contentValues.put(USERS_PASSWORD, password);
+        long result = db.insert(TABLE_USERS, null, contentValues);
+        return result != -1;
     }
 }
