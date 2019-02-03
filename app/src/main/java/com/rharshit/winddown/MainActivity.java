@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 + getResources().getDimension(R.dimen.notification_bg_margin))));
         int nCol = llWidth/nIconWidth;
         gvNotification.setColumnCount(nCol);
-        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol);
+//        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol);
 
         tvWindDown = findViewById(R.id.tvWindDown);
         tvWindDown.setOnClickListener(new View.OnClickListener() {
@@ -249,16 +249,16 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0; i<gvNotification.getChildCount(); i++){
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
             if(n.getPackageName().equals(nv.getPackageName())){
-                Log.d(TAG, "Update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
-                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
-                        + " Channel ID: " + n.getChannelId());
+//                Log.d(TAG, "Update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+//                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+//                        + " Channel ID: " + n.getChannelId());
                 nv.updateNotification(n, ticker);
                 return;
             }
         }
-        Log.d(TAG, "New notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
-                + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
-                + " Channel ID: " + n.getChannelId());
+//        Log.d(TAG, "New notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+//                + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+//                + " Channel ID: " + n.getChannelId());
         Drawable icon = null;
         try {
             icon = getPackageManager().getApplicationIcon(n.getPackageName());
@@ -318,9 +318,9 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0; i<gvNotification.getChildCount(); i++){
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
             if(n.getPackageName().equals(nv.getPackageName())){
-                Log.d(TAG, "Remove notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
-                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
-                        + " Channel ID: " + n.getChannelId());
+//                Log.d(TAG, "Remove notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
+//                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
+//                        + " Channel ID: " + n.getChannelId());
                 boolean remove = nv.removeNotification(n, ticker);
                 if(remove){
                     gvNotification.removeViewAt(i);
@@ -340,21 +340,21 @@ public class MainActivity extends AppCompatActivity {
             String ticker = "null";
             switch (action){
                 case 0:
-                    Log.d(TAG, "onReceive: Notificaiton List");
+//                    Log.d(TAG, "onReceive: Notificaiton List");
 //                    listNotification(n, ticker);
 //                    break;
                 case 1:
-                    Log.d(TAG, "onReceive: Notificaiton Add");
+//                    Log.d(TAG, "onReceive: Notificaiton Add");
                     ticker = intent.getStringExtra("TICKER_TEXT");
                     addNotification(n, ticker);
                     break;
                 case 2:
-                    Log.d(TAG, "onReceive: Notificaiton Remove");
+//                    Log.d(TAG, "onReceive: Notificaiton Remove");
                     ticker = intent.getStringExtra("TICKER_TEXT");
                     removeNotification(n, ticker);
                     break;
                 case 3:
-                    Log.e(TAG, "onReceive: Notification intent action" );
+//                    Log.e(TAG, "onReceive: Notification intent action" );
                     break;
             }
         }

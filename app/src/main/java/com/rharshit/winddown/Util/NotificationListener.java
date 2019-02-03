@@ -38,8 +38,8 @@ public class NotificationListener extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
 
-        Log.i(TAG, "onNotificationPosted");
-        Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + sbn.getPackageName());
+//        Log.i(TAG, "onNotificationPosted");
+//        Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + sbn.getPackageName());
         Intent i = new Intent("com.rharshit.winddown.NOTIFICATION_LISTENER");
         Notification n = new Notification(sbn);
         Bundle bundle = new Bundle();
@@ -55,8 +55,8 @@ public class NotificationListener extends NotificationListenerService {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        Log.i(TAG, "onNOtificationRemoved");
-        Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + sbn.getPackageName());
+//        Log.i(TAG, "onNOtificationRemoved");
+//        Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + sbn.getPackageName());
         Intent i = new Intent("com.rharshit.winddown.NOTIFICATION_LISTENER");
         Notification n = new Notification(sbn);
         Bundle bundle = new Bundle();
@@ -75,7 +75,7 @@ public class NotificationListener extends NotificationListenerService {
         public void onReceive(Context context, Intent intent) {
             if (intent.getStringExtra("EXTRA_ACTION").equals("getNotificaitons")) {
                 for (StatusBarNotification sbn : NotificationListener.this.getActiveNotifications()) {
-                    Log.i(TAG, "onNotificationListed");
+//                    Log.i(TAG, "onNotificationListed");
                     Intent i = new Intent("com.rharshit.winddown.NOTIFICATION_LISTENER");
                     Notification n = new Notification(sbn);
                     Bundle bundle = new Bundle();
@@ -85,7 +85,7 @@ public class NotificationListener extends NotificationListenerService {
                     CharSequence csTicker = sbn.getNotification().tickerText;
                     i.putExtra("TICKER_TEXT", csTicker==null? "null" : csTicker.toString());
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
-                    Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + n.getPackageName());
+//                    Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + n.getPackageName());
                 }
             }
         }
