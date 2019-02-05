@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rharshit.winddown">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,6 +31,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--<activity android:name=".AlbumActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".GalleryPreview"
+            android:configChanges="orientation|screenSize"/>-->
 
         <service
             android:name=".Util.NotificationListener"
