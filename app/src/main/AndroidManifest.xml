@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
+        <activity android:name=".Notes.Login"></activity>
         <activity
             android:name=".Notes.Notes"
             android:label="@string/title_activity_notes"
-            android:theme="@style/AppThemeLight.NoActionBar"></activity>
+            android:theme="@style/AppThemeLight.NoActionBar" />
         <activity android:name=".Music.Music" />
         <activity android:name=".Gallery.Gallery" />
         <activity android:name=".Camera.Camera" />
@@ -31,11 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".AlbumActivity"
+        <!--
+<activity android:name=".AlbumActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".GalleryPreview"
-            android:configChanges="orientation|screenSize"/>-->
-
+            android:configChanges="orientation|screenSize"/>
+        -->
         <service
             android:name=".Util.NotificationListener"
             android:label="@string/service_name"

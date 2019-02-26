@@ -1,8 +1,10 @@
 package com.rharshit.winddown.Notes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rharshit.winddown.Notes.db.DBHandler;
@@ -28,10 +31,23 @@ import java.util.Random;
 public class Notes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "Notes/Notes";
     private DBHandler db;
-    private String user;
+    private String user = "";
 
     private Context mContext;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==0){
+            Log.e(TAG, "onActivityResult: 0");
+            finish();
+        } else {
+            user = data.getStringExtra("username");
+            Log.d(TAG, "onCreate: User: "+user);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +82,9 @@ public class Notes extends AppCompatActivity
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         init();
+
+        Intent iLogin = new Intent(mContext, Login.class);
+        startActivityForResult(iLogin, 0);
 
         getUsers();
         createUser(randomString(), randomString());
