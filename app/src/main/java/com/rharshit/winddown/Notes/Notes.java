@@ -34,6 +34,8 @@ public class Notes extends AppCompatActivity
     private static final String TAG = "Notes/Notes";
     private String username;
 
+    private TextView tvUsername;
+
     private Context mContext;
 
     @Override
@@ -86,6 +88,8 @@ public class Notes extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.notes, menu);
+        tvUsername = findViewById(R.id.notes_nav_header_title);
+        tvUsername.setText(username);
         return true;
     }
 
