@@ -276,13 +276,13 @@ public class MainActivity extends AppCompatActivity {
                 getPackageManager().getApplicationLabel(appInfo).toString();
         NotificationView notificationView = new NotificationView(mContext, n, icon, appName, ticker);
         gvNotification.addView(notificationView, gvNotification.getChildCount());
-        notificationView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NotificationView nv = ((NotificationView)v);
-                showNotifications(nv);
-            }
-        });
+//        notificationView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NotificationView nv = ((NotificationView)v);
+//                showNotifications(nv);
+//            }
+//        });
     }
 
     private void showNotifications(NotificationView nv) {
