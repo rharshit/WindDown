@@ -28,6 +28,7 @@ import com.rharshit.winddown.Contacts.Contacts;
 import com.rharshit.winddown.Gallery.Gallery;
 import com.rharshit.winddown.Messages.Messages;
 import com.rharshit.winddown.Music.Music;
+import com.rharshit.winddown.Notes.Login;
 import com.rharshit.winddown.Notes.Notes;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
@@ -208,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.ic_notes), "Notes", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(mContext, Notes.class);
+                        Intent i = new Intent(mContext, Login.class);
                         startActivity(i);
                     }
                 })

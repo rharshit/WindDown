@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
-        <activity android:name=".Notes.Login"></activity>
+        <activity android:name=".Notes.Signup"></activity>
+        <activity android:name=".Notes.Login" />
         <activity
             android:name=".Notes.Notes"
             android:label="@string/title_activity_notes"

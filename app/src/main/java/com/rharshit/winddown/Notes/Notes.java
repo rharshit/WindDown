@@ -32,22 +32,9 @@ public class Notes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "Notes/Notes";
-    private DBHandler db;
-    private String user = "";
+    private String username;
 
     private Context mContext;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==0){
-            Log.e(TAG, "onActivityResult: 0");
-            finish();
-        } else {
-            user = data.getStringExtra("username");
-            Log.d(TAG, "onCreate: User: "+user);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +45,9 @@ public class Notes extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mContext = this;
+        Intent i = getIntent();
+        username = i.getStringExtra("username");
+        Log.d(TAG, "onCreate: "+username);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,43 +70,6 @@ public class Notes extends AppCompatActivity
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-
-        init();
-
-        Intent iLogin = new Intent(mContext, Login.class);
-        startActivityForResult(iLogin, 0);
-
-        getUsers();
-        createUser(randomString(), randomString());
-    }
-
-    private String randomString() {
-        byte[] array = new byte[7];
-        new Random().nextBytes(array);
-        return new String(array, Charset.forName("UTF-8"));
-    }
-
-    private void createUser(String u, String p) {
-        boolean res = db.insertUser(u, p);
-        if(res){
-            Toast.makeText(mContext,
-                    "Created new user", Toast.LENGTH_SHORT).show();
-            user = u;
-        } else {
-            Toast.makeText(mContext,
-                    "New user failed", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void getUsers(){
-        Cursor users = db.getAllUsernames();
-        while(users.moveToNext()){
-            Log.d("Notes", "getUsers: " + users.getString(0));
-        }
-    }
-
-    private void init() {
-        db = new DBHandler(this);
     }
 
     @Override
