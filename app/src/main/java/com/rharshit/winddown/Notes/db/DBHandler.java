@@ -11,7 +11,7 @@ import static android.content.ContentValues.TAG;
 
 public class DBHandler extends SQLiteOpenHelper {
 
-    private final SQLiteDatabase db;
+    private static SQLiteDatabase db;
 
     public static final String DB_NAME = "notes.db";
 
@@ -56,7 +56,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
     }
 
-    public boolean insertUser(String username, String password){
+    public static boolean insertUser(String username, String password){
         ContentValues contentValues = new ContentValues();
         contentValues.put(USERS_USERNAME, username);
         contentValues.put(USERS_PASSWORD, password);
@@ -64,9 +64,23 @@ public class DBHandler extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public Cursor getAllUsernames(){
-        return db.rawQuery("SELECT " +
-                USERS_USERNAME + " FROM " +
+    public static boolean getUser(String username, String password){
+        Cursor users = getAllUsers();
+        while (users.moveToNext()){
+            Log.d(TAG, "getUser: "+users.getString(0)+" "+users.getString(1));
+            if(users.getString(0).equals(username)){
+                if(users.getString(1).equals(password)){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static Cursor getAllUsers(){
+        return db.rawQuery("SELECT * FROM " +
                 TABLE_USERS, null);
     }
 }

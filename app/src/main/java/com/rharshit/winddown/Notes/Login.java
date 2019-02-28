@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.rharshit.winddown.Notes.db.DBHandler;
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
 
@@ -31,6 +33,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mContext = this;
 
+        initDB();
+
         etUser = findViewById(R.id.notes_login_et_username);
         etPass = findViewById(R.id.notes_login_et_password);
         bLogin = findViewById(R.id.notes_b_login);
@@ -39,10 +43,19 @@ public class Login extends AppCompatActivity {
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mContext, Notes.class);
-                i.putExtra("username", etUser.getText().toString());
-                startActivity(i);
-                finish();
+                String u = etUser.getText().toString();
+                String p = etPass.getText().toString();
+                boolean res = DBHandler.getUser(u, p);
+                if(res){
+                    Intent i = new Intent(mContext, Notes.class);
+                    i.putExtra("username", etUser.getText().toString());
+                    startActivity(i);
+                    finish();
+                } else {
+                    Toast.makeText(mContext, "Invalid username/password", Toast.LENGTH_LONG)
+                            .show();
+                }
+
             }
         });
 
@@ -53,6 +66,10 @@ public class Login extends AppCompatActivity {
                 startActivityForResult(i, 0);
             }
         });
+    }
+
+    private void initDB() {
+        new DBHandler(mContext);
     }
 
     @Override

@@ -25,16 +25,12 @@ public class Signup extends AppCompatActivity {
     private Button signup;
     private TextView tvExisting;
 
-    private DBHandler db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         mContext = this;
-
-        db = new DBHandler(this);
 
         etUser = findViewById(R.id.notes_signup_et_username);
         etPass = findViewById(R.id.notes_signup_et_password);
@@ -48,11 +44,6 @@ public class Signup extends AppCompatActivity {
                 String u = etUser.getText().toString();
                 String p = etPass.getText().toString();
                 createUser(u, p);
-
-                Intent i = new Intent();
-                i.putExtra("username", u);
-                setResult(1, i);
-                finish();
             }
         });
 
@@ -69,18 +60,22 @@ public class Signup extends AppCompatActivity {
     }
 
     private void createUser(String u, String p) {
-        boolean res = db.insertUser(u, p);
+        boolean res = DBHandler.insertUser(u, p);
         if(res){
             Toast.makeText(mContext,
                     "Created new user", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent();
+            i.putExtra("username", u);
+            setResult(1, i);
+            finish();
         } else {
             Toast.makeText(mContext,
-                    "New user failed", Toast.LENGTH_SHORT).show();
+                    "Username already exists", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void getUsers(){
-        Cursor users = db.getAllUsernames();
+        Cursor users = DBHandler.getAllUsers();
         while(users.moveToNext()){
             Log.d("Notes", "getUsers: " + users.getString(0));
         }
