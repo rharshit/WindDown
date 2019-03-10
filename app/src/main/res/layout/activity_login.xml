@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Notes.Login">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="24dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/notes_login_et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/notes_login_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:inputType="textPassword" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:elevation="5dp"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:layout_margin="16dp"
+            android:id="@+id/notes_b_login"/>
+
+        <TextView
+            style="@style/TextAppearance.Design.Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:text="New user"
+            android:id="@+id/notes_login_tv_new_user"/>
+    </LinearLayout>
+
+</LinearLayout>

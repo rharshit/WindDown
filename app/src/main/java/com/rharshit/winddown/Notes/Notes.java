@@ -1,8 +1,10 @@
 package com.rharshit.winddown.Notes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rharshit.winddown.Notes.db.DBHandler;
@@ -28,8 +31,10 @@ import java.util.Random;
 public class Notes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DBHandler db;
-    private String user;
+    private static final String TAG = "Notes/Notes";
+    private String username;
+
+    private TextView tvUsername;
 
     private Context mContext;
 
@@ -42,6 +47,9 @@ public class Notes extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mContext = this;
+        Intent i = getIntent();
+        username = i.getStringExtra("username");
+        Log.d(TAG, "onCreate: "+username);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,40 +72,6 @@ public class Notes extends AppCompatActivity
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-
-        init();
-
-        getUsers();
-        createUser(randomString(), randomString());
-    }
-
-    private String randomString() {
-        byte[] array = new byte[7];
-        new Random().nextBytes(array);
-        return new String(array, Charset.forName("UTF-8"));
-    }
-
-    private void createUser(String u, String p) {
-        boolean res = db.insertUser(u, p);
-        if(res){
-            Toast.makeText(mContext,
-                    "Created new user", Toast.LENGTH_SHORT).show();
-            user = u;
-        } else {
-            Toast.makeText(mContext,
-                    "New user failed", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void getUsers(){
-        Cursor users = db.getAllUsernames();
-        while(users.moveToNext()){
-            Log.d("Notes", "getUsers: " + users.getString(0));
-        }
-    }
-
-    private void init() {
-        db = new DBHandler(this);
     }
 
     @Override
@@ -114,6 +88,8 @@ public class Notes extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.notes, menu);
+        tvUsername = findViewById(R.id.notes_nav_header_title);
+        tvUsername.setText(username);
         return true;
     }
 
@@ -125,7 +101,8 @@ public class Notes extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            finish();
             return true;
         }
 
