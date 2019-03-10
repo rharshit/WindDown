@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.rharshit.winddown.R;
+import com.rharshit.winddown.Util.Theme;
 
 public class NewSmsActivity extends AppCompatActivity{
 
@@ -16,6 +17,7 @@ public class NewSmsActivity extends AppCompatActivity{
     Button send_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_new);
 
