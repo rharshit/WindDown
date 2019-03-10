@@ -151,12 +151,12 @@ class SingleAlbumAdapter extends BaseAdapter {
         }
         holder.galleryImage.setId(position);
 
-        HashMap < String, String > song = new HashMap < String, String > ();
-        song = data.get(position);
+        HashMap < String, String > pics = new HashMap < String, String > ();
+        pics = data.get(position);
         try {
 
             Glide.with(activity)
-                    .load(new File(song.get(Function.KEY_PATH))) // Uri of the picture
+                    .load(new File(pics.get(Function.KEY_PATH))) // Uri of the picture
                     .into(holder.galleryImage);
 
 
