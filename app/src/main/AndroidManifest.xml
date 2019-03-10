@@ -43,14 +43,10 @@
 
         <activity android:name=".Gallery.GalleryPreview"
             android:configChanges="orientation|screenSize"/>
-        <!--   <activity android:name=".Messages.NewSmsActivity"/>
+         <activity android:name=".Messages.NewSmsActivity"/>
            <activity android:name=".Messages.Chat"/>
-
-   <activity android:name=".AlbumActivity"
-               android:configChanges="orientation|screenSize"/>
-           <activity android:name=".GalleryPreview"
-               android:configChanges="orientation|screenSize"/>
-           -->
+        <!--
+                  -->
         <service
             android:name=".Util.NotificationListener"
             android:label="@string/service_name"
