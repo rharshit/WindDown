@@ -12,6 +12,7 @@
         android:horizontalSpacing="12dp"
         android:verticalSpacing="12dp"
         android:gravity="center"
+        android:clipToPadding="false"
         android:stretchMode="columnWidth"
         android:background="#ffffff">
     </GridView>
