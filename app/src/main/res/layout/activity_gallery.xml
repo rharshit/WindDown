@@ -33,7 +33,7 @@
         android:gravity="center"
         android:clipToPadding="false"
         android:stretchMode="columnWidth"
-        android:background="#ffffff">
+        android:background="?attr/colorPrimaryDark">
     </GridView></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
