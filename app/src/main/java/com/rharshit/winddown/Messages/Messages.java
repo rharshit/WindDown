@@ -208,7 +208,6 @@ public class Messages extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         String[] PERMISSIONS = {Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS,
                 Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
         if(!Function.hasPermissions(this, PERMISSIONS)){
