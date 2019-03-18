@@ -14,12 +14,16 @@ import com.rharshit.winddown.R;
 public class Blur {
     private static float SCALE = 0.50f;
 
-    public static Bitmap transform(Context context, Bitmap source, float radius) {
-        float dimen = context.getResources().getDimension(R.dimen.notification_icon_dimen);
-        float dimenBlur = context.getResources().getDimension(R.dimen.notification_icon_blur_dimen);
+    public static Bitmap transform(Context context, Bitmap source, float radius,
+                                   float dimen, float dimenBlur) {
+        return transform(context, source, radius, dimen, dimen, dimenBlur, dimenBlur);
+    }
+
+    public static Bitmap transform(Context context, Bitmap source, float radius,
+                                   float dimenX, float dimenY, float dimenBlurX, float dimenBlurY) {
         Bitmap sourceBitmap = Bitmap.createScaledBitmap(source,
-                (int) (dimen*SCALE),
-                (int) (dimen*SCALE), false);
+                (int) (dimenX*SCALE),
+                (int) (dimenY*SCALE), false);
 
         Bitmap blurredBitmap;
         blurredBitmap = Bitmap.createBitmap(sourceBitmap);
@@ -40,13 +44,18 @@ public class Blur {
         output.copyTo(blurredBitmap);
         source.recycle();
 
-        return Bitmap.createScaledBitmap(blurredBitmap, (int) (dimenBlur + 2*radius),
-                (int) (dimenBlur + 2*radius), false);
+        return Bitmap.createScaledBitmap(blurredBitmap, (int) (dimenBlurX + 2*radius),
+                (int) (dimenBlurY + 2*radius), false);
     }
 
-    public static Bitmap transform(Context context, Drawable source, float radius) {
-        float dimen = context.getResources().getDimension(R.dimen.notification_icon_dimen);
-        return transform(context, convertToBitmap(source, (int) dimen, (int) dimen, radius), radius);
+    public static Bitmap transform(Context context, Drawable source, float radius,
+                                   float dimenX, float dimenY, float dimenBLurX, float dimenBLurY) {
+        return transform(context, convertToBitmap(source, (int) dimenX, (int) dimenY, radius),
+                radius, dimenX, dimenY, dimenBLurX, dimenBLurY);
+    }
+
+    public static Bitmap transform(Context context, Drawable source, float radius, float dimen, float dimenBLur) {
+        return transform(context, convertToBitmap(source, (int) dimen, (int) dimen, radius), radius, dimen, dimen, dimenBLur, dimenBLur);
     }
 
     public static Bitmap convertToBitmap(Drawable drawable, int widthPixels, int heightPixels, float radius) {

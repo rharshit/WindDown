@@ -70,7 +70,7 @@ public class NotificationView extends LinearLayout {
 
         if(icon!=null){
             ivIcon.setImageDrawable(icon);
-            ivIconBlur.setImageBitmap(Blur.transform(context, icon, radius));
+            ivIconBlur.setImageBitmap(Blur.transform(context, icon, radius, dimen, dimenBlur));
         } else {
             Log.e(TAG, "NotificationView: NULL Icon");
         }
