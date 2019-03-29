@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -30,6 +31,7 @@
         <activity android:name=".Messages.Messages" />
         <activity android:name=".Contacts.Contacts" />
         <activity android:name=".Phone.Phone" />
+        <activity android:name=".Weather.WeatherActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
