@@ -37,6 +37,7 @@ import com.rharshit.winddown.UI.NotificationView;
 import com.rharshit.winddown.UI.Scroll;
 import com.rharshit.winddown.Util.Notification;
 import com.rharshit.winddown.Util.Theme;
+import com.rharshit.winddown.Weather.Weather;
 
 import java.util.ArrayList;
 
@@ -240,6 +241,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Music.class);
+                        startActivity(i);
+                    }
+                })
+        );
+        llScroll.addView(
+                new AppIcon(this, vWidth, vHeight,
+                        getResources().getDrawable(R.drawable.ic_weather), "Weather", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mContext, Weather.class);
                         startActivity(i);
                     }
                 })

@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
-        <activity android:name=".Notes.Signup"></activity>
+        <activity android:name=".Weather.Weather"></activity>
+        <activity android:name=".Notes.Signup" />
         <activity android:name=".Notes.Login" />
         <activity
             android:name=".Notes.Notes"
@@ -38,15 +39,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Gallery.AlbumActivity"
-            android:configChanges="orientation|screenSize"/>
-
-        <activity android:name=".Gallery.GalleryPreview"
-            android:configChanges="orientation|screenSize"/>
-         <activity android:name=".Messages.NewSmsActivity"/>
-           <activity android:name=".Messages.Chat"/>
-        <!--
-                  -->
+        <activity
+            android:name=".Gallery.AlbumActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".Gallery.GalleryPreview"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".Messages.NewSmsActivity" />
+        <activity android:name=".Messages.Chat" />
+        <!--   -->
         <service
             android:name=".Util.NotificationListener"
             android:label="@string/service_name"
