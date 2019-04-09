@@ -29,7 +29,6 @@ import com.rharshit.winddown.Gallery.Gallery;
 import com.rharshit.winddown.Messages.Messages;
 import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Notes.Login;
-import com.rharshit.winddown.Notes.Notes;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
 import com.rharshit.winddown.UI.DateTime;

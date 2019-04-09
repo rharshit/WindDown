@@ -78,7 +78,7 @@ public class Gallery extends AppCompatActivity {
         }
 
         protected String doInBackground(String... args) {
-            String xml = "";
+            String xml  = "";
 
             String path = null;
             String album = null;
