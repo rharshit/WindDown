@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        showNotificaitons = false;
+        showNotificaitons = true;
 
         hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
