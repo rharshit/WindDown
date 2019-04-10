@@ -68,19 +68,20 @@ public class Contacts extends AppCompatActivity {
                 String s=search.getText().toString().trim();
                 if(s.isEmpty())
                 {
-                    arrayList.clear();
                     loadContactTask1 = new LoadContacts();
                     loadContactTask1.execute();
                 }
                 else {
+                    arrayList.clear();
                     arrayList1.clear();
+                    loadContacts();
                     for (int i=0;i<arrayList.size();i++)
                     {
                         if(arrayList.get( i ).contact_name.toLowerCase().contains( s.toLowerCase() )||arrayList.get( i ).contact_number.contains( (s) )) {
                             arrayList1.add( arrayList.get( i ) );
                         }
                     }
-                    loadContacts();
+
                     Contact_List_Adapter adapter1=new Contact_List_Adapter( Contacts.this,arrayList1 );
                     list_contacts.setAdapter( adapter1 );
 

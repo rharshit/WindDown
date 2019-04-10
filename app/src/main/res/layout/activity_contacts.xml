@@ -27,7 +27,7 @@
     <EditText
         android:layout_width="300dp"
         android:id="@+id/search_name"
-        android:hint="Search contact name/number"
+        android:hint="Search "
         android:layout_height="wrap_content" />
     <ImageButton
         android:layout_width="match_parent"
