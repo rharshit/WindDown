@@ -36,9 +36,9 @@
         android:layout_height="wrap_content"
     android:layout_gravity="center"
         android:layout_marginTop="200dp"
-        android:src="@drawable/ic_call_green"
+        android:src="@drawable/ic_call_black_241dp"
         android:id="@+id/placecall"
-        android:background="#fff"
+        android:background="@android:color/transparent"
 
         />
 </LinearLayout>
