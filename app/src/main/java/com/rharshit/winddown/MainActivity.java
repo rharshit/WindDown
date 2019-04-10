@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int vHeight;
     private int vWidth;
-
     private int nChild;
 
     private void init(){

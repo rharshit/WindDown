@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,8 +46,11 @@ public class Contacts extends AppCompatActivity {
     LinearLayout Load_Contacts;
     ListView list_contacts;
     LoadContacts loadContactTask;
-
+    LoadContacts loadContactTask1;
+    EditText search;
+    ImageButton search_img;
     ArrayList<Android_Contacts> arrayList =new ArrayList<Android_Contacts>(  );
+    ArrayList<Android_Contacts> arrayList1 =new ArrayList<Android_Contacts>(  );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +58,42 @@ public class Contacts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         list_contacts=(ListView)findViewById( R.id.list_contacts );
-         Load_Contacts=(LinearLayout)findViewById( R.id.ll1 );
+        search=(EditText)findViewById( R.id.search_name );
+        search_img=(ImageButton)findViewById( R.id.search_img );
+        search_img.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String s=search.getText().toString().trim();
+                if(s.isEmpty())
+                {
+                    arrayList.clear();
+                    loadContactTask1 = new LoadContacts();
+                    loadContactTask1.execute();
+                }
+                else {
+                    arrayList1.clear();
+                    for (int i=0;i<arrayList.size();i++)
+                    {
+                        if(arrayList.get( i ).contact_name.toLowerCase().contains( s.toLowerCase() )||arrayList.get( i ).contact_number.contains( (s) ))
+                            arrayList1.add( arrayList.get( i ) );
+
+                    }
+                    loadContacts();
+                    Contact_List_Adapter adapter1=new Contact_List_Adapter( Contacts.this,arrayList1 );
+                    list_contacts.setAdapter( adapter1 );
+
+                }
+
+
+                }
+
+        } );
         String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
         if(!Function.hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_KEY);
+
+
         }
-Load_Contacts.setOnClickListener( new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        loadContacts();
-    }
-} );
 
 }
 class LoadContacts extends AsyncTask<String,Void,String>{
@@ -77,28 +106,9 @@ class LoadContacts extends AsyncTask<String,Void,String>{
     @Override
     protected String doInBackground(String... strings) {
         String xml  = "";
-        ContentResolver contentResolver=getContentResolver();
-        Cursor cursor=contentResolver.query( ContactsContract.Contacts.CONTENT_URI,null,null,null,null );
-        if(cursor.getCount()>0)
-        {
-            while (cursor.moveToNext()) {
-                Android_Contacts android_contacts=new Android_Contacts();
-                android_contacts.contact_id= cursor.getString( cursor.getColumnIndex( ContactsContract.Contacts._ID ) );
-                android_contacts.contact_name = cursor.getString( cursor.getColumnIndex( ContactsContract.Contacts.DISPLAY_NAME ) );
-                int hasPhoneNumber = Integer.parseInt( cursor.getString( cursor.getColumnIndex( ContactsContract.Contacts.HAS_PHONE_NUMBER ) ) );
-                if (hasPhoneNumber > 0) {
-                    Cursor cursor2 = contentResolver.query( ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{android_contacts.contact_id}, null );
-                    while (cursor2.moveToNext()) {
-                        android_contacts.contact_number = cursor2.getString( cursor2.getColumnIndex( ContactsContract.CommonDataKinds.Phone.NUMBER ) );
-                        //builder.append( "Contact:" ).append( name ).append( ",Number:" ).append( PhoneNumber ).append( "\n\n" );
-                    }
-                    cursor2.close();
-                }
-                arrayList.add( android_contacts );
-            }
-        }
-        cursor.close();
+        loadContacts();
         return xml;    }
+
 
     @Override
     protected void onPostExecute(String s) {
@@ -107,15 +117,8 @@ class LoadContacts extends AsyncTask<String,Void,String>{
     }
 
 }
-
-
-    public class Android_Contacts{
-        public String contact_name="";
-        public String contact_number="";
-        public String contact_id="";
-    }
-
-    private void loadContacts() {
+    public void loadContacts()
+    {
         ContentResolver contentResolver=getContentResolver();
         Cursor cursor=contentResolver.query( ContactsContract.Contacts.CONTENT_URI,null,null,null,null );
         if(cursor.getCount()>0)
@@ -137,7 +140,13 @@ class LoadContacts extends AsyncTask<String,Void,String>{
             }
         }
         cursor.close();
+    }
 
+
+    public class Android_Contacts{
+        public String contact_name="";
+        public String contact_number="";
+        public String contact_id="";
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
