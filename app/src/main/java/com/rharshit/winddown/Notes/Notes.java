@@ -85,6 +85,12 @@ public class Notes extends AppCompatActivity
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateList();
+    }
+
     private void populateList() {
         NotesAdapter adapter = new NotesAdapter(mContext, getNotes());
         lvNotes.setAdapter(adapter);
