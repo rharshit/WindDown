@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class Notes extends AppCompatActivity
     private String username;
 
     private TextView tvUsername;
+    private ListView lvNotes;
 
     private Context mContext;
 
@@ -48,11 +50,15 @@ public class Notes extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mContext = this;
+
+        lvNotes = findViewById(R.id.notes_list);
+
         Intent i = getIntent();
         username = i.getStringExtra("username");
         Log.d(TAG, "onCreate: "+username);
 
-        getNotes();
+        populateList();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +82,11 @@ public class Notes extends AppCompatActivity
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+    }
+
+    private void populateList() {
+        NotesAdapter adapter = new NotesAdapter(mContext, getNotes());
+        lvNotes.setAdapter(adapter);
     }
 
     @Override
