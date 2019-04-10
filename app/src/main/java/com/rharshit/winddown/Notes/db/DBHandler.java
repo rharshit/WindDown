@@ -25,6 +25,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String NOTES_USERNAME = "USERNAME";
     public static final String NOTES_TITLE = "TITLE";
     public static final String NOTES_TEXT = "TEXT";
+    public static final String NOTES_BOOK = "BOOK";
 
     public DBHandler(Context context) {
         super(context, DB_NAME, null, 1);
@@ -39,7 +40,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 NOTES_USERNAME + " TEXT, " +
                 NOTES_TITLE + " TEXT, " +
-                NOTES_TEXT + " TEXT)";
+                NOTES_TEXT + " TEXT, " +
+                NOTES_BOOK + "TEXT)";
         Log.d(TAG, "onCreate: " + query);
         db.execSQL(query);
 
