@@ -39,6 +39,8 @@ import com.rharshit.winddown.Util.Theme;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class Contacts extends AppCompatActivity {
@@ -74,13 +76,14 @@ public class Contacts extends AppCompatActivity {
                     arrayList1.clear();
                     for (int i=0;i<arrayList.size();i++)
                     {
-                        if(arrayList.get( i ).contact_name.toLowerCase().contains( s.toLowerCase() )||arrayList.get( i ).contact_number.contains( (s) ))
+                        if(arrayList.get( i ).contact_name.toLowerCase().contains( s.toLowerCase() )||arrayList.get( i ).contact_number.contains( (s) )) {
                             arrayList1.add( arrayList.get( i ) );
-
+                        }
                     }
                     loadContacts();
                     Contact_List_Adapter adapter1=new Contact_List_Adapter( Contacts.this,arrayList1 );
                     list_contacts.setAdapter( adapter1 );
+
 
                 }
 
@@ -96,6 +99,13 @@ public class Contacts extends AppCompatActivity {
         }
 
 }
+    public class NameSorter implements Comparator<Android_Contacts>
+    {
+        @Override
+        public int compare(Android_Contacts o1, Android_Contacts o2) {
+            return o1.contact_name.compareToIgnoreCase(o2.contact_name);
+        }
+    }
 class LoadContacts extends AsyncTask<String,Void,String>{
     @Override
     protected void onPreExecute() {
@@ -173,6 +183,7 @@ class LoadContacts extends AsyncTask<String,Void,String>{
             loadContactTask.execute();
         }
 
+
     }
 
         public class Contact_List_Adapter extends BaseAdapter{
@@ -181,6 +192,7 @@ class LoadContacts extends AsyncTask<String,Void,String>{
         public Contact_List_Adapter(Activity activity, ArrayList<Android_Contacts> arrayList) {
             this.activity=activity;
             this.arrayList=arrayList;
+            arrayList.sort( new NameSorter() );
         }
 
         @Override
