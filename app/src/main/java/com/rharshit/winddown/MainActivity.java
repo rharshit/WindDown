@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView scrollL;
     private ImageView scrollR;
 
+    private boolean showNotificaitons;
+
     private int vHeight;
     private int vWidth;
 
@@ -97,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        showNotificaitons = false;
+
         hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -128,7 +132,11 @@ public class MainActivity extends AppCompatActivity {
         tvNotificationText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                svMain.smoothScrollBy(0, llNotification.getHeight());
+                showNotificaitons = !showNotificaitons;
+                for(int i=0; i<gvNotification.getChildCount(); i++){
+                    View n = gvNotification.getChildAt(i);
+                    n.setVisibility(showNotificaitons?View.VISIBLE:View.GONE);
+                }
             }
         });
 
@@ -286,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
                 n.getPackageName() :
                 getPackageManager().getApplicationLabel(appInfo).toString();
         NotificationView notificationView = new NotificationView(mContext, n, icon, appName, ticker);
+        notificationView.setVisibility(showNotificaitons?View.VISIBLE:View.GONE);
         gvNotification.addView(notificationView, gvNotification.getChildCount());
 //        notificationView.setOnClickListener(new View.OnClickListener() {
 //            @Override
