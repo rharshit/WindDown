@@ -23,7 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rharshit.winddown.Camera.Camera;
+import com.rharshit.winddown.Camera.Main_Camera;
 import com.rharshit.winddown.Contacts.Contacts;
 import com.rharshit.winddown.Gallery.Gallery;
 import com.rharshit.winddown.Messages.Messages;
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                         getResources().getDrawable(R.drawable.ic_camera), "Camera", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(mContext, Camera.class);
+                        Intent i = new Intent(mContext, Main_Camera.class);
                         startActivity(i);
                     }
                 })
