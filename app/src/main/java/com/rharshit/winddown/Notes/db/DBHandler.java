@@ -92,4 +92,11 @@ public class DBHandler extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " +
                 TABLE_USERS, null);
     }
+
+    public static Cursor getNotes(String user){
+        String[] where = new String[]{user};
+        return db.rawQuery("SELECT " + NOTES_TITLE + ", " +
+                NOTES_TEXT + " FROM NOTES WHERE " +
+                NOTES_USERNAME+ " = ?", where);
+    }
 }

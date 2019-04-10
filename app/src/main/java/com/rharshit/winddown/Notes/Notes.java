@@ -26,6 +26,7 @@ import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Notes extends AppCompatActivity
@@ -50,6 +51,8 @@ public class Notes extends AppCompatActivity
         Intent i = getIntent();
         username = i.getStringExtra("username");
         Log.d(TAG, "onCreate: "+username);
+
+        getNotes();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -133,5 +136,18 @@ public class Notes extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private ArrayList<String[]> getNotes(){
+        ArrayList<String[]> list = new ArrayList<>();
+        Cursor c = DBHandler.getNotes(username);
+        while (c.moveToNext()){
+            String[] s = new String[]{
+                    c.getString(0),
+                    c.getString(1)
+            };
+            list.add(s);
+        }
+        return list;
     }
 }
