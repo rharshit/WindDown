@@ -25,7 +25,6 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String NOTES_USERNAME = "USERNAME";
     public static final String NOTES_TITLE = "TITLE";
     public static final String NOTES_TEXT = "TEXT";
-    public static final String NOTES_BOOK = "BOOK";
 
     public DBHandler(Context context) {
         super(context, DB_NAME, null, 1);
@@ -40,8 +39,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 NOTES_USERNAME + " TEXT, " +
                 NOTES_TITLE + " TEXT, " +
-                NOTES_TEXT + " TEXT, " +
-                NOTES_BOOK + "TEXT)";
+                NOTES_TEXT + " TEXT)";
         Log.d(TAG, "onCreate: " + query);
         db.execSQL(query);
 
@@ -63,6 +61,15 @@ public class DBHandler extends SQLiteOpenHelper {
         contentValues.put(USERS_USERNAME, username);
         contentValues.put(USERS_PASSWORD, password);
         long result = db.insert(TABLE_USERS, null, contentValues);
+        return result != -1;
+    }
+
+    public static boolean insertNote(String title, String text, String user){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NOTES_TITLE, title);
+        contentValues.put(NOTES_TEXT, text);
+        contentValues.put(NOTES_USERNAME, user);
+        long result = db.insert(TABLE_NOTES, null, contentValues);
         return result != -1;
     }
 
