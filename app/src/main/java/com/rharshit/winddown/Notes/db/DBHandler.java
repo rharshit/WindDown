@@ -73,6 +73,14 @@ public class DBHandler extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    public static boolean updateNote(String title, String text, String id){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NOTES_TITLE, title);
+        contentValues.put(NOTES_TEXT, text);
+        long result = db.update(TABLE_NOTES, contentValues, "ID="+id, null);
+        return result != -1;
+    }
+
     public static boolean getUser(String username, String password){
         Cursor users = getAllUsers();
         while (users.moveToNext()){
@@ -96,7 +104,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static Cursor getNotes(String user){
         String[] where = new String[]{user};
         return db.rawQuery("SELECT " + NOTES_TITLE + ", " +
-                NOTES_TEXT + " FROM NOTES WHERE " +
+                NOTES_TEXT + ", ID FROM NOTES WHERE " +
                 NOTES_USERNAME+ " = ?", where);
     }
 }

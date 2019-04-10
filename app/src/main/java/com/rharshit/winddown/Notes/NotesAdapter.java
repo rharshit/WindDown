@@ -38,7 +38,11 @@ public class NotesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         String[] s = list.get(position);
-        ItemNotes item = new ItemNotes(mContext, s[0], s[1]);
+        ItemNotes item = new ItemNotes(mContext, s[0], s[1], s[2]);
         return item;
+    }
+
+    public String[] getValues(int position){
+        return list.get(position);
     }
 }

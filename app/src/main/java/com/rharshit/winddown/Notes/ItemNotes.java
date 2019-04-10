@@ -13,10 +13,11 @@ public class ItemNotes extends LinearLayout {
 
     private String title;
     private String text;
+    private String id;
     private TextView tvTitle;
     private TextView tvText;
 
-    public ItemNotes(Context context, String title, String text) {
+    public ItemNotes(Context context, String title, String text, String id) {
         super(context);
 
         this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

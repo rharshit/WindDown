@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +88,19 @@ public class Notes extends AppCompatActivity
     private void populateList() {
         NotesAdapter adapter = new NotesAdapter(mContext, getNotes());
         lvNotes.setAdapter(adapter);
+        lvNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String[] val = ((NotesAdapter)lvNotes.getAdapter()).getValues(position);
+                Intent i = new Intent(mContext, TakeNotes.class);
+                i.putExtra("USER", username);
+                i.putExtra("EDIT", 1);
+                i.putExtra("TITLE", val[0]);
+                i.putExtra("TEXT", val[1]);
+                i.putExtra("ID", val[2]);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -155,7 +169,8 @@ public class Notes extends AppCompatActivity
         while (c.moveToNext()){
             String[] s = new String[]{
                     c.getString(0),
-                    c.getString(1)
+                    c.getString(1),
+                    c.getString(2)
             };
             list.add(s);
         }
