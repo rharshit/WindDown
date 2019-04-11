@@ -48,6 +48,7 @@ public class MusicList extends AppCompatActivity {
                 i.putExtra("URI", s[0]);
                 i.putExtra("NAME", s[1]);
                 i.putExtra("ALBUM", s[2]);
+                i.putExtra("ID", s[3]);
                 setResult(1, i);
                 finish();
             }
@@ -79,8 +80,9 @@ public class MusicList extends AppCompatActivity {
                     String path = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.DATA));
                     String name = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
                     String album = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-                    Log.d(TAG, "getSongList: " + path + " " + name + " " + album);
-                    String[] s = new String[] {path, name, album};
+                    String id = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
+                    Log.d(TAG, "getSongList: " + path + " " + name + " " + album + " " + id);
+                    String[] s = new String[] {path, name, album, id};
                     list.add(s);
                 }
 

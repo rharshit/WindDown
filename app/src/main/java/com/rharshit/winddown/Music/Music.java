@@ -3,10 +3,13 @@ package com.rharshit.winddown.Music;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,6 +74,7 @@ public class Music extends AppCompatActivity {
     String album;
     String name;
     String uri;
+    String id;
 
     int vWidth;
 
@@ -200,6 +204,7 @@ public class Music extends AppCompatActivity {
             uri = data.getStringExtra("URI");
             name = data.getStringExtra("NAME");
             album = data.getStringExtra("ALBUM");
+            id = data.getStringExtra("ID");
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             try {
@@ -211,7 +216,27 @@ public class Music extends AppCompatActivity {
             }
             tx4.setText(name);
             tx5.setText(album);
+            Drawable albumArt = getAlbumArt(id);
+            if(albumArt != null){
+                iv.setImageDrawable(albumArt);
+            } else {
+                iv.setImageDrawable(getDrawable(R.drawable.ic_music));
+            }
         }
+    }
+
+    private Drawable getAlbumArt(String id) {
+        Cursor cursor = getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
+                new String[] {MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART},
+                MediaStore.Audio.Albums._ID+ "=?",
+                new String[] {String.valueOf(id)},
+                null);
+
+        if (cursor.moveToFirst()) {
+            String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
+            return Drawable.createFromPath(path);
+        }
+        return null;
     }
 
     private Runnable UpdateSongTime = new Runnable() {

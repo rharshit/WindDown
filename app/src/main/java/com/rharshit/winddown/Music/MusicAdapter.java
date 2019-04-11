@@ -35,7 +35,7 @@ public class MusicAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         String[] s = list.get(position);
-        ItemMusic item = new ItemMusic(mContext, s[0], s[1], s[2]);
+        ItemMusic item = new ItemMusic(mContext, s[0], s[1], s[2], s[3]);
         return item;
     }
 

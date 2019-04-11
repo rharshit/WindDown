@@ -13,10 +13,11 @@ public class ItemMusic  extends LinearLayout {
     private String path;
     private String name;
     private String album;
+    private  String albumId;
     private TextView tvTitle;
     private TextView tvText;
 
-    public ItemMusic(Context context, String path, String name, String album) {
+    public ItemMusic(Context context, String path, String name, String album, String albumId) {
         super(context);
 
         this.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -24,6 +25,7 @@ public class ItemMusic  extends LinearLayout {
         this.path = path;
         this.name = name;
         this.album = album;
+        this.albumId = albumId;
 
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout body = (LinearLayout) layoutInflater.inflate(R.layout.item_notes, null, false);
