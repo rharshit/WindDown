@@ -3,6 +3,7 @@ package com.rharshit.winddown.Contacts;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,6 +13,8 @@ import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,48 +53,57 @@ public class Contacts extends AppCompatActivity {
     LoadContacts loadContactTask;
     LoadContacts loadContactTask1;
     EditText search;
-    ImageButton search_img;
     ArrayList<Android_Contacts> arrayList =new ArrayList<Android_Contacts>(  );
     ArrayList<Android_Contacts> arrayList1 =new ArrayList<Android_Contacts>(  );
+    private Context mContext;
+    private String TAG = "Contacts";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+        mContext = this;
+
         list_contacts=(ListView)findViewById( R.id.list_contacts );
         search=(EditText)findViewById( R.id.search_name );
-        search_img=(ImageButton)findViewById( R.id.search_img );
-        search_img.setOnClickListener( new View.OnClickListener() {
+        search.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                String s=search.getText().toString().trim();
-                if(s.isEmpty())
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String key = search.getText().toString().trim();
+                if(key.isEmpty() || key == null)
                 {
                     loadContactTask1 = new LoadContacts();
                     loadContactTask1.execute();
                 }
                 else {
+                    Log.d(TAG, "onTextChanged: " + key);
                     arrayList.clear();
                     arrayList1.clear();
                     loadContacts();
                     for (int i=0;i<arrayList.size();i++)
                     {
-                        if(arrayList.get( i ).contact_name.toLowerCase().contains( s.toLowerCase() )||arrayList.get( i ).contact_number.contains( (s) )) {
+                        if(arrayList.get( i ).contact_name.toLowerCase().contains( key.toLowerCase() )||arrayList.get( i ).contact_number.contains( (key) )) {
                             arrayList1.add( arrayList.get( i ) );
                         }
                     }
 
                     Contact_List_Adapter adapter1=new Contact_List_Adapter( Contacts.this,arrayList1 );
                     list_contacts.setAdapter( adapter1 );
-
-
                 }
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                }
+            }
+        });
 
-        } );
         String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
         if(!Function.hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_KEY);
@@ -147,7 +159,13 @@ class LoadContacts extends AsyncTask<String,Void,String>{
                     }
                     cursor2.close();
                 }
-                arrayList.add( android_contacts );
+                if(android_contacts != null){
+                    if(android_contacts.contact_name != null && !android_contacts.contact_name.isEmpty()
+                            && android_contacts.contact_number != null && !android_contacts.contact_number.isEmpty()
+                            && android_contacts.contact_id != null && !android_contacts.contact_id.isEmpty()){
+                        arrayList.add( android_contacts );
+                    }
+                }
             }
         }
         cursor.close();
