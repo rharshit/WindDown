@@ -2,12 +2,15 @@ package com.rharshit.winddown.Music;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.rharshit.winddown.R;
@@ -29,11 +32,26 @@ public class MusicList extends AppCompatActivity {
         setContentView(R.layout.activity_music_list);
         mContext = this;
 
+        setResult(0);
+
         lv = findViewById(R.id.list_music);
 
         list = new ArrayList<>();
         getSongList();
         populate();
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String[] s = ((MusicAdapter)lv.getAdapter()).getValues(position);
+                Intent i = new Intent();
+                i.putExtra("URI", s[0]);
+                i.putExtra("NAME", s[1]);
+                i.putExtra("ALBUM", s[2]);
+                setResult(1, i);
+                finish();
+            }
+        });
     }
 
     private void populate() {

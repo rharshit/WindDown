@@ -3,8 +3,11 @@ package com.rharshit.winddown.Music;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 
@@ -62,7 +66,11 @@ public class Music extends AppCompatActivity {
     private int forwardTime = 5000;
     private int backwardTime = 5000;
     private SeekBar seekbar;
-    private TextView tx1,tx2,tx3;
+    private TextView tx1,tx2,tx3, tx4, tx5;
+
+    String album;
+    String name;
+    String uri;
 
     int vWidth;
 
@@ -84,14 +92,15 @@ public class Music extends AppCompatActivity {
 
         tx1 = (TextView)findViewById(R.id.textView2);
         tx2 = (TextView)findViewById(R.id.textView3);
-        tx3 = (TextView)findViewById(R.id.textView4);
+        tx4 = (TextView)findViewById(R.id.textView4);
+        tx5 = (TextView)findViewById(R.id.textView5);
 
         arrow = findViewById(R.id.arrow_open_music_list);
         arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(mContext, MusicList.class);
-                startActivity(i);
+                startActivityForResult(i, 0);
             }
         });
 
@@ -181,6 +190,28 @@ public class Music extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 1){
+            mediaPlayer.pause();
+            uri = data.getStringExtra("URI");
+            name = data.getStringExtra("NAME");
+            album = data.getStringExtra("ALBUM");
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            try {
+                mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(uri));
+                mediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(mContext, "Error occured", Toast.LENGTH_SHORT).show();
+            }
+            tx4.setText(name);
+            tx5.setText(album);
+        }
     }
 
     private Runnable UpdateSongTime = new Runnable() {
