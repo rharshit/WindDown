@@ -1,18 +1,25 @@
 package com.rharshit.winddown.Music;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rharshit.winddown.R;
+import com.rharshit.winddown.Util.Theme;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,11 +45,15 @@ import android.support.v7.app.AppCompatActivity;
         import android.widget.Toast;
         import java.util.concurrent.TimeUnit;
 
+import static android.support.constraint.Constraints.TAG;
 
-public class Music extends Activity {
+
+public class Music extends AppCompatActivity {
     private ImageButton b1,b2,b3,b4;
     private ImageView iv;
     private MediaPlayer mediaPlayer;
+
+    private ImageView arrow;
 
     private double startTime = 0;
     private double finalTime = 0;
@@ -53,11 +64,17 @@ public class Music extends Activity {
     private SeekBar seekbar;
     private TextView tx1,tx2,tx3;
 
+    int vWidth;
+
+    private Context mContext;
+
     public static int oneTimeOnly = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
+        mContext = this;
 
         b1 = (ImageButton) findViewById(R.id.button);
         b2 = (ImageButton) findViewById(R.id.button2);
@@ -69,6 +86,21 @@ public class Music extends Activity {
         tx2 = (TextView)findViewById(R.id.textView3);
         tx3 = (TextView)findViewById(R.id.textView4);
 
+        arrow = findViewById(R.id.arrow_open_music_list);
+        arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, MusicList.class);
+                startActivity(i);
+            }
+        });
+
+        vWidth = getWindowManager(). getDefaultDisplay().getWidth();
+        ViewGroup.LayoutParams param = iv.getLayoutParams();
+        param.width = vWidth;
+        param.height = vWidth;
+
+        iv.setLayoutParams(param);
 
         mediaPlayer = MediaPlayer.create(this, R.raw.song);
         seekbar = (SeekBar)findViewById(R.id.seekBar);
@@ -163,4 +195,5 @@ public class Music extends Activity {
             seekbar.setProgress((int)startTime);
             myHandler.postDelayed(this, 100);
         }
-    };}
+    };
+}

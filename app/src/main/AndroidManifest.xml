@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
-        <activity android:name=".Notes.TakeNotes"></activity>
+        <activity android:name=".Music.MusicList"></activity>
+        <activity android:name=".Notes.TakeNotes" />
         <activity android:name=".Camera.Camera" />
         <activity android:name=".Music.Music" />
         <activity android:name=".Weather.Weather" />

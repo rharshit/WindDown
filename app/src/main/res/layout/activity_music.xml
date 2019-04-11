@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Music.Music">
 
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="400dp"
         android:scaleType="centerCrop"
-
-        android:layout_centerHorizontal="true"
+        app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/album_cover" />
 
 
@@ -22,8 +23,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginTop="20dp"
         android:text="A Sky Full of Star"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/imageView"
+        app:layout_constraintTop_toBottomOf="@id/imageView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/textView4"
 
         />
@@ -33,8 +35,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Coldplay"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/textView4"
+        app:layout_constraintTop_toBottomOf="@id/textView4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/textView5"
 
         />
@@ -45,7 +48,9 @@
         android:layout_width="match_parent"
         android:paddingVertical="20dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@id/textView5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_centerHorizontal="true"
         />
 
@@ -54,7 +59,7 @@
         android:layout_height="wrap_content"
         android:weightSum="4"
         android:paddingVertical="40dp"
-        android:layout_below="@+id/linear1"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
         android:id="@+id/linear2">
         <ImageButton
             android:id="@+id/button"
@@ -101,9 +106,7 @@
         android:layout_height="wrap_content"
         android:weightSum="2"
         android:id="@+id/linear1"
-        android:layout_alignParentLeft="true"
-
-        android:layout_below="@id/seekBar">
+        app:layout_constraintTop_toBottomOf="@id/seekBar">
 
 
         <TextView
@@ -134,5 +137,15 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/arrow_up"
+        android:id="@+id/arrow_open_music_list"/>
 
-</RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
