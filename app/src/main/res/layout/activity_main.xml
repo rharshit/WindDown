@@ -34,7 +34,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <com.rharshit.winddown.UI.Scroll
+                <HorizontalScrollView
                     android:id="@+id/hsMainScrollView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -43,31 +43,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" />
-                </com.rharshit.winddown.UI.Scroll>
+                </HorizontalScrollView>
 
-                <ImageView
-                    android:layout_width="96dp"
-                    android:layout_height="128dp"
-                    android:padding="32dp"
-                    android:paddingStart="0dp"
-                    android:src="@drawable/arrow_left"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:id="@+id/scrollLeft"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="96dp"-->
+                    <!--android:layout_height="128dp"-->
+                    <!--android:padding="32dp"-->
+                    <!--android:paddingStart="0dp"-->
+                    <!--android:src="@drawable/arrow_left"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:id="@+id/scrollLeft"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:scaleType="fitCenter"/>-->
 
-                <ImageView
-                    android:layout_width="96dp"
-                    android:layout_height="128dp"
-                    android:padding="32dp"
-                    android:paddingEnd="0dp"
-                    android:src="@drawable/arrow_right"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:id="@+id/scrollRight"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="96dp"-->
+                    <!--android:layout_height="128dp"-->
+                    <!--android:padding="32dp"-->
+                    <!--android:paddingEnd="0dp"-->
+                    <!--android:src="@drawable/arrow_right"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:id="@+id/scrollRight"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:scaleType="fitCenter"/>-->
             </RelativeLayout>
 
             <Space

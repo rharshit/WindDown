@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private static int theme = R.style.AppThemeLight;
     private TextView tvWindDown;
 
-    private Scroll hsView;
+    private HorizontalScrollView hsView;
     private LinearLayout llScroll;
     private LinearLayout llMainScroll;
     private LinearLayout llNotification;
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvNotificationText;
     private ScrollView svMain;
     private LinearLayout llDateTime;
-    private ImageView scrollL;
-    private ImageView scrollR;
+//    private ImageView scrollL;
+//    private ImageView scrollR;
 
     private int vHeight;
     private int vWidth;
@@ -82,21 +83,21 @@ public class MainActivity extends AppCompatActivity {
         tvNotificationText = findViewById(R.id.tvNotificaiton);
         svMain = findViewById(R.id.svMain);
         llDateTime = findViewById(R.id.llDateTime);
-        scrollL = findViewById(R.id.scrollLeft);
-        scrollR = findViewById(R.id.scrollRight);
+//        scrollL = findViewById(R.id.scrollLeft);
+//        scrollR = findViewById(R.id.scrollRight);
 
-        scrollL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hsView.smoothScrollBy(-vWidth, 0);
-            }
-        });
-        scrollR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hsView.smoothScrollBy(vWidth, 0);
-            }
-        });
+//        scrollL.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hsView.smoothScrollBy(-vWidth, 0);
+//            }
+//        });
+//        scrollR.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                hsView.smoothScrollBy(vWidth, 0);
+//            }
+//        });
 
         hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
@@ -159,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
         populate();
         notificationListener();
         getNotifications();
+        nChild = llScroll.getChildCount();
     }
 
     @Override
