@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:hint="Title"
-        android:inputType="textShortMessage"
-        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="textShortMessage|textCapSentences"
         app:layout_constraintEnd_toStartOf="@+id/b_notes_save"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,9 +34,9 @@
         android:layout_marginTop="8dp"
         android:gravity="top"
         android:hint="Note..."
-        android:inputType="textLongMessage|textMultiLine"
+        android:inputType="textLongMessage|textMultiLine|textCapSentences"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_notes_title"
-        app:layout_constraintVertical_bias="0"/>
+        app:layout_constraintVertical_bias="0" />
 
 </android.support.constraint.ConstraintLayout>
