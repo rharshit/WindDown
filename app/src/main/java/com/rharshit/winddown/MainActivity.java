@@ -30,7 +30,6 @@ import com.rharshit.winddown.Gallery.Gallery;
 import com.rharshit.winddown.Messages.Messages;
 import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Notes.Login;
-import com.rharshit.winddown.Notes.Notes;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
 import com.rharshit.winddown.UI.DateTime;
@@ -64,9 +63,10 @@ public class MainActivity extends AppCompatActivity {
 //    private ImageView scrollL;
 //    private ImageView scrollR;
 
+    private boolean showNotificaitons;
+
     private int vHeight;
     private int vWidth;
-
     private int nChild;
 
     private void init(){
@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+        showNotificaitons = true;
+
         hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -130,7 +132,11 @@ public class MainActivity extends AppCompatActivity {
         tvNotificationText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                svMain.smoothScrollBy(0, llNotification.getHeight());
+                showNotificaitons = !showNotificaitons;
+                for(int i=0; i<gvNotification.getChildCount(); i++){
+                    View n = gvNotification.getChildAt(i);
+                    n.setVisibility(showNotificaitons?View.VISIBLE:View.GONE);
+                }
             }
         });
 
@@ -289,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
                 n.getPackageName() :
                 getPackageManager().getApplicationLabel(appInfo).toString();
         NotificationView notificationView = new NotificationView(mContext, n, icon, appName, ticker);
+        notificationView.setVisibility(showNotificaitons?View.VISIBLE:View.GONE);
         gvNotification.addView(notificationView, gvNotification.getChildCount());
 //        notificationView.setOnClickListener(new View.OnClickListener() {
 //            @Override

@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -18,20 +20,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
-        <activity android:name=".Weather.Weather"></activity>
+        <activity android:name=".Music.MusicList"></activity>
+        <activity android:name=".Notes.TakeNotes" />
+        <activity android:name=".Camera.Camera" />
+        <activity android:name=".Music.Music" />
+        <activity android:name=".Weather.Weather" />
         <activity android:name=".Notes.Signup" />
         <activity android:name=".Notes.Login" />
         <activity
             android:name=".Notes.Notes"
             android:label="@string/title_activity_notes"
             android:theme="@style/AppThemeLight.NoActionBar" />
-        <activity android:name=".Music.Music" />
         <activity android:name=".Gallery.Gallery" />
-        <activity android:name=".Camera.Camera" />
         <activity android:name=".Messages.Messages" />
         <activity android:name=".Contacts.Contacts" />
         <activity android:name=".Phone.Phone" />
-        <activity android:name=".Weather.WeatherActivity"></activity>
+        <activity android:name=".Weather.WeatherActivity" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -48,8 +52,7 @@
             android:name=".Gallery.GalleryPreview"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".Messages.NewSmsActivity" />
-        <activity android:name=".Messages.Chat" />
-        <!--   -->
+        <activity android:name=".Messages.Chat" /> <!--  -->
         <service
             android:name=".Util.NotificationListener"
             android:label="@string/service_name"

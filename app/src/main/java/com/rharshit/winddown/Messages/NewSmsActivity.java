@@ -1,5 +1,6 @@
 package com.rharshit.winddown.Messages;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
@@ -21,9 +22,14 @@ public class NewSmsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_new);
 
+
+
         address = (EditText) findViewById(R.id.address);
         message = (EditText) findViewById(R.id.message);
         send_btn = (Button) findViewById(R.id.send_btn);
+        Intent intent=getIntent();
+        address.setText( intent.getStringExtra( "Number" ) );
+
 
 
         send_btn.setOnClickListener(new View.OnClickListener() {

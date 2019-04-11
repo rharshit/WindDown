@@ -18,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Notes extends AppCompatActivity
@@ -35,6 +38,7 @@ public class Notes extends AppCompatActivity
     private String username;
 
     private TextView tvUsername;
+    private ListView lvNotes;
 
     private Context mContext;
 
@@ -47,16 +51,23 @@ public class Notes extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mContext = this;
+
+        lvNotes = findViewById(R.id.notes_list);
+
         Intent i = getIntent();
         username = i.getStringExtra("username");
         Log.d(TAG, "onCreate: "+username);
+
+        populateList();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent i = new Intent(mContext, TakeNotes.class);
+                i.putExtra("USER", username);
+                startActivity(i);
             }
         });
 
@@ -72,6 +83,30 @@ public class Notes extends AppCompatActivity
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        populateList();
+    }
+
+    private void populateList() {
+        NotesAdapter adapter = new NotesAdapter(mContext, getNotes());
+        lvNotes.setAdapter(adapter);
+        lvNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String[] val = ((NotesAdapter)lvNotes.getAdapter()).getValues(position);
+                Intent i = new Intent(mContext, TakeNotes.class);
+                i.putExtra("USER", username);
+                i.putExtra("EDIT", 1);
+                i.putExtra("TITLE", val[0]);
+                i.putExtra("TEXT", val[1]);
+                i.putExtra("ID", val[2]);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -132,5 +167,19 @@ public class Notes extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private ArrayList<String[]> getNotes(){
+        ArrayList<String[]> list = new ArrayList<>();
+        Cursor c = DBHandler.getNotes(username);
+        while (c.moveToNext()){
+            String[] s = new String[]{
+                    c.getString(0),
+                    c.getString(1),
+                    c.getString(2)
+            };
+            list.add(s);
+        }
+        return list;
     }
 }
