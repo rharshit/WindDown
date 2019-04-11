@@ -146,6 +146,9 @@ public class Music extends AppCompatActivity {
         if (mediaPlayer == null){
             mediaPlayer = MediaPlayer.create(this, R.raw.song);
         } else {
+            tx4.setText(name);
+            tx5.setText(album);
+
             Drawable albumArt = getAlbumArt(id);
             if(albumArt != null){
                 iv.setImageDrawable(albumArt);

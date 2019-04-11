@@ -87,8 +87,10 @@
 
         <ImageButton
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
             android:background="#0000"
             android:src="@drawable/ic_replay_5_black"
             android:layout_weight="1"/>
@@ -103,8 +105,10 @@
 
         <ImageButton
             android:id="@+id/play_pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
             android:background="#0000"
             android:src="@drawable/ic_pause_black"
             android:layout_weight="1"/>
@@ -120,8 +124,10 @@
 
         <ImageButton
             android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
             android:background="#0000"
             android:src="@drawable/ic_forward"
             android:layout_weight="1"/>
