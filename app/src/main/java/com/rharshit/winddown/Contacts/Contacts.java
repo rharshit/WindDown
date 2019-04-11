@@ -14,7 +14,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,7 +68,6 @@ public class Contacts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         mContext = this;
-
         list_contacts=(ListView)findViewById( R.id.list_contacts );
         search=(EditText)findViewById( R.id.search_name );
         search.addTextChangedListener(new TextWatcher() {
@@ -78,7 +81,7 @@ public class Contacts extends AppCompatActivity {
                 String key = search.getText().toString().trim();
                 if(key.isEmpty() || key == null)
                 {
-                    Contact_List_Adapter adapter=new Contact_List_Adapter( Contacts.this,arrayList );
+                    Contact_List_Adapter adapter=new Contact_List_Adapter( Contacts.this,arrayList ,"");
                     list_contacts.setAdapter( adapter );
                 }
                 else {
@@ -87,11 +90,12 @@ public class Contacts extends AppCompatActivity {
                     for (int i=0;i<arrayList.size();i++)
                     {
                         if(arrayList.get( i ).contact_name.toLowerCase().contains( key.toLowerCase() )||arrayList.get( i ).contact_number.contains( (key) )) {
+
                             arrayList1.add( arrayList.get( i ) );
                         }
                     }
 
-                    Contact_List_Adapter adapter1=new Contact_List_Adapter( Contacts.this,arrayList1 );
+                    Contact_List_Adapter adapter1=new Contact_List_Adapter( Contacts.this,arrayList1,key );
                     list_contacts.setAdapter( adapter1 );
                 }
             }
@@ -105,8 +109,6 @@ public class Contacts extends AppCompatActivity {
         String[] PERMISSIONS = {Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
         if(!Function.hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_KEY);
-
-
         }
 
 }
@@ -133,7 +135,7 @@ class LoadContacts extends AsyncTask<String,Void,String>{
 
     @Override
     protected void onPostExecute(String s) {
-        Contact_List_Adapter adapter = new Contact_List_Adapter(Contacts.this, arrayList);
+        Contact_List_Adapter adapter = new Contact_List_Adapter(Contacts.this, arrayList,"");
         list_contacts.setAdapter( adapter );
     }
 
@@ -207,9 +209,11 @@ class LoadContacts extends AsyncTask<String,Void,String>{
         public class Contact_List_Adapter extends BaseAdapter{
         private Activity activity;
         private ArrayList<Android_Contacts> arrayList;
-        public Contact_List_Adapter(Activity activity, ArrayList<Android_Contacts> arrayList) {
+        String key;
+        public Contact_List_Adapter(Activity activity, ArrayList<Android_Contacts> arrayList,String key) {
             this.activity=activity;
             this.arrayList=arrayList;
+            this.key=key;
             arrayList.sort( new NameSorter() );
         }
 
@@ -232,9 +236,55 @@ class LoadContacts extends AsyncTask<String,Void,String>{
         public View getView(final int i, View view, ViewGroup viewGroup) {
             view=getLayoutInflater().inflate( R.layout.activity_contact_list,null );
             TextView name=(TextView)view.findViewById( R.id.contact_Name );
-            name.setText( arrayList.get( i ).contact_name );
             final TextView Number =(TextView)view.findViewById( R.id.contact_Number );
-            Number.setText( arrayList.get( i ).contact_number );
+           if(key!=""){
+               if(key.matches("[a-zA-Z]*")){
+                   Log.d( "key","alpha" );
+            SpannableStringBuilder ssb=new SpannableStringBuilder( arrayList.get( i ).contact_name );
+            ssb.setSpan(
+                    new UnderlineSpan(),
+                    arrayList.get( i ).contact_name.toLowerCase().indexOf(key.toLowerCase()),
+                    arrayList.get( i ).contact_name.toLowerCase().indexOf(key.toLowerCase() ) + String.valueOf(key).length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            name.setText( ssb );
+               Number.setText( arrayList.get( i ).contact_number );}
+                 else if(key.matches( "[0-9]*" )){
+                     Log.d("key","numeric");
+                     if(!arrayList.get(i).contact_name.toLowerCase().contains( key.toLowerCase() )){
+                   SpannableStringBuilder ssb1=new SpannableStringBuilder( arrayList.get( i ).contact_number );
+                   ssb1.setSpan(
+                           new UnderlineSpan(),
+                           arrayList.get( i ).contact_number.toLowerCase().indexOf(key.toLowerCase()),
+                           arrayList.get( i ).contact_number.toLowerCase().indexOf(key.toLowerCase() ) + String.valueOf(key).length(),
+                           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                   );
+                   name.setText( arrayList.get( i ).contact_name );
+                   Number.setText( ssb1 );}
+                   else {
+                         SpannableStringBuilder ssb1=new SpannableStringBuilder( arrayList.get( i ).contact_name );
+                         ssb1.setSpan(
+                                 new UnderlineSpan(),
+                                 arrayList.get( i ).contact_name.toLowerCase().indexOf(key.toLowerCase()),
+                                 arrayList.get( i ).contact_name.toLowerCase().indexOf(key.toLowerCase() ) + String.valueOf(key).length(),
+                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                         );
+                       name.setText( ssb1);
+                       Number.setText( arrayList.get(i).contact_number );
+                     }
+               }
+               else
+               {
+                   name.setText( arrayList.get( i ).contact_name );
+                   Number.setText( arrayList.get( i ).contact_number );
+               }
+           }
+            else {
+                name.setText( arrayList.get( i ).contact_name );
+               Number.setText( arrayList.get( i ).contact_number );
+
+           }
+
 
             ImageButton call=(ImageButton)view.findViewById( R.id.contacts_call );
             ImageButton mess=(ImageButton)view.findViewById( R.id.contacts_message );
