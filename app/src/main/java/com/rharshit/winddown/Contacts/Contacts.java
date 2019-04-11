@@ -78,14 +78,12 @@ public class Contacts extends AppCompatActivity {
                 String key = search.getText().toString().trim();
                 if(key.isEmpty() || key == null)
                 {
-                    loadContactTask1 = new LoadContacts();
-                    loadContactTask1.execute();
+                    Contact_List_Adapter adapter=new Contact_List_Adapter( Contacts.this,arrayList );
+                    list_contacts.setAdapter( adapter );
                 }
                 else {
                     Log.d(TAG, "onTextChanged: " + key);
-                    arrayList.clear();
                     arrayList1.clear();
-                    loadContacts();
                     for (int i=0;i<arrayList.size();i++)
                     {
                         if(arrayList.get( i ).contact_name.toLowerCase().contains( key.toLowerCase() )||arrayList.get( i ).contact_number.contains( (key) )) {
@@ -142,6 +140,7 @@ class LoadContacts extends AsyncTask<String,Void,String>{
 }
     public void loadContacts()
     {
+
         ContentResolver contentResolver=getContentResolver();
         Cursor cursor=contentResolver.query( ContactsContract.Contacts.CONTENT_URI,null,null,null,null );
         if(cursor.getCount()>0)
