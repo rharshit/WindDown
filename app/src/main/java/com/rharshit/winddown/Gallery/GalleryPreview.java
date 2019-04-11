@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.rharshit.winddown.R;
+import com.rharshit.winddown.Util.Theme;
 
 import java.io.File;
 
@@ -16,6 +17,7 @@ public class GalleryPreview extends AppCompatActivity {
     String path;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         //getSupportActionBar().hide();
         setContentView(R.layout.gallery_preview);

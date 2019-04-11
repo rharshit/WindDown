@@ -21,6 +21,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.rharshit.winddown.R;
+import com.rharshit.winddown.Util.Theme;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class AlbumActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_album);
 
