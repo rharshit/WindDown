@@ -2,10 +2,14 @@ package com.rharshit.winddown.Phone;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -16,9 +20,11 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rharshit.winddown.R;
@@ -28,8 +34,10 @@ import java.util.ArrayList;
 
 public class Phone extends AppCompatActivity {
 private static final int REQUEST_CALL=1;
-private EditText mEditTextNumber;
+//private EditText mEditTextNumber;
+private TextView tvPhone;
 private ImageButton f;
+private ImageButton del;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getTheme());
@@ -37,8 +45,8 @@ private ImageButton f;
         Intent intent=getIntent();
 
         setContentView(R.layout.activity_phone);
-        mEditTextNumber=findViewById( R.id.phone );
-        mEditTextNumber.setText( intent.getStringExtra( "Number" ) );
+        tvPhone=findViewById( R.id.phone );
+        tvPhone.setText( intent.getStringExtra( "Number" ) );
         f=findViewById( R.id.placecall );
         f.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -47,10 +55,26 @@ private ImageButton f;
             }
         } );
 
+        del = findViewById(R.id.del);
+        del.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                tvPhone.setText("");
+                Vibrator v1 = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    v1.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    //deprecated in API 26
+                    v1.vibrate(100);
+                }
+                return false;
+            }
+        });
+
     }
 
     private void makePhoneCall() {
-        String number=mEditTextNumber.getText().toString();
+        String number=tvPhone.getText().toString();
         if(number.trim().length()>0)
         {
             if(ContextCompat.checkSelfPermission( Phone.this, Manifest.permission.CALL_PHONE )!= PackageManager.PERMISSION_GRANTED){
@@ -76,5 +100,26 @@ private ImageButton f;
            }
        }
         super.onRequestPermissionsResult( requestCode, permissions, grantResults );
+    }
+
+    public void btnPress(View view) {
+        if(view.getId() == R.id.del){
+            String s = tvPhone.getText().toString();
+            if(!s.equals("")){
+                s = s.substring(0, s.length()-1);
+                tvPhone.setText(s);
+            }
+        } else {
+            Button b = (Button) view;
+            String s = b.getText().toString();
+            tvPhone.setText(tvPhone.getText() + s);
+        }
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            //deprecated in API 26
+            v.vibrate(50);
+        }
     }
 }
