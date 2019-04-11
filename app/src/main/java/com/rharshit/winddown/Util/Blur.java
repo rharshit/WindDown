@@ -21,9 +21,13 @@ public class Blur {
 
     public static Bitmap transform(Context context, Bitmap source, float radius,
                                    float dimenX, float dimenY, float dimenBlurX, float dimenBlurY) {
+        return transform(context, source, radius, dimenX, dimenY, dimenBlurX, dimenBlurY, SCALE);
+    }
+    public static Bitmap transform(Context context, Bitmap source, float radius,
+                                   float dimenX, float dimenY, float dimenBlurX, float dimenBlurY, float s) {
         Bitmap sourceBitmap = Bitmap.createScaledBitmap(source,
-                (int) (dimenX*SCALE),
-                (int) (dimenY*SCALE), false);
+                (int) (dimenX*s),
+                (int) (dimenY*s), false);
 
         Bitmap blurredBitmap;
         blurredBitmap = Bitmap.createBitmap(sourceBitmap);
@@ -56,6 +60,10 @@ public class Blur {
 
     public static Bitmap transform(Context context, Drawable source, float radius, float dimen, float dimenBLur) {
         return transform(context, convertToBitmap(source, (int) dimen, (int) dimen, radius), radius, dimen, dimen, dimenBLur, dimenBLur);
+    }
+
+    public static Bitmap transform(Context context, Drawable source, float radius, float dimen, float dimenBLur, float s) {
+        return transform(context, convertToBitmap(source, (int) dimen, (int) dimen, radius), radius, dimen, dimen, dimenBLur, dimenBLur, s);
     }
 
     public static Bitmap convertToBitmap(Drawable drawable, int widthPixels, int heightPixels, float radius) {

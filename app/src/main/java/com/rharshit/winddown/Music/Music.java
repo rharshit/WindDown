@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rharshit.winddown.R;
+import com.rharshit.winddown.Util.Blur;
 import com.rharshit.winddown.Util.Theme;
 
 import java.io.IOException;
@@ -56,9 +57,14 @@ import static android.support.constraint.Constraints.TAG;
 
 
 public class Music extends AppCompatActivity {
-    private ImageButton b1,b2,b3,b4;
+    private ImageButton b1,b4;
     private ImageView iv;
-    private MediaPlayer mediaPlayer;
+    private ImageView ivB;
+    private RelativeLayout rl;
+
+    private static MediaPlayer mediaPlayer;
+    private static boolean isPlaying;
+    private static ImageButton bPlayPause;
 
     private ImageView arrow;
 
@@ -71,10 +77,10 @@ public class Music extends AppCompatActivity {
     private SeekBar seekbar;
     private TextView tx1,tx2,tx3, tx4, tx5;
 
-    String album;
-    String name;
-    String uri;
-    String id;
+    private static String album;
+    private static String name;
+    private static String uri;
+    private static String id;
 
     int vWidth;
 
@@ -89,10 +95,14 @@ public class Music extends AppCompatActivity {
         mContext = this;
 
         b1 = (ImageButton) findViewById(R.id.button);
-        b2 = (ImageButton) findViewById(R.id.button2);
-        b3 = (ImageButton)findViewById(R.id.button3);
+//        b2 = (ImageButton) findViewById(R.id.button2);
+//        b3 = (ImageButton)findViewById(R.id.button3);
         b4 = (ImageButton)findViewById(R.id.button4);
+        bPlayPause = findViewById(R.id.play_pause);
+
         iv = (ImageView)findViewById(R.id.imageView);
+        ivB = (ImageView)findViewById(R.id.imageViewBlur);
+        rl = findViewById(R.id.rl_music_album_art);
 
         tx1 = (TextView)findViewById(R.id.textView2);
         tx2 = (TextView)findViewById(R.id.textView3);
@@ -109,61 +119,114 @@ public class Music extends AppCompatActivity {
         });
 
         vWidth = getWindowManager(). getDefaultDisplay().getWidth();
-        ViewGroup.LayoutParams param = iv.getLayoutParams();
+
+        ViewGroup.LayoutParams param = ivB.getLayoutParams();
         param.width = vWidth;
         param.height = vWidth;
 
-        iv.setLayoutParams(param);
+        ViewGroup.LayoutParams param2 = iv.getLayoutParams();
+        param2.width = (int) (vWidth*0.75);
+        param2.height = (int) (vWidth*0.75);
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.song);
+        ivB.setLayoutParams(param);
+        iv.setLayoutParams(param2);
+
+        Drawable art = ivB.getDrawable();
+
+        float s = (float) art.getIntrinsicHeight()/vWidth;
+        if(s>1){
+            s = 1/s;
+        }
+        Log.d(TAG, "onCreate: " + s);
+
+        ivB.setImageBitmap(Blur.transform(mContext, art, 25,
+                art.getIntrinsicHeight(), vWidth,
+                s));
+
+        if (mediaPlayer == null){
+            mediaPlayer = MediaPlayer.create(this, R.raw.song);
+        } else {
+            Drawable albumArt = getAlbumArt(id);
+            if(albumArt != null){
+                iv.setImageDrawable(albumArt);
+                s = (float) albumArt.getIntrinsicHeight()/vWidth;
+                if(s>1){
+                    s = 1/s;
+                }
+                Log.d(TAG, "onActivityResult: " + s);
+
+                ivB.setImageBitmap(Blur.transform(mContext, albumArt, 25,
+                        albumArt.getIntrinsicHeight(), vWidth,
+                        s));
+            } else {
+                iv.setImageDrawable(getDrawable(R.drawable.ic_music));
+                ivB.setImageDrawable(getDrawable(android.R.color.transparent));
+            }
+        }
+        isPlaying = mediaPlayer.isPlaying();
         seekbar = (SeekBar)findViewById(R.id.seekBar);
         seekbar.setClickable(false);
-        b2.setEnabled(false);
 
-        b3.setOnClickListener(new View.OnClickListener() {
+        bPlayPause.setImageDrawable(getDrawable(isPlaying
+                ? R.drawable.ic_pause_black
+                : R.drawable.ic_play_arrow_black));
+
+        bPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Playing sound",Toast.LENGTH_SHORT).show();
-                mediaPlayer.start();
-
-                finalTime = mediaPlayer.getDuration();
-                startTime = mediaPlayer.getCurrentPosition();
-
-                if (oneTimeOnly == 0) {
-                    seekbar.setMax((int) finalTime);
-                    oneTimeOnly = 1;
+                if(isPlaying){
+                    pauseSong();
+                } else {
+                    playSong();
                 }
-
-                tx2.setText(String.format("%d min, %d sec",
-                        TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
-                        TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
-                                        finalTime)))
-                );
-
-                tx1.setText(String.format("%d min, %d sec",
-                        TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-                        TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
-                                        startTime)))
-                );
-
-                seekbar.setProgress((int)startTime);
-                myHandler.postDelayed(UpdateSongTime,100);
-                b2.setEnabled(true);
-                b3.setEnabled(false);
+                updateIsPlaying();
             }
         });
 
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Pausing sound",Toast.LENGTH_SHORT).show();
-                mediaPlayer.pause();
-                b2.setEnabled(false);
-                b3.setEnabled(true);
-            }
-        });
+//        b3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(), "Playing sound",Toast.LENGTH_SHORT).show();
+//                mediaPlayer.start();
+//
+//                finalTime = mediaPlayer.getDuration();
+//                startTime = mediaPlayer.getCurrentPosition();
+//
+//                if (oneTimeOnly == 0) {
+//                    seekbar.setMax((int) finalTime);
+//                    oneTimeOnly = 1;
+//                }
+//
+//                tx2.setText(String.format("%d:%d",
+//                        TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
+//                        TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
+//                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
+//                                        finalTime)))
+//                );
+//
+//                tx1.setText(String.format("%d:%d",
+//                        TimeUnit.MILLISECONDS.toMinutes((long) startTime),
+//                        TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+//                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
+//                                        startTime)))
+//                );
+//
+//                seekbar.setProgress((int)startTime);
+//                myHandler.postDelayed(UpdateSongTime,100);
+//                b2.setEnabled(true);
+//                b3.setEnabled(false);
+//            }
+//        });
+//
+//        b2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(), "Pausing sound",Toast.LENGTH_SHORT).show();
+//                mediaPlayer.pause();
+//                b2.setEnabled(false);
+//                b3.setEnabled(true);
+//            }
+//        });
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,11 +311,55 @@ public class Music extends AppCompatActivity {
 
     }
 
+    private void updateIsPlaying() {
+        isPlaying = mediaPlayer.isPlaying();
+        bPlayPause.setImageDrawable(getDrawable(isPlaying
+                ? R.drawable.ic_pause_black
+                : R.drawable.ic_play_arrow_black));
+    }
+
+    private void playSong() {
+        Toast.makeText(getApplicationContext(), "Playing sound",Toast.LENGTH_SHORT).show();
+        mediaPlayer.start();
+
+        finalTime = mediaPlayer.getDuration();
+        startTime = mediaPlayer.getCurrentPosition();
+
+        if (oneTimeOnly == 0) {
+            seekbar.setMax((int) finalTime);
+            oneTimeOnly = 1;
+        }
+
+        tx2.setText(String.format("%d:%d",
+                TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
+                TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
+                                finalTime)))
+        );
+
+        tx1.setText(String.format("%d:%d",
+                TimeUnit.MILLISECONDS.toMinutes((long) startTime),
+                TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
+                                startTime)))
+        );
+
+        seekbar.setProgress((int)startTime);
+        myHandler.postDelayed(UpdateSongTime,100);
+    }
+
+    private void pauseSong() {
+        Toast.makeText(getApplicationContext(), "Pausing sound",Toast.LENGTH_SHORT).show();
+        mediaPlayer.pause();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 1){
-            mediaPlayer.pause();
+            pauseSong();
+            updateIsPlaying();
+
             uri = data.getStringExtra("URI");
             name = data.getStringExtra("NAME");
             album = data.getStringExtra("ALBUM");
@@ -268,12 +375,25 @@ public class Music extends AppCompatActivity {
             }
             tx4.setText(name);
             tx5.setText(album);
+
             Drawable albumArt = getAlbumArt(id);
             if(albumArt != null){
                 iv.setImageDrawable(albumArt);
+                float s = (float) albumArt.getIntrinsicHeight()/vWidth;
+                if(s>1){
+                    s = 1/s;
+                }
+                Log.d(TAG, "onActivityResult: " + s);
+
+                ivB.setImageBitmap(Blur.transform(mContext, albumArt, 25,
+                        albumArt.getIntrinsicHeight(), vWidth,
+                        s));
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
+                ivB.setImageDrawable(getDrawable(android.R.color.transparent));
             }
+            playSong();
+            updateIsPlaying();
         }
     }
 
@@ -294,7 +414,7 @@ public class Music extends AppCompatActivity {
     private Runnable UpdateSongTime = new Runnable() {
         public void run() {
             startTime = mediaPlayer.getCurrentPosition();
-            tx1.setText(String.format("%d min, %d sec",
+            tx1.setText(String.format("%d:%d",
                     TimeUnit.MILLISECONDS.toMinutes((long) startTime),
                     TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
