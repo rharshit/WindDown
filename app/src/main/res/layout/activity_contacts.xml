@@ -27,6 +27,8 @@
     <EditText
         android:layout_width="match_parent"
         android:id="@+id/search_name"
+        android:padding="16dp"
+        android:layout_margin="16dp"
         android:hint="Search "
         android:layout_height="wrap_content" />
     <!--<ImageButton-->
@@ -39,7 +41,9 @@
         android:id="@+id/list_contacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#00000000"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:divider="@android:color/transparent"
         android:dividerHeight="20dip"/>
 
 </LinearLayout>
