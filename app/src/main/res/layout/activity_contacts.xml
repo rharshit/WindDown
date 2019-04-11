@@ -44,6 +44,6 @@
         android:padding="8dp"
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
-        android:dividerHeight="20dip"/>
+        android:dividerHeight="8dp"/>
 
 </LinearLayout>

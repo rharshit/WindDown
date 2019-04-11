@@ -36,8 +36,10 @@
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="#00000000"
-                android:dividerHeight="20dip"/>
+                android:divider="@android:color/transparent"
+                android:clipToPadding="false"
+                android:padding="16dp"
+                android:dividerHeight="16dp"/>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab_new"
@@ -48,7 +50,9 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="8dp"
                 android:descendantFocusability="blocksDescendants"
-                android:src="@drawable/ic_message_black_24dp" />
+                android:background="?android:attr/background"
+                app:backgroundTint="?android:attr/background"
+                app:srcCompat="@drawable/ic_message_black"  />
 
 
             <ProgressBar
