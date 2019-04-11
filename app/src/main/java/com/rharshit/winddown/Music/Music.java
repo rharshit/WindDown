@@ -194,6 +194,58 @@ public class Music extends AppCompatActivity {
                 }
             }
         });
+
+        final TextView seekBarHint = findViewById(R.id.seekbarhint);
+
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                seekBarHint.setVisibility(View.VISIBLE);
+            }
+            int y=0;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+                if (!mediaPlayer.isPlaying()){
+                    return;
+                }
+                seekBarHint.setVisibility(View.VISIBLE);
+                startTime = mediaPlayer.getCurrentPosition();
+                seekBarHint.setText(String.format("%d:%d",
+                        TimeUnit.MILLISECONDS.toMinutes((long) startTime),
+                        TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
+                                        toMinutes((long) startTime))));
+
+
+                double percent = progress / (double) seekBar.getMax();
+                int offset = seekBar.getThumbOffset();
+                int seekWidth = seekBar.getWidth();
+                int val = (int) Math.round(percent * (seekWidth - 2 * offset));
+                int labelWidth = seekBarHint.getWidth();
+                seekBarHint.setX(offset + seekBar.getX() + val
+                        - Math.round(percent * offset)
+                        - Math.round(percent * labelWidth / 2));
+
+                if (progress > 0 && mediaPlayer != null && !mediaPlayer.isPlaying()) {
+
+
+                    Music.this.seekbar.setProgress(0);
+                }
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.seekTo(seekBar.getProgress());
+                }
+            }
+        });
+
+
     }
 
     @Override

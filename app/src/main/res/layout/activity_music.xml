@@ -54,6 +54,15 @@
         android:layout_centerHorizontal="true"
         />
 
+    <TextView
+        android:id="@+id/seekbarhint"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/seekBar"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        android:layout_height="wrap_content" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
