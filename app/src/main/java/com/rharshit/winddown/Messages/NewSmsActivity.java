@@ -7,6 +7,7 @@ import android.view.GestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.rharshit.winddown.R;
@@ -15,7 +16,7 @@ import com.rharshit.winddown.Util.Theme;
 public class NewSmsActivity extends AppCompatActivity{
 
     EditText address, message;
-    Button send_btn;
+    ImageButton send_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getTheme());
@@ -26,7 +27,7 @@ public class NewSmsActivity extends AppCompatActivity{
 
         address = (EditText) findViewById(R.id.address);
         message = (EditText) findViewById(R.id.message);
-        send_btn = (Button) findViewById(R.id.send_btn);
+        send_btn = (ImageButton) findViewById(R.id.send_btn);
         Intent intent=getIntent();
         address.setText( intent.getStringExtra( "Number" ) );
 
