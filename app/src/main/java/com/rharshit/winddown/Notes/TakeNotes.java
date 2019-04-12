@@ -53,7 +53,7 @@ public class TakeNotes extends AppCompatActivity {
                 ? DBHandler.updateNote(title, text, id)
                 : DBHandler.insertNote(title, text, user);
         if(success){
-            Toast.makeText(mContext, "Note saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText( getApplicationContext(), "Note saved", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

@@ -374,7 +374,7 @@ public class Music extends AppCompatActivity {
                 mediaPlayer.prepare();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(mContext, "Error occured", Toast.LENGTH_SHORT).show();
+                Toast.makeText( getApplicationContext(), "Error occured", Toast.LENGTH_SHORT).show();
             }
             tx4.setText(name);
             tx5.setText(album);

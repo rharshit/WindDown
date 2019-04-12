@@ -86,7 +86,7 @@ private ImageButton del;
             }
         }
         else {
-            Toast.makeText( this, "Enter Phone Number", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( getApplicationContext(), "Enter Phone Number", Toast.LENGTH_SHORT ).show();
         }
     }
 
@@ -96,7 +96,7 @@ private ImageButton del;
            if(grantResults.length>0&& grantResults[0]==PackageManager.PERMISSION_GRANTED){
                makePhoneCall();
            }else{
-               Toast.makeText( this, "Permission DENIED", Toast.LENGTH_SHORT ).show();
+              Toast.makeText( getApplicationContext(), "Permission DENIED", Toast.LENGTH_SHORT ).show();
            }
        }
         super.onRequestPermissionsResult( requestCode, permissions, grantResults );

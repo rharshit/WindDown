@@ -69,7 +69,7 @@ public class WeatherActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<WeatherInfo> call, Throwable t) {
-                Toast.makeText(mContext, "Failed retrieving weather",
+                Toast.makeText( getApplicationContext(), "Failed retrieving weather",
                         Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }

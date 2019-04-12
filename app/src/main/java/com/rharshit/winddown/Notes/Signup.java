@@ -51,12 +51,12 @@ public class Signup extends AppCompatActivity {
                 String c = etConf.getText().toString();
                 if(c.equals(p)){
                     if(p.length()<6){
-                        Toast.makeText(mContext, "Password must be at east 6 char long", Toast.LENGTH_LONG).show();
+                        Toast.makeText( getApplicationContext(), "Password must be at east 6 char long", Toast.LENGTH_LONG).show();
                     } else {
                         createUser(u, p);
                     }
                 } else {
-                    Toast.makeText(mContext, "Please check the password", Toast.LENGTH_LONG).show();
+                    Toast.makeText( getApplicationContext(), "Please check the password", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -76,14 +76,14 @@ public class Signup extends AppCompatActivity {
     private void createUser(String u, String p) {
         boolean res = DBHandler.insertUser(u, p);
         if(res){
-            Toast.makeText(mContext,
+            Toast.makeText( getApplicationContext(),
                     "Created new user", Toast.LENGTH_SHORT).show();
             Intent i = new Intent();
             i.putExtra("username", u);
             setResult(1, i);
             finish();
         } else {
-            Toast.makeText(mContext,
+            Toast.makeText( getApplicationContext(),
                     "Username already exists", Toast.LENGTH_SHORT).show();
         }
     }

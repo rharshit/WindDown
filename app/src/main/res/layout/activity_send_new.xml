@@ -12,10 +12,10 @@ tools:context=".Messages.NewSmsActivity">
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:hint="Phone"
-        android:inputType="textShortMessage"
-        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="textShortMessage|numberSigned"
         app:layout_constraintEnd_toStartOf="@+id/send_btn"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:layout_width="wrap_content"
