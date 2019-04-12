@@ -3,8 +3,11 @@ package com.rharshit.winddown.Notes;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +27,7 @@ public class Signup extends AppCompatActivity {
     private EditText etConf;
     private Button signup;
     private TextView tvExisting;
+    Color textColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +42,22 @@ public class Signup extends AppCompatActivity {
         signup = findViewById(R.id.notes_b_signup);
         tvExisting = findViewById(R.id.notes_signup_tv_login);
 
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String u = etUser.getText().toString();
                 String p = etPass.getText().toString();
-                createUser(u, p);
+                String c = etConf.getText().toString();
+                if(c.equals(p)){
+                    if(p.length()<6){
+                        Toast.makeText(mContext, "Password must be at east 6 char long", Toast.LENGTH_LONG).show();
+                    } else {
+                        createUser(u, p);
+                    }
+                } else {
+                    Toast.makeText(mContext, "Please check the password", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
