@@ -21,22 +21,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
-        <activity android:name=".Music.MusicList"></activity>
-        <activity android:name=".Notes.TakeNotes" />
-        <activity android:name=".Camera.Camera" />
-        <activity android:name=".Music.Music" />
-        <activity android:name=".Weather.Weather" />
-        <activity android:name=".Notes.Signup" />
-        <activity android:name=".Notes.Login" />
+        <activity android:name=".Music.MusicList"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Notes.TakeNotes"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Camera.Camera"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Music.Music"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Weather.Weather"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Notes.Signup"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Notes.Login"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Notes.Notes"
             android:label="@string/title_activity_notes"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeLight.NoActionBar" />
-        <activity android:name=".Gallery.Gallery" />
-        <activity android:name=".Messages.Messages" />
-        <activity android:name=".Contacts.Contacts" />
-        <activity android:name=".Phone.Phone" />
-        <activity android:name=".Weather.WeatherActivity" />
+        <activity android:name=".Gallery.Gallery"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Messages.Messages"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Contacts.Contacts"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Phone.Phone"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Weather.WeatherActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -48,12 +61,16 @@
         </activity>
         <activity
             android:name=".Gallery.AlbumActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name=".Gallery.GalleryPreview"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".Messages.NewSmsActivity" />
-        <activity android:name=".Messages.Chat" /> <!--  -->
+        <activity android:name=".Messages.NewSmsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Messages.Chat"
+            android:screenOrientation="portrait"/> <!--  -->
         <service
             android:name=".Util.NotificationListener"
             android:label="@string/service_name"
