@@ -36,11 +36,11 @@ public class Chat extends AppCompatActivity {
     EditText new_message;
     ImageButton send_message;
     int thread_id_main;
-    private Handler handler = new Handler();
     Thread t;
     ArrayList<HashMap<String, String>> smsList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> customList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> tmpList = new ArrayList<HashMap<String, String>>();
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +53,9 @@ public class Chat extends AppCompatActivity {
         address = intent.getStringExtra("address");
         thread_id_main = Integer.parseInt(intent.getStringExtra("thread_id"));
 
-        listView = (ListView) findViewById(R.id.listView);
-        new_message = (EditText) findViewById(R.id.new_message);
-        send_message = (ImageButton) findViewById(R.id.send_message);
+        listView = findViewById(R.id.listView);
+        new_message = findViewById(R.id.new_message);
+        send_message = findViewById(R.id.send_message);
 
         startLoadingSms();
 
@@ -66,15 +66,13 @@ public class Chat extends AppCompatActivity {
                 String text = new_message.getText().toString();
 
 
-                if(text.length()>0) {
+                if (text.length() > 0) {
                     String tmp_msg = text;
                     new_message.setText("Sending....");
                     new_message.setEnabled(false);
 
 
-
-                    if(Function.sendSMS(address, tmp_msg))
-                    {
+                    if (Function.sendSMS(address, tmp_msg)) {
                         new_message.setText("");
                         new_message.setEnabled(true);
                         // Creating a custom list for newly added sms
@@ -84,7 +82,7 @@ public class Chat extends AppCompatActivity {
                         adapter = new ChatAdapter(Chat.this, customList);
                         listView.setAdapter(adapter);
                         //=========================
-                    }else{
+                    } else {
                         new_message.setText(tmp_msg);
                         new_message.setEnabled(true);
                     }
@@ -97,8 +95,18 @@ public class Chat extends AppCompatActivity {
 
     }
 
+    public void startLoadingSms() {
+        final Runnable r = new Runnable() {
+            public void run() {
 
+                loadsmsTask = new LoadSms();
+                loadsmsTask.execute();
 
+                handler.postDelayed(this, 5000);
+            }
+        };
+        handler.postDelayed(r, 0);
+    }
 
     class LoadSms extends AsyncTask<String, Void, String> {
         @Override
@@ -115,8 +123,7 @@ public class Chat extends AppCompatActivity {
                 Cursor inbox = getContentResolver().query(uriInbox, null, "thread_id=" + thread_id_main, null, null);
                 Uri uriSent = Uri.parse("content://sms/sent");
                 Cursor sent = getContentResolver().query(uriSent, null, "thread_id=" + thread_id_main, null, null);
-                Cursor c = new MergeCursor(new Cursor[]{inbox,sent}); // Attaching inbox and sent sms
-
+                Cursor c = new MergeCursor(new Cursor[]{inbox, sent}); // Attaching inbox and sent sms
 
 
                 if (c.moveToFirst()) {
@@ -135,7 +142,7 @@ public class Chat extends AppCompatActivity {
                 }
                 c.close();
 
-            }catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -147,8 +154,7 @@ public class Chat extends AppCompatActivity {
         @Override
         protected void onPostExecute(String xml) {
 
-            if(!tmpList.equals(smsList))
-            {
+            if (!tmpList.equals(smsList)) {
                 smsList.clear();
                 smsList.addAll(tmpList);
                 adapter = new ChatAdapter(Chat.this, smsList);
@@ -158,38 +164,26 @@ public class Chat extends AppCompatActivity {
 
         }
     }
-
-
-    public void startLoadingSms()
-    {
-        final Runnable r = new Runnable() {
-            public void run() {
-
-                loadsmsTask = new LoadSms();
-                loadsmsTask.execute();
-
-                handler.postDelayed(this, 5000);
-            }
-        };
-        handler.postDelayed(r, 0);
-    }
 }
-
 
 
 class ChatAdapter extends BaseAdapter {
     private Activity activity;
-    private ArrayList<HashMap< String, String >> data;
-    public ChatAdapter(Activity a, ArrayList < HashMap < String, String >> d) {
+    private ArrayList<HashMap<String, String>> data;
+
+    public ChatAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
         activity = a;
         data = d;
     }
+
     public int getCount() {
         return data.size();
     }
+
     public Object getItem(int position) {
         return position;
     }
+
     public long getItemId(int position) {
         return position;
     }
@@ -202,14 +196,14 @@ class ChatAdapter extends BaseAdapter {
                     R.layout.chat_item, parent, false);
 
 
-            holder.txtMsgYou = (TextView)convertView.findViewById(R.id.txtMsgYou);
-            holder.lblMsgYou = (TextView)convertView.findViewById(R.id.lblMsgYou);
-            holder.timeMsgYou = (TextView)convertView.findViewById(R.id.timeMsgYou);
-            holder.lblMsgFrom = (TextView)convertView.findViewById(R.id.lblMsgFrom);
-            holder.timeMsgFrom = (TextView)convertView.findViewById(R.id.timeMsgFrom);
-            holder.txtMsgFrom = (TextView)convertView.findViewById(R.id.txtMsgFrom);
-            holder.msgFrom = (LinearLayout)convertView.findViewById(R.id.msgFrom);
-            holder.msgYou = (LinearLayout)convertView.findViewById(R.id.msgYou);
+            holder.txtMsgYou = convertView.findViewById(R.id.txtMsgYou);
+            holder.lblMsgYou = convertView.findViewById(R.id.lblMsgYou);
+            holder.timeMsgYou = convertView.findViewById(R.id.timeMsgYou);
+            holder.lblMsgFrom = convertView.findViewById(R.id.lblMsgFrom);
+            holder.timeMsgFrom = convertView.findViewById(R.id.timeMsgFrom);
+            holder.txtMsgFrom = convertView.findViewById(R.id.txtMsgFrom);
+            holder.msgFrom = convertView.findViewById(R.id.msgFrom);
+            holder.msgYou = convertView.findViewById(R.id.msgYou);
 
             convertView.setTag(holder);
         } else {
@@ -224,19 +218,18 @@ class ChatAdapter extends BaseAdapter {
         holder.msgFrom.setId(position);
         holder.msgYou.setId(position);
 
-        HashMap < String, String > song = new HashMap < String, String > ();
+        HashMap<String, String> song = new HashMap<String, String>();
         song = data.get(position);
         try {
 
 
-            if(song.get(Function.KEY_TYPE).contentEquals("1"))
-            {
+            if (song.get(Function.KEY_TYPE).contentEquals("1")) {
                 holder.lblMsgFrom.setText(song.get(Function.KEY_NAME));
                 holder.txtMsgFrom.setText(song.get(Function.KEY_MSG));
                 holder.timeMsgFrom.setText(song.get(Function.KEY_TIME));
                 holder.msgFrom.setVisibility(View.VISIBLE);
                 holder.msgYou.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.lblMsgYou.setText("You");
                 holder.txtMsgYou.setText(song.get(Function.KEY_MSG));
                 holder.timeMsgYou.setText(song.get(Function.KEY_TIME));
@@ -244,7 +237,8 @@ class ChatAdapter extends BaseAdapter {
                 holder.msgYou.setVisibility(View.VISIBLE);
             }
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return convertView;
     }
 }

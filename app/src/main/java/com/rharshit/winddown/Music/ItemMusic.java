@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import com.rharshit.winddown.R;
 
-public class ItemMusic  extends LinearLayout {
+public class ItemMusic extends LinearLayout {
 
     private String path;
     private String name;
     private String album;
-    private  String albumId;
+    private String albumId;
     private TextView tvTitle;
     private TextView tvText;
 

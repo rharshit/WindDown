@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <ScrollView
+        android:id="@+id/svMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/svMain">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/llVerticalScroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:orientation="vertical"
             android:paddingBottom="?android:attr/actionBarSize"
-            android:clipToPadding="false"
             android:weightSum="100">
 
             <LinearLayout
+                android:id="@+id/llWindDown"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:id="@+id/llWindDown">
+                android:paddingTop="20dp">
+
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_marginStart="20dp"
                     android:layout_gravity="center"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:layout_marginStart="20dp"
+                    android:src="@mipmap/ic_launcher" />
+
                 <TextView
                     android:id="@+id/tvWindDown"
                     android:layout_width="match_parent"
@@ -41,8 +42,8 @@
                     android:gravity="start|center_vertical"
                     android:padding="40dp"
                     android:paddingStart="20dp"
-                    android:textColor="?android:attr/colorAccent"
                     android:text="@string/app_name"
+                    android:textColor="?android:attr/colorAccent"
                     android:textSize="40sp" />
             </LinearLayout>
 
@@ -50,10 +51,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <HorizontalScrollView
                     android:id="@+id/hsMainScrollView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:id="@+id/llHorizintalScroll"
                         android:layout_width="wrap_content"
@@ -62,40 +65,40 @@
                 </HorizontalScrollView>
 
                 <!--<ImageView-->
-                    <!--android:layout_width="96dp"-->
-                    <!--android:layout_height="128dp"-->
-                    <!--android:padding="32dp"-->
-                    <!--android:paddingStart="0dp"-->
-                    <!--android:src="@drawable/arrow_left"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:id="@+id/scrollLeft"-->
-                    <!--android:background="@android:color/transparent"-->
-                    <!--android:scaleType="fitCenter"/>-->
+                <!--android:layout_width="96dp"-->
+                <!--android:layout_height="128dp"-->
+                <!--android:padding="32dp"-->
+                <!--android:paddingStart="0dp"-->
+                <!--android:src="@drawable/arrow_left"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:id="@+id/scrollLeft"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:scaleType="fitCenter"/>-->
 
                 <!--<ImageView-->
-                    <!--android:layout_width="96dp"-->
-                    <!--android:layout_height="128dp"-->
-                    <!--android:padding="32dp"-->
-                    <!--android:paddingEnd="0dp"-->
-                    <!--android:src="@drawable/arrow_right"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:id="@+id/scrollRight"-->
-                    <!--android:background="@android:color/transparent"-->
-                    <!--android:scaleType="fitCenter"/>-->
+                <!--android:layout_width="96dp"-->
+                <!--android:layout_height="128dp"-->
+                <!--android:padding="32dp"-->
+                <!--android:paddingEnd="0dp"-->
+                <!--android:src="@drawable/arrow_right"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:id="@+id/scrollRight"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:scaleType="fitCenter"/>-->
             </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="32dp"/>
+                android:layout_height="32dp" />
 
             <LinearLayout
+                android:id="@+id/llDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_gravity="center"
-                android:id="@+id/llDateTime">
+                android:orientation="vertical">
 
                 <DigitalClock
                     android:layout_width="wrap_content"
@@ -107,41 +110,45 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="32dp"/>
+                android:layout_height="32dp" />
 
             <LinearLayout
                 android:id="@+id/llNotifivationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/notification_bg_padding"
                 android:layout_margin="@dimen/notification_bg_margin"
-                android:translationZ="4dp"
                 android:background="@drawable/notification_panel_bg"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/notification_bg_padding"
+                android:translationZ="4dp">
+
                 <TextView
+                    android:id="@+id/tvNotificaiton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="12dp"
                     android:paddingEnd="0dp"
-                    android:textSize="20sp"
                     android:text="@string/notification_panel_header"
-                    android:id="@+id/tvNotificaiton"/>
+                    android:textSize="20sp" />
+
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="32dp" />
+
                 <GridLayout
+                    android:id="@+id/gvNotificaiton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:foregroundGravity="center"
-                    android:id="@+id/gvNotificaiton"/>
+                    android:foregroundGravity="center" />
             </LinearLayout>
+
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:onClick="scrollUp"
-                android:src="@drawable/arrow_down"/>
+                android:src="@drawable/arrow_down" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

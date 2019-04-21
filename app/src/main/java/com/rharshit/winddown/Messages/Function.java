@@ -33,7 +33,7 @@ public class Function {
     static final String KEY_TIME = "time";
 
 
-    public static  boolean hasPermissions(Context context, String... permissions) {
+    public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
                 if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -44,8 +44,7 @@ public class Function {
         return true;
     }
 
-    public static String converToTime(String timestamp)
-    {
+    public static String converToTime(String timestamp) {
         long datetime = Long.parseLong(timestamp);
         Date date = new Date(datetime);
         DateFormat formatter = new SimpleDateFormat("dd/MM HH:mm");
@@ -53,8 +52,7 @@ public class Function {
     }
 
 
-    public static HashMap<String, String> mappingInbox(String _id, String thread_id, String name, String phone, String msg, String type, String timestamp, String time)
-    {
+    public static HashMap<String, String> mappingInbox(String _id, String thread_id, String name, String phone, String msg, String type, String timestamp, String time) {
         HashMap<String, String> map = new HashMap<String, String>();
         map.put(_ID, _id);
         map.put(KEY_THREAD_ID, thread_id);
@@ -68,23 +66,18 @@ public class Function {
     }
 
 
-    public static  ArrayList<HashMap<String, String>> removeDuplicates( ArrayList<HashMap<String, String>> smsList)
-    {
+    public static ArrayList<HashMap<String, String>> removeDuplicates(ArrayList<HashMap<String, String>> smsList) {
         ArrayList<HashMap<String, String>> gpList = new ArrayList<HashMap<String, String>>();
-        for (int i = 0; i<smsList.size(); i++)
-        {
+        for (int i = 0; i < smsList.size(); i++) {
             boolean available = false;
-            for (int j = 0; j<gpList.size(); j++)
-            {
-                if( Integer.parseInt(gpList.get(j).get(KEY_THREAD_ID)) == Integer.parseInt(smsList.get(i).get(KEY_THREAD_ID)))
-                {
+            for (int j = 0; j < gpList.size(); j++) {
+                if (Integer.parseInt(gpList.get(j).get(KEY_THREAD_ID)) == Integer.parseInt(smsList.get(i).get(KEY_THREAD_ID))) {
                     available = true;
                     break;
                 }
             }
 
-            if(!available)
-            {
+            if (!available) {
                 gpList.add(mappingInbox(smsList.get(i).get(_ID), smsList.get(i).get(KEY_THREAD_ID),
                         smsList.get(i).get(KEY_NAME), smsList.get(i).get(KEY_PHONE),
                         smsList.get(i).get(KEY_MSG), smsList.get(i).get(KEY_TYPE),
@@ -116,7 +109,7 @@ public class Function {
 
         if (cursor == null) {
             return phoneNumber;
-        }else {
+        } else {
             String name = phoneNumber;
             try {
 
@@ -133,19 +126,18 @@ public class Function {
     }
 
 
-
-    public static void createCachedFile (Context context, String key, ArrayList<HashMap<String, String>> dataList) throws IOException {
-        FileOutputStream fos = context.openFileOutput (key, Context.MODE_PRIVATE);
+    public static void createCachedFile(Context context, String key, ArrayList<HashMap<String, String>> dataList) throws IOException {
+        FileOutputStream fos = context.openFileOutput(key, Context.MODE_PRIVATE);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject (dataList);
-        oos.close ();
-        fos.close ();
+        oos.writeObject(dataList);
+        oos.close();
+        fos.close();
     }
 
-    public static Object readCachedFile (Context context, String key) throws IOException, ClassNotFoundException {
-        FileInputStream fis = context.openFileInput (key);
+    public static Object readCachedFile(Context context, String key) throws IOException, ClassNotFoundException {
+        FileInputStream fis = context.openFileInput(key);
         ObjectInputStream ois = new ObjectInputStream(fis);
-        Object object = ois.readObject ();
+        Object object = ois.readObject();
         return object;
     }
 }

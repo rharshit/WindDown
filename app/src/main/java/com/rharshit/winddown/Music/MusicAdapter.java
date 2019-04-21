@@ -12,7 +12,7 @@ public class MusicAdapter extends BaseAdapter {
     private ArrayList<String[]> list;
     private Context mContext;
 
-    public MusicAdapter(Context mContext, ArrayList<String[]> list){
+    public MusicAdapter(Context mContext, ArrayList<String[]> list) {
         this.mContext = mContext;
         this.list = list;
     }
@@ -39,7 +39,7 @@ public class MusicAdapter extends BaseAdapter {
         return item;
     }
 
-    public String[] getValues(int position){
+    public String[] getValues(int position) {
         return list.get(position);
     }
 }

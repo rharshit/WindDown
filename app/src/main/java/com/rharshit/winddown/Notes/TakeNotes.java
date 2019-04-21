@@ -2,10 +2,9 @@ package com.rharshit.winddown.Notes;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -37,7 +36,7 @@ public class TakeNotes extends AppCompatActivity {
         Intent i = getIntent();
         user = i.getStringExtra("USER");
         edit = i.getIntExtra("EDIT", 0) == 1;
-        if(edit){
+        if (edit) {
             String title = i.getStringExtra("TITLE");
             String text = i.getStringExtra("TEXT");
             id = i.getStringExtra("ID");
@@ -52,8 +51,8 @@ public class TakeNotes extends AppCompatActivity {
         boolean success = edit
                 ? DBHandler.updateNote(title, text, id)
                 : DBHandler.insertNote(title, text, user);
-        if(success){
-            Toast.makeText( getApplicationContext(), "Note saved", Toast.LENGTH_SHORT).show();
+        if (success) {
+            Toast.makeText(getApplicationContext(), "Note saved", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

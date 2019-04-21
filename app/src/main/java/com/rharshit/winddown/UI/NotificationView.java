@@ -26,14 +26,14 @@ import static android.content.ContentValues.TAG;
 
 public class NotificationView extends LinearLayout {
 
-    private Notification notification;
     private final String appName;
     private final Drawable icon;
-
+    private Notification notification;
     private HashMap<String, ArrayList<String>> groupNotifications;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public NotificationView(Context context, Notification notification, Drawable icon,
-                            String appName, String ticker){
+                            String appName, String ticker) {
         this(context, notification, icon, appName);
         groupNotifications = new HashMap<>();
         addToHashMap(notification.getKey(), ticker, notification.isOngoing());
@@ -58,17 +58,17 @@ public class NotificationView extends LinearLayout {
         float pad = getResources().getDimension(R.dimen.notification_icon_padding);
 
         RelativeLayout rvIcon = new RelativeLayout(context);
-        rvIcon.setLayoutParams(new LayoutParams((int) (dimenBlur + 2*radius),
+        rvIcon.setLayoutParams(new LayoutParams((int) (dimenBlur + 2 * radius),
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
         ImageView ivIcon = new ImageView(context);
         ImageView ivIconBlur = new ImageView(context);
 
-        ivIcon.setLayoutParams(new LayoutParams((int) (dimenBlur + 2*radius), (int) dimenBlur));
-        ivIconBlur.setLayoutParams(new LayoutParams((int) (dimenBlur + 2*radius),
-                (int) (dimenBlur + 2*radius)));
+        ivIcon.setLayoutParams(new LayoutParams((int) (dimenBlur + 2 * radius), (int) dimenBlur));
+        ivIconBlur.setLayoutParams(new LayoutParams((int) (dimenBlur + 2 * radius),
+                (int) (dimenBlur + 2 * radius)));
 
-        if(icon!=null){
+        if (icon != null) {
             ivIcon.setImageDrawable(icon);
             ivIconBlur.setImageBitmap(Blur.transform(context, icon, radius, dimen, dimenBlur));
         } else {
@@ -77,7 +77,7 @@ public class NotificationView extends LinearLayout {
 
         ivIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         ivIconBlur.setScaleType(ImageView.ScaleType.CENTER);
-        ivIcon.setPadding((int) (pad + dimenDiff/2), 0, (int) (pad + dimenDiff/2), 0);
+        ivIcon.setPadding((int) (pad + dimenDiff / 2), 0, (int) (pad + dimenDiff / 2), 0);
         ivIconBlur.setPadding(0, 0, 0, 0);
 
         rvIcon.addView(ivIconBlur);
@@ -94,17 +94,17 @@ public class NotificationView extends LinearLayout {
         packageName.setTextSize(16.0f);
         packageName.setTypeface(typeface);
         packageName.setLines(2);
-        packageName.setBackgroundColor(Color.argb(0,0,0,0));
+        packageName.setBackgroundColor(Color.argb(0, 0, 0, 0));
         this.addView(packageName);
-        packageName.setTranslationY(-2*radius);
+        packageName.setTranslationY(-2 * radius);
     }
 
     private void addToHashMap(String key, String ticker, boolean ongoing) {
         ArrayList<String> notifs = groupNotifications.get(key);
-        if(notifs == null){
+        if (notifs == null) {
             notifs = new ArrayList<>();
         }
-        if(ongoing && notifs.size()>0){
+        if (ongoing && notifs.size() > 0) {
             notifs.set(0, ticker);
         } else {
             notifs.add(ticker);
@@ -118,23 +118,23 @@ public class NotificationView extends LinearLayout {
         return groupNotifications.isEmpty();
     }
 
-    public String getGroupKey(){
+    public String getGroupKey() {
         return notification.getGroupKey();
     }
 
-    public String getKey(){
+    public String getKey() {
         return notification.getKey();
     }
 
-    public String getPackageName(){
+    public String getPackageName() {
         return notification.getPackageName();
     }
 
-    public String getAppName(){
+    public String getAppName() {
         return appName;
     }
 
-    public Drawable getIcon(){
+    public Drawable getIcon() {
         return icon;
     }
 
@@ -148,8 +148,8 @@ public class NotificationView extends LinearLayout {
 
     public ArrayList<String> getNotifications() {
         ArrayList<String> notifications = new ArrayList<>();
-        for(String key : groupNotifications.keySet()){
-            for(String ticker : groupNotifications.get(key)){
+        for (String key : groupNotifications.keySet()) {
+            for (String ticker : groupNotifications.get(key)) {
                 Log.d(TAG, "getNotifications: Key: " + key + " Ticker: " + ticker);
                 notifications.add(ticker);
             }

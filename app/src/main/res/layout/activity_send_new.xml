@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".Messages.NewSmsActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Messages.NewSmsActivity">
 
     <EditText
         android:id="@+id/address"
@@ -18,14 +18,14 @@ tools:context=".Messages.NewSmsActivity">
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
+        android:id="@+id/send_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_send"
         android:padding="8dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_send"
         app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/send_btn"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/message"
@@ -37,6 +37,6 @@ tools:context=".Messages.NewSmsActivity">
         android:inputType="textLongMessage|textMultiLine"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/address"
-        app:layout_constraintVertical_bias="0"/>
+        app:layout_constraintVertical_bias="0" />
 
 </android.support.constraint.ConstraintLayout>

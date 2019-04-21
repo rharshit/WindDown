@@ -2,9 +2,9 @@ package com.rharshit.winddown.Notes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,13 +46,13 @@ public class Login extends AppCompatActivity {
                 String u = etUser.getText().toString();
                 String p = etPass.getText().toString();
                 boolean res = DBHandler.getUser(u, p);
-                if(res){
+                if (res) {
                     Intent i = new Intent(mContext, Notes.class);
                     i.putExtra("username", etUser.getText().toString());
                     startActivity(i);
                     finish();
                 } else {
-                    Toast.makeText( getApplicationContext(), "Invalid username/password", Toast.LENGTH_LONG)
+                    Toast.makeText(getApplicationContext(), "Invalid username/password", Toast.LENGTH_LONG)
                             .show();
                 }
 
@@ -75,11 +75,11 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==1){ //success
+        if (resultCode == 1) { //success
             String username = data.getStringExtra("username");
             Intent i = new Intent(mContext, Notes.class);
             i.putExtra("username", username);
-            Log.d(TAG, "onActivityResult: "+username);
+            Log.d(TAG, "onActivityResult: " + username);
             startActivity(i);
             finish();
         }

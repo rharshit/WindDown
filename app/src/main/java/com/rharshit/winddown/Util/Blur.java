@@ -9,8 +9,6 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
-import com.rharshit.winddown.R;
-
 public class Blur {
     private static float SCALE = 0.50f;
 
@@ -23,11 +21,12 @@ public class Blur {
                                    float dimenX, float dimenY, float dimenBlurX, float dimenBlurY) {
         return transform(context, source, radius, dimenX, dimenY, dimenBlurX, dimenBlurY, SCALE);
     }
+
     public static Bitmap transform(Context context, Bitmap source, float radius,
                                    float dimenX, float dimenY, float dimenBlurX, float dimenBlurY, float s) {
         Bitmap sourceBitmap = Bitmap.createScaledBitmap(source,
-                (int) (dimenX*s),
-                (int) (dimenY*s), false);
+                (int) (dimenX * s),
+                (int) (dimenY * s), false);
 
         Bitmap blurredBitmap;
         blurredBitmap = Bitmap.createBitmap(sourceBitmap);
@@ -48,8 +47,8 @@ public class Blur {
         output.copyTo(blurredBitmap);
         source.recycle();
 
-        return Bitmap.createScaledBitmap(blurredBitmap, (int) (dimenBlurX + 2*radius),
-                (int) (dimenBlurY + 2*radius), false);
+        return Bitmap.createScaledBitmap(blurredBitmap, (int) (dimenBlurX + 2 * radius),
+                (int) (dimenBlurY + 2 * radius), false);
     }
 
     public static Bitmap transform(Context context, Drawable source, float radius,
@@ -67,10 +66,10 @@ public class Blur {
     }
 
     public static Bitmap convertToBitmap(Drawable drawable, int widthPixels, int heightPixels, float radius) {
-        Bitmap mutableBitmap = Bitmap.createBitmap(widthPixels+(int)(4*radius/SCALE), heightPixels+(int)(4*radius/SCALE), Bitmap.Config.ARGB_8888);
+        Bitmap mutableBitmap = Bitmap.createBitmap(widthPixels + (int) (4 * radius / SCALE), heightPixels + (int) (4 * radius / SCALE), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mutableBitmap);
-        drawable.setBounds((int) (2*radius/SCALE), (int) (2*radius/SCALE),
-                widthPixels+(int) (2*radius/SCALE), heightPixels+(int) (2*radius/SCALE));
+        drawable.setBounds((int) (2 * radius / SCALE), (int) (2 * radius / SCALE),
+                widthPixels + (int) (2 * radius / SCALE), heightPixels + (int) (2 * radius / SCALE));
         drawable.draw(canvas);
 
         return mutableBitmap;

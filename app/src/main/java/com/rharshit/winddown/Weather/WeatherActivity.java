@@ -2,8 +2,8 @@ package com.rharshit.winddown.Weather;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,8 +11,8 @@ import android.widget.Toast;
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
 import com.rharshit.winddown.Weather.api.ApiHandler;
-import com.rharshit.winddown.Weather.api.WeatherInfo;
 import com.rharshit.winddown.Weather.api.Weather;
+import com.rharshit.winddown.Weather.api.WeatherInfo;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +69,7 @@ public class WeatherActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<WeatherInfo> call, Throwable t) {
-                Toast.makeText( getApplicationContext(), "Failed retrieving weather",
+                Toast.makeText(getApplicationContext(), "Failed retrieving weather",
                         Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }

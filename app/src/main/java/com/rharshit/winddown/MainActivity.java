@@ -9,16 +9,17 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -34,7 +35,6 @@ import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
 import com.rharshit.winddown.UI.DateTime;
 import com.rharshit.winddown.UI.NotificationView;
-import com.rharshit.winddown.UI.Scroll;
 import com.rharshit.winddown.Util.Notification;
 import com.rharshit.winddown.Util.Theme;
 import com.rharshit.winddown.Weather.Weather;
@@ -43,13 +43,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static int theme = R.style.AppThemeLight;
     private String TAG = "MainActivity";
     private Context mContext;
-
     private TextView tvNotification;
     private NotificationReceiver nReceiver;
-
-    private static int theme = R.style.AppThemeLight;
     private LinearLayout llWindDown;
 
     private HorizontalScrollView hsView;
@@ -60,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvNotificationText;
     private ScrollView svMain;
     private LinearLayout llDateTime;
-//    private ImageView scrollL;
-//    private ImageView scrollR;
 
     private boolean showNotificaitons;
 
@@ -69,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private int vWidth;
     private int nChild;
 
-    private void init(){
+    private void init() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         vHeight = displayMetrics.heightPixels;
@@ -83,21 +79,6 @@ public class MainActivity extends AppCompatActivity {
         tvNotificationText = findViewById(R.id.tvNotificaiton);
         svMain = findViewById(R.id.svMain);
         llDateTime = findViewById(R.id.llDateTime);
-//        scrollL = findViewById(R.id.scrollLeft);
-//        scrollR = findViewById(R.id.scrollRight);
-
-//        scrollL.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                hsView.smoothScrollBy(-vWidth, 0);
-//            }
-//        });
-//        scrollR.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                hsView.smoothScrollBy(vWidth, 0);
-//            }
-//        });
 
         showNotificaitons = true;
 
@@ -112,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_blur_dimen)
-                + 2*getResources().getInteger(R.integer.notification_icon_blur_radius));
-        int llWidth = vWidth - ((int) (2*(getResources().getDimension(R.dimen.notification_bg_padding)
+                + 2 * getResources().getInteger(R.integer.notification_icon_blur_radius));
+        int llWidth = vWidth - ((int) (2 * (getResources().getDimension(R.dimen.notification_bg_padding)
                 + getResources().getDimension(R.dimen.notification_bg_margin))));
-        int nCol = llWidth/nIconWidth;
+        int nCol = llWidth / nIconWidth;
         gvNotification.setColumnCount(nCol);
 //        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol);
 
@@ -133,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showNotificaitons = !showNotificaitons;
-                for(int i=0; i<gvNotification.getChildCount(); i++){
+                for (int i = 0; i < gvNotification.getChildCount(); i++) {
                     View n = gvNotification.getChildAt(i);
-                    n.setVisibility(showNotificaitons?View.VISIBLE:View.GONE);
+                    n.setVisibility(showNotificaitons ? View.VISIBLE : View.GONE);
                 }
             }
         });
@@ -182,16 +163,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void populate(){
+    private void populate() {
         llScroll.addView(
                 new AppIcon(this, vWidth, vHeight,
-                    getResources().getDrawable(R.drawable.ic_phone), "Phone", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(mContext, Phone.class);
-                    startActivity(i);
-                }
-            })
+                        getResources().getDrawable(R.drawable.ic_phone), "Phone", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(mContext, Phone.class);
+                        startActivity(i);
+                    }
+                })
         );
         llScroll.addView(
                 new AppIcon(this, vWidth, vHeight,
@@ -265,10 +246,11 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void addNotification(Notification n, String ticker) {
-        for(int i=0; i<gvNotification.getChildCount(); i++){
+        for (int i = 0; i < gvNotification.getChildCount(); i++) {
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
-            if(n.getPackageName().equals(nv.getPackageName())){
+            if (n.getPackageName().equals(nv.getPackageName())) {
 //                Log.d(TAG, "Update notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
 //                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
 //                        + " Channel ID: " + n.getChannelId());
@@ -295,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                 n.getPackageName() :
                 getPackageManager().getApplicationLabel(appInfo).toString();
         NotificationView notificationView = new NotificationView(mContext, n, icon, appName, ticker);
-        notificationView.setVisibility(showNotificaitons?View.VISIBLE:View.GONE);
+        notificationView.setVisibility(showNotificaitons ? View.VISIBLE : View.GONE);
         gvNotification.addView(notificationView, gvNotification.getChildCount());
 //        notificationView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -309,21 +291,21 @@ public class MainActivity extends AppCompatActivity {
     private void showNotifications(NotificationView nv) {
         ArrayList<String> notifications = nv.getNotifications();
         String msg = "";
-        for (String notification : notifications){
-            msg+="\n"+notification+"\n";
+        for (String notification : notifications) {
+            msg += "\n" + notification + "\n";
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                })
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //  Action for 'NO' Button
                         dialog.cancel();
-                        Toast.makeText(getApplicationContext(),"Dismissed",
+                        Toast.makeText(getApplicationContext(), "Dismissed",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -335,15 +317,15 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    private void removeNotification(Notification n, String ticker){
-        for(int i=0; i<gvNotification.getChildCount(); i++){
+    private void removeNotification(Notification n, String ticker) {
+        for (int i = 0; i < gvNotification.getChildCount(); i++) {
             NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
-            if(n.getPackageName().equals(nv.getPackageName())){
+            if (n.getPackageName().equals(nv.getPackageName())) {
 //                Log.d(TAG, "Remove notification: " + n.getPackageName() + " GroupKey: " + n.getGroupKey()
 //                        + " Key: " + n.getKey() + " nGroup: " + n.getGroup() + " ID: " + n.getId()
 //                        + " Channel ID: " + n.getChannelId());
                 boolean remove = nv.removeNotification(n, ticker);
-                if(remove){
+                if (remove) {
                     gvNotification.removeViewAt(i);
                 }
                 return;
@@ -353,13 +335,14 @@ public class MainActivity extends AppCompatActivity {
 
     class NotificationReceiver extends BroadcastReceiver {
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onReceive(Context context, Intent intent) {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
             int action = intent.getIntExtra("ACTION", 3);
             String ticker = "null";
-            switch (action){
+            switch (action) {
                 case 0:
 //                    Log.d(TAG, "onReceive: Notificaiton List");
 //                    listNotification(n, ticker);

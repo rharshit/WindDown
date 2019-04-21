@@ -24,10 +24,12 @@ public class Scroll extends HorizontalScrollView {
     public Scroll(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return false;
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return false;

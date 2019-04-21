@@ -32,13 +32,6 @@ public class AutoFitTextureView extends TextureView {
     private int mRatioWidth = 0;
     private int mRatioHeight = 0;
 
-    @Override
-    public void setBackgroundDrawable(Drawable background) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && background != null) {
-            setBackgroundDrawable(background);
-        }
-    }
-
     public AutoFitTextureView(Context context) {
         this(context, null);
     }
@@ -49,6 +42,13 @@ public class AutoFitTextureView extends TextureView {
 
     public AutoFitTextureView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
+
+    @Override
+    public void setBackgroundDrawable(Drawable background) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N && background != null) {
+            setBackgroundDrawable(background);
+        }
     }
 
     /**

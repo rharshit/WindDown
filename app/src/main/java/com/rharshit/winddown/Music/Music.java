@@ -1,6 +1,5 @@
 package com.rharshit.winddown.Music;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,12 +7,11 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,62 +29,46 @@ import com.rharshit.winddown.Util.Theme;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-
-
-
-import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-
-
-
-        import android.app.Activity;
-        import android.media.MediaPlayer;
-        import android.os.Bundle;
-        import android.os.Handler;
-        import android.view.View;
-
-        import android.widget.Button;
-        import android.widget.ImageButton;
-        import android.widget.ImageView;
-        import android.widget.SeekBar;
-        import android.widget.TextView;
-        import android.widget.Toast;
-        import java.util.concurrent.TimeUnit;
-
 import static android.support.constraint.Constraints.TAG;
 
 
 public class Music extends AppCompatActivity {
-    private ImageButton b1,b4;
-    private ImageView iv;
-    private ImageView ivB;
-    private RelativeLayout rl;
-
+    public static int oneTimeOnly = 0;
     private static MediaPlayer mediaPlayer;
     private static boolean isPlaying;
     private static ImageButton bPlayPause;
-
-    private ImageView arrow;
-
-    private double startTime = 0;
-    private double finalTime = 0;
-
-    private Handler myHandler = new Handler();;
-    private int forwardTime = 5000;
-    private int backwardTime = 5000;
-    private SeekBar seekbar;
-    private TextView tx1,tx2,tx3, tx4, tx5;
-
     private static String album;
     private static String name;
     private static String uri;
     private static String id;
-
     int vWidth;
-
+    private ImageButton b1, b4;
+    private ImageView iv;
+    private ImageView ivB;
+    private RelativeLayout rl;
+    private ImageView arrow;
+    private double startTime = 0;
+    private double finalTime = 0;
+    private Handler myHandler = new Handler();
+    private int forwardTime = 5000;
+    private int backwardTime = 5000;
+    private SeekBar seekbar;
+    private TextView tx1, tx2, tx3, tx4, tx5;
     private Context mContext;
+    private Runnable UpdateSongTime = new Runnable() {
+        public void run() {
+            startTime = mediaPlayer.getCurrentPosition();
+            tx1.setText(String.format("%d:%d",
+                    TimeUnit.MILLISECONDS.toMinutes((long) startTime),
+                    TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
+                                    toMinutes((long) startTime)))
+            );
+            seekbar.setProgress((int) startTime);
+            myHandler.postDelayed(this, 100);
+        }
+    };
 
-    public static int oneTimeOnly = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getTheme());
@@ -94,20 +76,20 @@ public class Music extends AppCompatActivity {
         setContentView(R.layout.activity_music);
         mContext = this;
 
-        b1 = (ImageButton) findViewById(R.id.button);
+        b1 = findViewById(R.id.button);
 //        b2 = (ImageButton) findViewById(R.id.button2);
 //        b3 = (ImageButton)findViewById(R.id.button3);
-        b4 = (ImageButton)findViewById(R.id.button4);
+        b4 = findViewById(R.id.button4);
         bPlayPause = findViewById(R.id.play_pause);
 
-        iv = (ImageView)findViewById(R.id.imageView);
-        ivB = (ImageView)findViewById(R.id.imageViewBlur);
+        iv = findViewById(R.id.imageView);
+        ivB = findViewById(R.id.imageViewBlur);
         rl = findViewById(R.id.rl_music_album_art);
 
-        tx1 = (TextView)findViewById(R.id.textView2);
-        tx2 = (TextView)findViewById(R.id.textView3);
-        tx4 = (TextView)findViewById(R.id.textView4);
-        tx5 = (TextView)findViewById(R.id.textView5);
+        tx1 = findViewById(R.id.textView2);
+        tx2 = findViewById(R.id.textView3);
+        tx4 = findViewById(R.id.textView4);
+        tx5 = findViewById(R.id.textView5);
 
         arrow = findViewById(R.id.arrow_open_music_list);
         arrow.setOnClickListener(new View.OnClickListener() {
@@ -118,24 +100,24 @@ public class Music extends AppCompatActivity {
             }
         });
 
-        vWidth = getWindowManager(). getDefaultDisplay().getWidth();
+        vWidth = getWindowManager().getDefaultDisplay().getWidth();
 
         ViewGroup.LayoutParams param = ivB.getLayoutParams();
         param.width = vWidth;
         param.height = vWidth;
 
         ViewGroup.LayoutParams param2 = iv.getLayoutParams();
-        param2.width = (int) (vWidth*0.75);
-        param2.height = (int) (vWidth*0.75);
+        param2.width = (int) (vWidth * 0.75);
+        param2.height = (int) (vWidth * 0.75);
 
         ivB.setLayoutParams(param);
         iv.setLayoutParams(param2);
 
         Drawable art = ivB.getDrawable();
 
-        float s = (float) art.getIntrinsicHeight()/vWidth;
-        if(s>1){
-            s = 1/s;
+        float s = (float) art.getIntrinsicHeight() / vWidth;
+        if (s > 1) {
+            s = 1 / s;
         }
         Log.d(TAG, "onCreate: " + s);
 
@@ -143,18 +125,18 @@ public class Music extends AppCompatActivity {
                 art.getIntrinsicHeight(), vWidth,
                 s));
 
-        if (mediaPlayer == null){
+        if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(this, R.raw.song);
         } else {
             tx4.setText(name);
             tx5.setText(album);
 
             Drawable albumArt = getAlbumArt(id);
-            if(albumArt != null){
+            if (albumArt != null) {
                 iv.setImageDrawable(albumArt);
-                s = (float) albumArt.getIntrinsicHeight()/vWidth;
-                if(s>1){
-                    s = 1/s;
+                s = (float) albumArt.getIntrinsicHeight() / vWidth;
+                if (s > 1) {
+                    s = 1 / s;
                 }
                 Log.d(TAG, "onActivityResult: " + s);
 
@@ -167,7 +149,7 @@ public class Music extends AppCompatActivity {
             }
         }
         isPlaying = mediaPlayer.isPlaying();
-        seekbar = (SeekBar)findViewById(R.id.seekBar);
+        seekbar = findViewById(R.id.seekBar);
         seekbar.setClickable(false);
 
         bPlayPause.setImageDrawable(getDrawable(isPlaying
@@ -177,7 +159,7 @@ public class Music extends AppCompatActivity {
         bPlayPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isPlaying){
+                if (isPlaying) {
                     pauseSong();
                 } else {
                     playSong();
@@ -234,14 +216,14 @@ public class Music extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int temp = (int)startTime;
+                int temp = (int) startTime;
 
-                if((temp+forwardTime)<=finalTime){
+                if ((temp + forwardTime) <= finalTime) {
                     startTime = startTime + forwardTime;
                     mediaPlayer.seekTo((int) startTime);
-                    Toast.makeText(getApplicationContext(),"You have Jumped forward 5 seconds",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Cannot jump forward 5 seconds",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "You have Jumped forward 5 seconds", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Cannot jump forward 5 seconds", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -249,14 +231,14 @@ public class Music extends AppCompatActivity {
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int temp = (int)startTime;
+                int temp = (int) startTime;
 
-                if((temp-backwardTime)>0){
+                if ((temp - backwardTime) > 0) {
                     startTime = startTime - backwardTime;
                     mediaPlayer.seekTo((int) startTime);
-                    Toast.makeText(getApplicationContext(),"You have Jumped backward 5  seconds",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Cannot jump backward 5 seconds",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "You have Jumped backward 5  seconds", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Cannot jump backward 5 seconds", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -264,15 +246,17 @@ public class Music extends AppCompatActivity {
         final TextView seekBarHint = findViewById(R.id.seekbarhint);
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int y = 0;
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
                 seekBarHint.setVisibility(View.VISIBLE);
             }
-            int y=0;
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-                if (!mediaPlayer.isPlaying()){
+                if (!mediaPlayer.isPlaying()) {
                     return;
                 }
                 seekBarHint.setVisibility(View.VISIBLE);
@@ -322,7 +306,7 @@ public class Music extends AppCompatActivity {
     }
 
     private void playSong() {
-        Toast.makeText(getApplicationContext(), "Playing sound",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Playing sound", Toast.LENGTH_SHORT).show();
         mediaPlayer.start();
 
         finalTime = mediaPlayer.getDuration();
@@ -347,19 +331,19 @@ public class Music extends AppCompatActivity {
                                 startTime)))
         );
 
-        seekbar.setProgress((int)startTime);
-        myHandler.postDelayed(UpdateSongTime,100);
+        seekbar.setProgress((int) startTime);
+        myHandler.postDelayed(UpdateSongTime, 100);
     }
 
     private void pauseSong() {
-        Toast.makeText(getApplicationContext(), "Pausing sound",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Pausing sound", Toast.LENGTH_SHORT).show();
         mediaPlayer.pause();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 1){
+        if (resultCode == 1) {
             pauseSong();
             updateIsPlaying();
 
@@ -374,17 +358,17 @@ public class Music extends AppCompatActivity {
                 mediaPlayer.prepare();
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText( getApplicationContext(), "Error occured", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Error occured", Toast.LENGTH_SHORT).show();
             }
             tx4.setText(name);
             tx5.setText(album);
 
             Drawable albumArt = getAlbumArt(id);
-            if(albumArt != null){
+            if (albumArt != null) {
                 iv.setImageDrawable(albumArt);
-                float s = (float) albumArt.getIntrinsicHeight()/vWidth;
-                if(s>1){
-                    s = 1/s;
+                float s = (float) albumArt.getIntrinsicHeight() / vWidth;
+                if (s > 1) {
+                    s = 1 / s;
                 }
                 Log.d(TAG, "onActivityResult: " + s);
 
@@ -402,9 +386,9 @@ public class Music extends AppCompatActivity {
 
     private Drawable getAlbumArt(String id) {
         Cursor cursor = getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
-                new String[] {MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART},
-                MediaStore.Audio.Albums._ID+ "=?",
-                new String[] {String.valueOf(id)},
+                new String[]{MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART},
+                MediaStore.Audio.Albums._ID + "=?",
+                new String[]{String.valueOf(id)},
                 null);
 
         if (cursor.moveToFirst()) {
@@ -413,18 +397,4 @@ public class Music extends AppCompatActivity {
         }
         return null;
     }
-
-    private Runnable UpdateSongTime = new Runnable() {
-        public void run() {
-            startTime = mediaPlayer.getCurrentPosition();
-            tx1.setText(String.format("%d:%d",
-                    TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-                    TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
-                                    toMinutes((long) startTime)))
-            );
-            seekbar.setProgress((int)startTime);
-            myHandler.postDelayed(this, 100);
-        }
-    };
 }

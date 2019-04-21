@@ -4,6 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Weather {
+    public static Map<String, String> icons = new HashMap<String, String>() {{
+        put("sn", "❄️");
+        put("sl", "\uD83C\uDF28️");
+        put("h", "☄️");
+        put("t", "\uD83C\uDF29️");
+        put("hr", "️\uD83C\uDF27️");
+        put("lr", "\uD83C\uDF27️");
+        put("s", "\uD83C\uDF26️");
+        put("hc", "☁️️");
+        put("lc", "\uD83C\uDF25️️");
+        put("c", "\uD83C\uDF24️");
+    }};
     public long id;
     public String weather_state_name;
     public String weather_state_abbr;
@@ -17,17 +29,4 @@ public class Weather {
     public int humidity;
     public Float visibility;
     public int predictability;
-
-    public static Map<String, String> icons = new HashMap<String, String>() {{
-        put("sn", "❄️");
-        put("sl", "\uD83C\uDF28️");
-        put("h", "☄️");
-        put("t", "\uD83C\uDF29️");
-        put("hr", "️\uD83C\uDF27️");
-        put("lr", "\uD83C\uDF27️");
-        put("s", "\uD83C\uDF26️");
-        put("hc", "☁️️");
-        put("lc", "\uD83C\uDF25️️");
-        put("c", "\uD83C\uDF24️");
-    }};
 }

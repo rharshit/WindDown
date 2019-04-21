@@ -1,7 +1,7 @@
 package com.rharshit.winddown.Camera;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.rharshit.winddown.R;
@@ -14,11 +14,11 @@ public class Camera extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getTheme());
-        super.onCreate( savedInstanceState );
+        super.onCreate(savedInstanceState);
 
         decorView = getWindow().getDecorView();
         hideUI();
-        setContentView( R.layout.activity_camera );
+        setContentView(R.layout.activity_camera);
 
         if (null == savedInstanceState) {
             getSupportFragmentManager().beginTransaction()

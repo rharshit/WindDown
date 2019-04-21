@@ -5,32 +5,27 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rharshit.winddown.Notes.db.DBHandler;
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Notes extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,7 +43,7 @@ public class Notes extends AppCompatActivity
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mContext = this;
@@ -57,12 +52,12 @@ public class Notes extends AppCompatActivity
 
         Intent i = getIntent();
         username = i.getStringExtra("username");
-        Log.d(TAG, "onCreate: "+username);
+        Log.d(TAG, "onCreate: " + username);
 
         populateList();
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,13 +67,13 @@ public class Notes extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBar actionbar = getSupportActionBar();
@@ -98,7 +93,7 @@ public class Notes extends AppCompatActivity
         lvNotes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String[] val = ((NotesAdapter)lvNotes.getAdapter()).getValues(position);
+                String[] val = ((NotesAdapter) lvNotes.getAdapter()).getValues(position);
                 Intent i = new Intent(mContext, TakeNotes.class);
                 i.putExtra("USER", username);
                 i.putExtra("EDIT", 1);
@@ -112,7 +107,7 @@ public class Notes extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -146,10 +141,10 @@ public class Notes extends AppCompatActivity
     }
 
 
-    private ArrayList<String[]> getNotes(){
+    private ArrayList<String[]> getNotes() {
         ArrayList<String[]> list = new ArrayList<>();
         Cursor c = DBHandler.getNotes(username);
-        while (c.moveToNext()){
+        while (c.moveToNext()) {
             String[] s = new String[]{
                     c.getString(0),
                     c.getString(1),

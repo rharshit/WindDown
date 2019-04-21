@@ -13,13 +13,7 @@ import java.util.HashMap;
 
 public class DateTime extends LinearLayout {
 
-    private String date;
-    private String day;
-    private String month;
-
-    private TextView tvDay;
-
-    HashMap<Integer, String> days = new HashMap<Integer, String>(){{
+    HashMap<Integer, String> days = new HashMap<Integer, String>() {{
         put(2, "Mon");
         put(3, "Tue");
         put(4, "Wed");
@@ -28,8 +22,7 @@ public class DateTime extends LinearLayout {
         put(7, "Sat");
         put(1, "Sun");
     }};
-
-    HashMap<Integer, String> months = new HashMap<Integer, String>(){{
+    HashMap<Integer, String> months = new HashMap<Integer, String>() {{
         put(0, "Jan");
         put(1, "Feb");
         put(2, "Mar");
@@ -43,6 +36,10 @@ public class DateTime extends LinearLayout {
         put(10, "Nov");
         put(11, "Dec");
     }};
+    private String date;
+    private String day;
+    private String month;
+    private TextView tvDay;
 
     public DateTime(Context context) {
         super(context);
@@ -64,7 +61,7 @@ public class DateTime extends LinearLayout {
         update();
     }
 
-    public void update(){
+    public void update() {
         Calendar c = Calendar.getInstance();
 
         date = "" + c.get(Calendar.DAY_OF_MONTH);

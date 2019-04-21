@@ -120,19 +120,19 @@ public class Notification implements Parcelable {
         return 0;
     }
 
-    public String getGroupKey(){
+    public String getGroupKey() {
         return groupKey;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public String getKey(){
+    public String getKey() {
         return key;
     }
 
-    public String getOverrideGroupKey(){
+    public String getOverrideGroupKey() {
         return overrideGroupKey;
     }
 
@@ -140,27 +140,27 @@ public class Notification implements Parcelable {
         return packageName;
     }
 
-    public long getPostTime(){
+    public long getPostTime() {
         return postTime;
     }
 
-    public String getTag(){
+    public String getTag() {
         return tag;
     }
 
-    public UserHandle getUser(){
+    public UserHandle getUser() {
         return user;
     }
 
-    public int getUserId(){
+    public int getUserId() {
         return userId;
     }
 
-    public boolean isClearable(){
+    public boolean isClearable() {
         return clearable;
     }
 
-    public boolean isGroup(){
+    public boolean isGroup() {
         return group;
     }
 
@@ -168,31 +168,31 @@ public class Notification implements Parcelable {
         return ongoing;
     }
 
-    public String getChannelId(){
+    public String getChannelId() {
         return nChannelId;
     }
 
-    public String getGroup(){
+    public String getGroup() {
         return nGroup;
     }
 
-    public Icon getLargeIcon(){
+    public Icon getLargeIcon() {
         return nLargeIcon;
     }
 
-    public String getShortcutId(){
+    public String getShortcutId() {
         return nShortcutId;
     }
 
-    public Icon getSmallIcon(){
+    public Icon getSmallIcon() {
         return nSmallIcon;
     }
 
-    public String getSortKey(){
+    public String getSortKey() {
         return nSortKey;
     }
 
-    public long getTimeoutAfter(){
+    public long getTimeoutAfter() {
         return nTimeoutAfter;
     }
 }

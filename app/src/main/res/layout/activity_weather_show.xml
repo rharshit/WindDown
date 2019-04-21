@@ -9,33 +9,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
         android:paddingTop="32dp"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <TextView
+                android:id="@+id/city_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="40sp"
-                android:text="City"
                 android:fontFamily="@font/medium"
+                android:text="City"
                 android:textAlignment="center"
-                android:id="@+id/city_name"/>
+                android:textSize="40sp" />
+
             <TextView
+                android:id="@+id/lat_long"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="16sp"
                 android:text="lat,long"
                 android:textAlignment="center"
-                android:id="@+id/lat_long"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
         <Space
@@ -47,22 +49,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <TextView
+                android:id="@+id/weather_state_abbr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="100sp"
                 android:text=""
-                android:id="@+id/weather_state_abbr"/>
+                android:textSize="100sp" />
+
             <TextView
+                android:id="@+id/weather_state_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="42sp"
                 android:text="Fetching"
-                android:id="@+id/weather_state_name"/>
+                android:textSize="42sp" />
         </LinearLayout>
 
         <Space
@@ -74,36 +78,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/the_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="40sp"
                     android:layout_gravity="center"
                     android:text="Fetching"
-                    android:id="@+id/the_temp"/>
+                    android:textSize="40sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="36sp"
                     android:layout_gravity="start"
-                    android:text="C"/>
+                    android:text="C"
+                    android:textSize="36sp" />
             </LinearLayout>
+
             <TextView
+                android:id="@+id/humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="24sp"
                 android:text="Fetching"
                 android:textAlignment="center"
-                android:id="@+id/humidity"/>
+                android:textSize="24sp" />
         </LinearLayout>
+
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

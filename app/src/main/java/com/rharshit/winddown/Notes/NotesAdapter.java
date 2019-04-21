@@ -1,12 +1,9 @@
 package com.rharshit.winddown.Notes;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
-import com.rharshit.winddown.R;
 
 import java.util.ArrayList;
 
@@ -15,7 +12,7 @@ public class NotesAdapter extends BaseAdapter {
     private ArrayList<String[]> list;
     private Context mContext;
 
-    public NotesAdapter(Context mContext, ArrayList<String[]> list){
+    public NotesAdapter(Context mContext, ArrayList<String[]> list) {
         this.mContext = mContext;
         this.list = list;
     }
@@ -42,7 +39,7 @@ public class NotesAdapter extends BaseAdapter {
         return item;
     }
 
-    public String[] getValues(int position){
+    public String[] getValues(int position) {
         return list.get(position);
     }
 }

@@ -10,7 +10,6 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 
 public class NotificationListener extends NotificationListenerService {
     private String TAG = this.getClass().getSimpleName();
@@ -47,7 +46,7 @@ public class NotificationListener extends NotificationListenerService {
         i.putExtras(bundle);
         i.putExtra("ACTION", 1);
         CharSequence csTicker = sbn.getNotification().tickerText;
-        i.putExtra("TICKER_TEXT", csTicker==null? "null" : csTicker.toString());
+        i.putExtra("TICKER_TEXT", csTicker == null ? "null" : csTicker.toString());
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 
     }
@@ -64,7 +63,7 @@ public class NotificationListener extends NotificationListenerService {
         i.putExtras(bundle);
         i.putExtra("ACTION", 2);
         CharSequence csTicker = sbn.getNotification().tickerText;
-        i.putExtra("TICKER_TEXT", csTicker==null? "null" : csTicker.toString());
+        i.putExtra("TICKER_TEXT", csTicker == null ? "null" : csTicker.toString());
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
     }
 
@@ -83,7 +82,7 @@ public class NotificationListener extends NotificationListenerService {
                     i.putExtras(bundle);
                     i.putExtra("ACTION", 0);
                     CharSequence csTicker = sbn.getNotification().tickerText;
-                    i.putExtra("TICKER_TEXT", csTicker==null? "null" : csTicker.toString());
+                    i.putExtra("TICKER_TEXT", csTicker == null ? "null" : csTicker.toString());
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(i);
 //                    Log.i(TAG, "ID :" + sbn.getId() + "\t" + sbn.getNotification().tickerText + "\t" + n.getPackageName());
                 }

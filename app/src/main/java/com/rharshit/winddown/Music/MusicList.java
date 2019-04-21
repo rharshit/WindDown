@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,9 +21,9 @@ import java.util.ArrayList;
 public class MusicList extends AppCompatActivity {
 
     private static final String TAG = "MusicList";
-    private Context mContext;
     ArrayList<String[]> list;
     ListView lv;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MusicList extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String[] s = ((MusicAdapter)lv.getAdapter()).getValues(position);
+                String[] s = ((MusicAdapter) lv.getAdapter()).getValues(position);
                 Intent i = new Intent();
                 i.putExtra("URI", s[0]);
                 i.putExtra("NAME", s[1]);
@@ -69,20 +69,17 @@ public class MusicList extends AppCompatActivity {
         Cursor cur = cr.query(uri, null, selection, null, sortOrder);
         int count = 0;
 
-        if(cur != null)
-        {
+        if (cur != null) {
             count = cur.getCount();
 
-            if(count > 0)
-            {
-                while(cur.moveToNext())
-                {
+            if (count > 0) {
+                while (cur.moveToNext()) {
                     String path = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.DATA));
                     String name = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
                     String album = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.ALBUM));
                     String id = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
                     Log.d(TAG, "getSongList: " + path + " " + name + " " + album + " " + id);
-                    String[] s = new String[] {path, name, album, id};
+                    String[] s = new String[]{path, name, album, id};
                     list.add(s);
                 }
 

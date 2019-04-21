@@ -26,22 +26,21 @@ import android.widget.Toast;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.lifeofcoding.cacheutlislibrary.CacheUtils;
+import com.rharshit.winddown.R;
+import com.rharshit.winddown.Util.Theme;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-import com.rharshit.winddown.R;
-import com.rharshit.winddown.Util.Theme;
-
 public class Messages extends AppCompatActivity {
 
     static final int REQUEST_PERMISSION_KEY = 1;
+    static Messages inst;
     ArrayList<HashMap<String, String>> smsList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> tmpList = new ArrayList<HashMap<String, String>>();
-    static Messages inst;
     LoadSms loadsmsTask;
-    InboxAdapter adapter, tmpadapter;;
+    InboxAdapter adapter, tmpadapter;
     ListView listView;
     FloatingActionButton fab_new;
     ProgressBar loader;
@@ -56,9 +55,9 @@ public class Messages extends AppCompatActivity {
 
         CacheUtils.configureCache(this);
 
-        listView = (ListView) findViewById(R.id.listView);
-        loader = (ProgressBar) findViewById(R.id.loader);
-        fab_new = (FloatingActionButton) findViewById(R.id.fab_new);
+        listView = findViewById(R.id.listView);
+        loader = findViewById(R.id.loader);
+        fab_new = findViewById(R.id.fab_new);
 
         listView.setEmptyView(loader);
 
@@ -70,11 +69,10 @@ public class Messages extends AppCompatActivity {
         });
     }
 
-    public void init()
-    {
+    public void init() {
         smsList.clear();
-        try{
-            tmpList = (ArrayList<HashMap<String, String>>)Function.readCachedFile  (Messages.this, "smsapp");
+        try {
+            tmpList = (ArrayList<HashMap<String, String>>) Function.readCachedFile(Messages.this, "smsapp");
             tmpadapter = new InboxAdapter(Messages.this, tmpList);
             listView.setAdapter(tmpadapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,11 +86,48 @@ public class Messages extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-        }catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_PERMISSION_KEY: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    init();
+                    loadsmsTask = new LoadSms();
+                    loadsmsTask.execute();
+                } else {
+                    Toast.makeText(Messages.this, "You must accept permissions.", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String[] PERMISSIONS = {Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
+        if (!Function.hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_KEY);
+        } else {
+            init();
+            loadsmsTask = new LoadSms();
+            loadsmsTask.execute();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+    }
 
     class LoadSms extends AsyncTask<String, Void, String> {
         @Override
@@ -110,7 +145,7 @@ public class Messages extends AppCompatActivity {
                 Cursor inbox = getContentResolver().query(uriInbox, null, "address IS NOT NULL) GROUP BY (thread_id", null, null); // 2nd null = "address IS NOT NULL) GROUP BY (address"
                 Uri uriSent = Uri.parse("content://sms/sent");
                 Cursor sent = getContentResolver().query(uriSent, null, "address IS NOT NULL) GROUP BY (thread_id", null, null); // 2nd null = "address IS NOT NULL) GROUP BY (address"
-                Cursor c = new MergeCursor(new Cursor[]{inbox,sent}); // Attaching inbox and sent sms
+                Cursor c = new MergeCursor(new Cursor[]{inbox, sent}); // Attaching inbox and sent sms
 
 
                 if (c.moveToFirst()) {
@@ -125,10 +160,8 @@ public class Messages extends AppCompatActivity {
                         phone = c.getString(c.getColumnIndexOrThrow("address"));
 
 
-
                         name = CacheUtils.readFile(thread_id);
-                        if(name == null)
-                        {
+                        if (name == null) {
                             name = Function.getContactbyPhoneNumber(getApplicationContext(), c.getString(c.getColumnIndexOrThrow("address")));
                             CacheUtils.writeFile(thread_id, name);
                         }
@@ -140,7 +173,7 @@ public class Messages extends AppCompatActivity {
                 }
                 c.close();
 
-            }catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -151,9 +184,10 @@ public class Messages extends AppCompatActivity {
             smsList.addAll(purified);
 
             // Updating cache data
-            try{
-                Function.createCachedFile (Messages.this,"smsapp", smsList);
-            }catch (Exception e) {}
+            try {
+                Function.createCachedFile(Messages.this, "smsapp", smsList);
+            } catch (Exception e) {
+            }
             // Updating cache data
 
             return xml;
@@ -162,8 +196,7 @@ public class Messages extends AppCompatActivity {
         @Override
         protected void onPostExecute(String xml) {
 
-            if(!tmpList.equals(smsList))
-            {
+            if (!tmpList.equals(smsList)) {
                 adapter = new InboxAdapter(Messages.this, smsList);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -179,77 +212,29 @@ public class Messages extends AppCompatActivity {
             }
 
 
-
         }
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode)
-        {
-            case REQUEST_PERMISSION_KEY: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                {
-                    init();
-                    loadsmsTask = new LoadSms();
-                    loadsmsTask.execute();
-                } else
-                {
-                    Toast.makeText(Messages.this, "You must accept permissions.", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        String[] PERMISSIONS = {Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS,
-                Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS};
-        if(!Function.hasPermissions(this, PERMISSIONS)){
-            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_KEY);
-        }else{
-            init();
-            loadsmsTask = new LoadSms();
-            loadsmsTask.execute();
-        }
-    }
-
-
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
     }
 
 }
 
 
-
-
-
-
-
 class InboxAdapter extends BaseAdapter {
     private Activity activity;
-    private ArrayList<HashMap< String, String >> data;
-    public InboxAdapter(Activity a, ArrayList < HashMap < String, String >> d) {
+    private ArrayList<HashMap<String, String>> data;
+
+    public InboxAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
         activity = a;
         data = d;
     }
+
     public int getCount() {
         return data.size();
     }
+
     public Object getItem(int position) {
         return position;
     }
+
     public long getItemId(int position) {
         return position;
     }
@@ -261,10 +246,10 @@ class InboxAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(activity).inflate(
                     R.layout.conversation_list_item, parent, false);
 
-            holder.inbox_thumb = (ImageView) convertView.findViewById(R.id.inbox_thumb);
-            holder.inbox_user = (TextView) convertView.findViewById(R.id.inbox_user);
-            holder.inbox_msg = (TextView) convertView.findViewById(R.id.inbox_msg);
-            holder.inbox_date = (TextView) convertView.findViewById(R.id.inbox_date);
+            holder.inbox_thumb = convertView.findViewById(R.id.inbox_thumb);
+            holder.inbox_user = convertView.findViewById(R.id.inbox_user);
+            holder.inbox_msg = convertView.findViewById(R.id.inbox_msg);
+            holder.inbox_date = convertView.findViewById(R.id.inbox_date);
 
             convertView.setTag(holder);
         } else {
@@ -275,7 +260,7 @@ class InboxAdapter extends BaseAdapter {
         holder.inbox_msg.setId(position);
         holder.inbox_date.setId(position);
 
-        HashMap < String, String > song = new HashMap < String, String > ();
+        HashMap<String, String> song = new HashMap<String, String>();
         song = data.get(position);
         try {
             holder.inbox_user.setText(song.get(Function.KEY_NAME));
@@ -288,7 +273,8 @@ class InboxAdapter extends BaseAdapter {
             TextDrawable drawable = TextDrawable.builder()
                     .buildRound(firstLetter, color);
             holder.inbox_thumb.setImageDrawable(drawable);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return convertView;
     }
 }

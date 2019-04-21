@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,13 +19,13 @@ import com.rharshit.winddown.Util.Theme;
 
 public class Signup extends AppCompatActivity {
 
+    Color textColor;
     private Context mContext;
     private EditText etUser;
     private EditText etPass;
     private EditText etConf;
     private Button signup;
     private TextView tvExisting;
-    Color textColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +47,14 @@ public class Signup extends AppCompatActivity {
                 String u = etUser.getText().toString();
                 String p = etPass.getText().toString();
                 String c = etConf.getText().toString();
-                if(c.equals(p)){
-                    if(p.length()<6){
-                        Toast.makeText( getApplicationContext(), "Password must be at east 6 char long", Toast.LENGTH_LONG).show();
+                if (c.equals(p)) {
+                    if (p.length() < 6) {
+                        Toast.makeText(getApplicationContext(), "Password must be at east 6 char long", Toast.LENGTH_LONG).show();
                     } else {
                         createUser(u, p);
                     }
                 } else {
-                    Toast.makeText( getApplicationContext(), "Please check the password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Please check the password", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -75,22 +73,22 @@ public class Signup extends AppCompatActivity {
 
     private void createUser(String u, String p) {
         boolean res = DBHandler.insertUser(u, p);
-        if(res){
-            Toast.makeText( getApplicationContext(),
+        if (res) {
+            Toast.makeText(getApplicationContext(),
                     "Created new user", Toast.LENGTH_SHORT).show();
             Intent i = new Intent();
             i.putExtra("username", u);
             setResult(1, i);
             finish();
         } else {
-            Toast.makeText( getApplicationContext(),
+            Toast.makeText(getApplicationContext(),
                     "Username already exists", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void getUsers(){
+    private void getUsers() {
         Cursor users = DBHandler.getAllUsers();
-        while(users.moveToNext()){
+        while (users.moveToNext()) {
             Log.d("Notes", "getUsers: " + users.getString(0));
         }
     }

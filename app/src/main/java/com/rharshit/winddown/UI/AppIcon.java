@@ -1,30 +1,21 @@
 package com.rharshit.winddown.UI;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.rharshit.winddown.Phone.Phone;
-import com.rharshit.winddown.R;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
 public class AppIcon extends LinearLayout {
 
+    private static int width = 0;
     private final Context mContext;
     private final ImageView appIcon;
     private final String appName;
     private final TextView tvAppName;
-    private static int width = 0;
-
     public TextView debug;
 
     public AppIcon(Context context, int w, int h, Drawable icon, String name, OnClickListener onClick) {

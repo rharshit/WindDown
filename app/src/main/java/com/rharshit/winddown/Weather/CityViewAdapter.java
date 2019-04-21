@@ -18,7 +18,7 @@ public class CityViewAdapter extends BaseAdapter {
     private List<City> cities;
     private Context mContext;
 
-    public CityViewAdapter(Context mContext, List<City> cities){
+    public CityViewAdapter(Context mContext, List<City> cities) {
         this.mContext = mContext;
         this.cities = cities;
     }

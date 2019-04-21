@@ -3,8 +3,8 @@ package com.rharshit.winddown.Weather;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,10 +15,10 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.rharshit.winddown.Weather.api.ApiHandler;
-import com.rharshit.winddown.Weather.api.City;
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
+import com.rharshit.winddown.Weather.api.ApiHandler;
+import com.rharshit.winddown.Weather.api.City;
 
 import java.util.List;
 
@@ -77,7 +77,7 @@ public class Weather extends AppCompatActivity {
                 String query = etSearch.getText().toString();
                 Log.d(TAG, "afterTextChanged: City: " + query);
 
-                if(query.equals("")){
+                if (query.equals("")) {
                     ibClear.setVisibility(View.INVISIBLE);
                 } else {
                     ibClear.setVisibility(View.VISIBLE);
@@ -91,7 +91,7 @@ public class Weather extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<List<City>> call, Throwable t) {
-                            Toast.makeText( getApplicationContext(), "Failed retrieving data",
+                            Toast.makeText(getApplicationContext(), "Failed retrieving data",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
