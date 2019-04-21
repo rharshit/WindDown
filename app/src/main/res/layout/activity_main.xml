@@ -25,7 +25,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/llWindDown">
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"

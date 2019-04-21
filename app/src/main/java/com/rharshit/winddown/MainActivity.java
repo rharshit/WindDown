@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private NotificationReceiver nReceiver;
 
     private static int theme = R.style.AppThemeLight;
-    private TextView tvWindDown;
+    private LinearLayout llWindDown;
 
     private HorizontalScrollView hsView;
     private LinearLayout llScroll;
@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
         gvNotification.setColumnCount(nCol);
 //        Log.d(TAG, "init: " + nIconWidth + " " + llWidth + " " + nCol);
 
-        tvWindDown = findViewById(R.id.tvWindDown);
-        tvWindDown.setOnClickListener(new View.OnClickListener() {
+        llWindDown = findViewById(R.id.llWindDown);
+        llWindDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Switching");
