@@ -7,7 +7,6 @@
         android:id="@+id/galleryGridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
         android:clipToPadding="false"
         android:gravity="center"
         android:horizontalSpacing="12dp"
