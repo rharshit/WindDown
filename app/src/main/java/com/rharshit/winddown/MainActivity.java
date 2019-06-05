@@ -1,9 +1,7 @@
 package com.rharshit.winddown;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
@@ -15,6 +13,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.DisplayMetrics;
@@ -25,7 +24,6 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rharshit.winddown.Camera.Camera;
 import com.rharshit.winddown.Contacts.Contacts;
@@ -36,7 +34,6 @@ import com.rharshit.winddown.Notes.Login;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIconAdapter;
 import com.rharshit.winddown.UI.AppIconData;
-import com.rharshit.winddown.UI.AppIconSnapHelper;
 import com.rharshit.winddown.UI.DateTime;
 import com.rharshit.winddown.UI.NotificationView;
 import com.rharshit.winddown.Util.Notification;
@@ -161,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         rvHorizontallApp.setAdapter(appIconAdapter);
         rvHorizontallApp.setLayoutManager(new LinearLayoutManager(
                 mContext, LinearLayoutManager.HORIZONTAL, false));
-        SnapHelper snapHelper = new AppIconSnapHelper();
+        SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(rvHorizontallApp);
     }
 
