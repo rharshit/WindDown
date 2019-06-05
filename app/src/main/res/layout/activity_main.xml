@@ -47,47 +47,19 @@
                     android:textSize="40sp" />
             </LinearLayout>
 
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <HorizontalScrollView
-                    android:id="@+id/hsMainScrollView"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_horizontal_app_scroll"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:id="@+id/llHorizintalScroll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal" />
-                </HorizontalScrollView>
-
-                <!--<ImageView-->
-                <!--android:layout_width="96dp"-->
-                <!--android:layout_height="128dp"-->
-                <!--android:padding="32dp"-->
-                <!--android:paddingStart="0dp"-->
-                <!--android:src="@drawable/arrow_left"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_alignParentStart="true"-->
-                <!--android:id="@+id/scrollLeft"-->
-                <!--android:background="@android:color/transparent"-->
-                <!--android:scaleType="fitCenter"/>-->
-
-                <!--<ImageView-->
-                <!--android:layout_width="96dp"-->
-                <!--android:layout_height="128dp"-->
-                <!--android:padding="32dp"-->
-                <!--android:paddingEnd="0dp"-->
-                <!--android:src="@drawable/arrow_right"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:id="@+id/scrollRight"-->
-                <!--android:background="@android:color/transparent"-->
-                <!--android:scaleType="fitCenter"/>-->
-            </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"

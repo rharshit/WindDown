@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +35,8 @@ import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Notes.Login;
 import com.rharshit.winddown.Phone.Phone;
 import com.rharshit.winddown.UI.AppIcon;
+import com.rharshit.winddown.UI.AppIconAdapter;
+import com.rharshit.winddown.UI.AppIconData;
 import com.rharshit.winddown.UI.DateTime;
 import com.rharshit.winddown.UI.NotificationView;
 import com.rharshit.winddown.Util.Notification;
@@ -40,6 +44,7 @@ import com.rharshit.winddown.Util.Theme;
 import com.rharshit.winddown.Weather.Weather;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,9 +54,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvNotification;
     private NotificationReceiver nReceiver;
     private LinearLayout llWindDown;
+    private AppIconAdapter appIconAdapter;
 
-    private HorizontalScrollView hsView;
-    private LinearLayout llScroll;
+//    private HorizontalScrollView hsView;
+//    private LinearLayout llScroll;
+    private RecyclerView rvHorizontallApp;
     private LinearLayout llMainScroll;
     private LinearLayout llNotification;
     private GridLayout gvNotification;
@@ -71,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
         vHeight = displayMetrics.heightPixels;
         vWidth = displayMetrics.widthPixels;
 
-        hsView = findViewById(R.id.hsMainScrollView);
-        llScroll = findViewById(R.id.llHorizintalScroll);
+//        hsView = findViewById(R.id.hsMainScrollView);
+//        llScroll = findViewById(R.id.llHorizintalScroll);
+        rvHorizontallApp = findViewById(R.id.rv_horizontal_app_scroll);
         llMainScroll = findViewById(R.id.llVerticalScroll);
         llNotification = findViewById(R.id.llNotifivationView);
         gvNotification = findViewById(R.id.gvNotificaiton);
@@ -82,15 +90,15 @@ public class MainActivity extends AppCompatActivity {
 
         showNotificaitons = true;
 
-        hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                for (int i = 0; i < nChild; i++) {
-                    AppIcon tmp = (AppIcon) llScroll.getChildAt(i);
-                    tmp.updateView();
-                }
-            }
-        });
+//        hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                for (int i = 0; i < nChild; i++) {
+//                    AppIcon tmp = (AppIcon) llScroll.getChildAt(i);
+//                    tmp.updateView();
+//                }
+//            }
+//        });
 
         int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_blur_dimen)
                 + 2 * getResources().getInteger(R.integer.notification_icon_blur_radius));
@@ -147,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         populate();
         notificationListener();
         getNotifications();
-        nChild = llScroll.getChildCount();
+//        nChild = llScroll.getChildCount();
     }
 
     @Override
@@ -164,9 +172,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void populate() {
-        llScroll.addView(
-                new AppIcon(this, vWidth, vHeight,
-                        getResources().getDrawable(R.drawable.ic_phone), "Phone", new View.OnClickListener() {
+        appIconAdapter = new AppIconAdapter(getApps(), mContext);
+        rvHorizontallApp.setAdapter(appIconAdapter);
+        rvHorizontallApp.setLayoutManager(new LinearLayoutManager(
+                mContext, LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    private List<AppIconData> getApps() {
+        List<AppIconData> apps = new ArrayList<>();
+        apps.add(new AppIconData(getResources().getDrawable(R.drawable.ic_phone), "Phone", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Phone.class);
@@ -174,9 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
-        llScroll.addView(
-                new AppIcon(this, vWidth, vHeight,
-                        getResources().getDrawable(R.drawable.ic_contacts), "Contacts", new View.OnClickListener() {
+        apps.add(new AppIconData(getResources().getDrawable(R.drawable.ic_contacts), "Contacts", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Contacts.class);
@@ -184,9 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
-        llScroll.addView(
-                new AppIcon(this, vWidth, vHeight,
-                        getResources().getDrawable(R.drawable.ic_message), "Messages", new View.OnClickListener() {
+        apps.add(new AppIconData(getResources().getDrawable(R.drawable.ic_message), "Messages", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Messages.class);
@@ -194,9 +204,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
-        llScroll.addView(
-                new AppIcon(this, vWidth, vHeight,
-                        getResources().getDrawable(R.drawable.ic_notes), "Notes", new View.OnClickListener() {
+        apps.add(new AppIconData(getResources().getDrawable(R.drawable.ic_notes), "Notes", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Login.class);
@@ -204,9 +212,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
-        llScroll.addView(
-                new AppIcon(this, vWidth, vHeight,
-                        getResources().getDrawable(R.drawable.ic_camera), "Camera", new View.OnClickListener() {
+        apps.add(new AppIconData(getResources().getDrawable(R.drawable.ic_camera), "Camera", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Camera.class);
@@ -214,9 +220,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
-        llScroll.addView(
-                new AppIcon(this, vWidth, vHeight,
-                        getResources().getDrawable(R.drawable.ic_gallery), "Gallery", new View.OnClickListener() {
+        apps.add(new AppIconData(getResources().getDrawable(R.drawable.ic_gallery), "Gallery", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Gallery.class);
@@ -224,9 +228,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
-        llScroll.addView(
-                new AppIcon(this, vWidth, vHeight,
-                        getResources().getDrawable(R.drawable.ic_music), "Music", new View.OnClickListener() {
+        apps.add(new AppIconData(getResources().getDrawable(R.drawable.ic_music), "Music", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Music.class);
@@ -234,9 +236,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
-        llScroll.addView(
-                new AppIcon(this, vWidth, vHeight,
-                        getResources().getDrawable(R.drawable.ic_weather), "Weather", new View.OnClickListener() {
+        apps.add(new AppIconData(getResources().getDrawable(R.drawable.ic_weather), "Weather", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, Weather.class);
@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         );
+        return apps;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
