@@ -16,12 +16,12 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -34,9 +34,9 @@ import com.rharshit.winddown.Messages.Messages;
 import com.rharshit.winddown.Music.Music;
 import com.rharshit.winddown.Notes.Login;
 import com.rharshit.winddown.Phone.Phone;
-import com.rharshit.winddown.UI.AppIcon;
 import com.rharshit.winddown.UI.AppIconAdapter;
 import com.rharshit.winddown.UI.AppIconData;
+import com.rharshit.winddown.UI.AppIconSnapHelper;
 import com.rharshit.winddown.UI.DateTime;
 import com.rharshit.winddown.UI.NotificationView;
 import com.rharshit.winddown.Util.Notification;
@@ -48,7 +48,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int theme = R.style.AppThemeLight;
     private String TAG = "MainActivity";
     private Context mContext;
     private TextView tvNotification;
@@ -56,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llWindDown;
     private AppIconAdapter appIconAdapter;
 
-//    private HorizontalScrollView hsView;
-//    private LinearLayout llScroll;
     private RecyclerView rvHorizontallApp;
     private LinearLayout llMainScroll;
     private LinearLayout llNotification;
@@ -78,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
         vHeight = displayMetrics.heightPixels;
         vWidth = displayMetrics.widthPixels;
 
-//        hsView = findViewById(R.id.hsMainScrollView);
-//        llScroll = findViewById(R.id.llHorizintalScroll);
         rvHorizontallApp = findViewById(R.id.rv_horizontal_app_scroll);
         llMainScroll = findViewById(R.id.llVerticalScroll);
         llNotification = findViewById(R.id.llNotifivationView);
@@ -89,16 +84,6 @@ public class MainActivity extends AppCompatActivity {
         llDateTime = findViewById(R.id.llDateTime);
 
         showNotificaitons = true;
-
-//        hsView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                for (int i = 0; i < nChild; i++) {
-//                    AppIcon tmp = (AppIcon) llScroll.getChildAt(i);
-//                    tmp.updateView();
-//                }
-//            }
-//        });
 
         int nIconWidth = (int) (getResources().getDimension(R.dimen.notification_icon_blur_dimen)
                 + 2 * getResources().getInteger(R.integer.notification_icon_blur_radius));
@@ -176,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
         rvHorizontallApp.setAdapter(appIconAdapter);
         rvHorizontallApp.setLayoutManager(new LinearLayoutManager(
                 mContext, LinearLayoutManager.HORIZONTAL, false));
+        SnapHelper snapHelper = new AppIconSnapHelper();
+        snapHelper.attachToRecyclerView(rvHorizontallApp);
     }
 
     private List<AppIconData> getApps() {
@@ -289,34 +276,34 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-    private void showNotifications(NotificationView nv) {
-        ArrayList<String> notifications = nv.getNotifications();
-        String msg = "";
-        for (String notification : notifications) {
-            msg += "\n" + notification + "\n";
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        })
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //  Action for 'NO' Button
-                        dialog.cancel();
-                        Toast.makeText(getApplicationContext(), "Dismissed",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        AlertDialog alert = builder.create();
-        alert.setTitle(nv.getAppName());
-        alert.setMessage(msg);
-        alert.setIcon(nv.getIcon());
-        alert.show();
-    }
+//    private void showNotifications(NotificationView nv) {
+//        ArrayList<String> notifications = nv.getNotifications();
+//        String msg = "";
+//        for (String notification : notifications) {
+//            msg += "\n" + notification + "\n";
+//        }
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//                dialog.cancel();
+//            }
+//        })
+//                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        //  Action for 'NO' Button
+//                        dialog.cancel();
+//                        Toast.makeText(getApplicationContext(), "Dismissed",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//        AlertDialog alert = builder.create();
+//        alert.setTitle(nv.getAppName());
+//        alert.setMessage(msg);
+//        alert.setIcon(nv.getIcon());
+//        alert.show();
+//    }
 
     private void removeNotification(Notification n, String ticker) {
         for (int i = 0; i < gvNotification.getChildCount(); i++) {
@@ -342,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             Notification n = bundle.getParcelable("NOTIFICATION");
             int action = intent.getIntExtra("ACTION", 3);
-            String ticker = "null";
+            String ticker;
             switch (action) {
                 case 0:
 //                    Log.d(TAG, "onReceive: Notificaiton List");
