@@ -3,23 +3,25 @@ package com.rharshit.winddown.UI;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.rharshit.winddown.R;
 
-import java.util.Collections;
 import java.util.List;
 
 public class AppIconAdapter extends RecyclerView.Adapter<AppIconViewHolder> {
 
-    List<AppIconData> apps = Collections.emptyList();
+    List<AppIconData> apps;
+    AppIconViewHolder[] appViewHolder;
     Context mContext;
 
     public AppIconAdapter(List<AppIconData> apps, Context context){
         this.apps = apps;
         this.mContext = context;
+        appViewHolder = new AppIconViewHolder[apps.size()];
     }
 
     @NonNull
@@ -37,6 +39,7 @@ public class AppIconAdapter extends RecyclerView.Adapter<AppIconViewHolder> {
         appIconViewHolder.appIcon.setImageDrawable(apps.get(i).icon);
         appIconViewHolder.tvAppName.setText(apps.get(i).name);
         appIconViewHolder.itemView.setOnClickListener(apps.get(i).onClick);
+        appViewHolder[i] = appIconViewHolder;
     }
 
     @Override
@@ -47,5 +50,13 @@ public class AppIconAdapter extends RecyclerView.Adapter<AppIconViewHolder> {
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public void updateViews() {
+        for (AppIconViewHolder view : appViewHolder) {
+            if (view != null) {
+                view.updateView();
+            }
+        }
     }
 }

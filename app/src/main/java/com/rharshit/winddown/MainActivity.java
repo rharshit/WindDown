@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -160,6 +161,16 @@ public class MainActivity extends AppCompatActivity {
                 mContext, LinearLayoutManager.HORIZONTAL, false));
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(rvHorizontallApp);
+        rvHorizontallApp.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                for (int i = 0; i < recyclerView.getChildCount(); i++) {
+                    ((AppIconAdapter) recyclerView.getAdapter())
+                            .updateViews();
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     private List<AppIconData> getApps() {
