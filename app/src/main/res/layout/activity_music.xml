@@ -10,8 +10,7 @@
     <RelativeLayout
         android:id="@+id/rl_music_album_art"
         android:layout_width="match_parent"
-        android:layout_height="432dp"
-        android:paddingTop="32sp"
+        android:layout_height="400dp"
         android:foregroundGravity="center"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent">

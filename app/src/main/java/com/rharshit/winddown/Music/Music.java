@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Music extends AppCompatActivity {
     private static final String TAG = "Music";
+    private static final float albumArtMarginFactor = 0.1f;
     public static int oneTimeOnly = 0;
     private static MediaPlayer mediaPlayer;
     private static boolean isPlaying;
@@ -110,11 +111,17 @@ public class Music extends AppCompatActivity {
         param.height = vWidth;
 
         ViewGroup.LayoutParams param2 = iv.getLayoutParams();
-        param2.width = (int) (vWidth * 0.75);
-        param2.height = (int) (vWidth * 0.75);
+        param2.width = (int) (vWidth * (1 - 2 * albumArtMarginFactor));
+        param2.height = (int) (vWidth * (1 - 2 * albumArtMarginFactor));
 
         ivB.setLayoutParams(param);
         iv.setLayoutParams(param2);
+
+        ViewGroup.LayoutParams rlParam = rl.getLayoutParams();
+        rlParam.width = vWidth;
+        rlParam.height = (int) (vWidth * (1 + albumArtMarginFactor));
+        rl.setPadding(0, (int) (vWidth * albumArtMarginFactor), 0, 0);
+        rl.setLayoutParams(rlParam);
 
         Drawable art = ivB.getDrawable();
 
