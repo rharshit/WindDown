@@ -24,7 +24,8 @@ public class Blur {
 
     public static Bitmap transform(Context context, Bitmap source, float radius,
                                    float dimenX, float dimenY, float dimenBlurX, float dimenBlurY, float s) {
-        return process(context, source, radius, dimenX, dimenY, dimenBlurX, dimenBlurY, s);
+        Bitmap pad = addPadding(source, radius, dimenX, dimenY, dimenBlurX, dimenBlurY);
+        return process(context, pad, radius, dimenX, dimenY, dimenBlurX, dimenBlurY, s);
     }
 
     public static Bitmap process(Context context, Bitmap source, float radius,
@@ -58,6 +59,10 @@ public class Blur {
         return rtn;
     }
 
+    public static Bitmap transform(Context context, Bitmap source, float radius, float dimen, float dimenBLur, float s) {
+        return transform(context, source, radius, dimen, dimen, dimenBLur, dimenBLur, s);
+    }
+
     public static Bitmap transform(Context context, Drawable source, float radius,
                                    float dimenX, float dimenY, float dimenBlurX, float dimenBllurY) {
         return process(context, convertToBitmap(source, (int) dimenX, (int) dimenY, radius),
@@ -69,7 +74,7 @@ public class Blur {
     }
 
     public static Bitmap transform(Context context, Drawable source, float radius, float dimen, float dimenBLur) {
-        return transform(context, convertToBitmap(source, (int) dimen, (int) dimen, radius), radius, dimen, dimen, dimenBLur, dimenBLur);
+        return process(context, convertToBitmap(source, (int) dimen, (int) dimen, radius), radius, dimen, dimen, dimenBLur, dimenBLur);
     }
 
     public static Bitmap transform(Context context, Drawable source, float radius, float dimen, float dimenBLur, float s) {
@@ -82,6 +87,16 @@ public class Blur {
         drawable.setBounds((int) (2 * radius / SCALE), (int) (2 * radius / SCALE),
                 widthPixels + (int) (2 * radius / SCALE), heightPixels + (int) (2 * radius / SCALE));
         drawable.draw(canvas);
+
+        return mutableBitmap;
+    }
+
+    private static Bitmap addPadding(Bitmap source, float radius, float dimenX, float dimenY,
+                                     float dimenBlurX, float dimenBlurY) {
+        Bitmap mutableBitmap = Bitmap.createBitmap((source.getWidth() + (int) (4 * radius / SCALE)),
+                (source.getHeight() + (int) (4 * radius / SCALE)), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(mutableBitmap);
+        canvas.drawBitmap(source, (int) (2 * radius / SCALE), (int) (2 * radius / SCALE), null);
 
         return mutableBitmap;
     }

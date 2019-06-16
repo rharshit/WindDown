@@ -3,6 +3,8 @@ package com.rharshit.winddown.Music;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -131,18 +133,19 @@ public class Music extends AppCompatActivity {
             tx4.setText(name);
             tx5.setText(album);
 
-            Drawable albumArt = getAlbumArt(id);
+            Bitmap albumArt = getAlbumArt(id);
             if (albumArt != null) {
-                iv.setImageDrawable(albumArt);
-                s = (float) albumArt.getIntrinsicHeight() / vWidth;
+                iv.setImageBitmap(albumArt.copy(albumArt.getConfig(), false));
+                s = (float) albumArt.getHeight() / vWidth;
                 if (s > 1) {
                     s = 1 / s;
                 }
                 Log.d(TAG, "onActivityResult: " + s);
 
-                ivB.setImageBitmap(Blur.transform(mContext, albumArt, 25,
-                        albumArt.getIntrinsicHeight(), vWidth,
-                        s));
+                Bitmap blur = Blur.transform(mContext, albumArt, 25,
+                        albumArt.getHeight(), vWidth,
+                        s);
+                ivB.setImageBitmap(blur.copy(blur.getConfig(), false));
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
                 ivB.setImageDrawable(getDrawable(android.R.color.transparent));
@@ -363,18 +366,19 @@ public class Music extends AppCompatActivity {
             tx4.setText(name);
             tx5.setText(album);
 
-            Drawable albumArt = getAlbumArt(id);
+            Bitmap albumArt = getAlbumArt(id);
             if (albumArt != null) {
-                iv.setImageDrawable(albumArt);
-                float s = (float) albumArt.getIntrinsicHeight() / vWidth;
+                iv.setImageBitmap(albumArt.copy(albumArt.getConfig(), false));
+                float s = (float) albumArt.getHeight() / vWidth;
                 if (s > 1) {
                     s = 1 / s;
                 }
                 Log.d(TAG, "onActivityResult: " + s);
 
-                ivB.setImageBitmap(Blur.transform(mContext, albumArt, 25,
-                        albumArt.getIntrinsicHeight(), vWidth,
-                        s));
+                Bitmap blur = Blur.transform(mContext, albumArt, 25,
+                        albumArt.getHeight(), vWidth,
+                        s);
+                ivB.setImageBitmap(blur.copy(blur.getConfig(), false));
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
                 ivB.setImageDrawable(getDrawable(android.R.color.transparent));
@@ -384,7 +388,7 @@ public class Music extends AppCompatActivity {
         }
     }
 
-    private Drawable getAlbumArt(String id) {
+    private Bitmap getAlbumArt(String id) {
         Cursor cursor = getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
                 new String[]{MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART},
                 MediaStore.Audio.Albums._ID + "=?",
@@ -393,7 +397,7 @@ public class Music extends AppCompatActivity {
 
         if (cursor.moveToFirst()) {
             String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
-            return Drawable.createFromPath(path);
+            return BitmapFactory.decodeFile(path);
         }
         return null;
     }
