@@ -6,8 +6,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
+
+import androidx.core.app.ActivityCompat;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

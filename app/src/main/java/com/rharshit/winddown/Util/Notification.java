@@ -6,7 +6,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.UserHandle;
 import android.service.notification.StatusBarNotification;
-import android.support.annotation.RequiresApi;
+
+import androidx.annotation.RequiresApi;
 
 public class Notification implements Parcelable {
 

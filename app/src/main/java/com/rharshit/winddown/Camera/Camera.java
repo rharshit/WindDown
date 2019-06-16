@@ -1,8 +1,9 @@
 package com.rharshit.winddown.Camera;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;

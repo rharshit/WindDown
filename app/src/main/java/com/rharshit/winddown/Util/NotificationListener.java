@@ -8,8 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.LocalBroadcastManager;
+
+import androidx.annotation.RequiresApi;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class NotificationListener extends NotificationListenerService {
     private String TAG = this.getClass().getSimpleName();

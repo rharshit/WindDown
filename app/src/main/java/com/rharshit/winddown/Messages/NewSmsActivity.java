@@ -2,11 +2,12 @@ package com.rharshit.winddown.Messages;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;

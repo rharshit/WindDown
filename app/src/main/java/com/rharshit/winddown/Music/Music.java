@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +20,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Blur;
 import com.rharshit.winddown.Util.Theme;
@@ -29,10 +30,9 @@ import com.rharshit.winddown.Util.Theme;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static android.support.constraint.Constraints.TAG;
-
 
 public class Music extends AppCompatActivity {
+    private static final String TAG = "Music";
     public static int oneTimeOnly = 0;
     private static MediaPlayer mediaPlayer;
     private static boolean isPlaying;
