@@ -10,7 +10,8 @@
     <RelativeLayout
         android:id="@+id/rl_music_album_art"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="432dp"
+        android:paddingTop="32sp"
         android:foregroundGravity="center"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,7 +20,8 @@
             android:id="@+id/imageViewBlur"
             android:layout_width="400dp"
             android:layout_height="400dp"
-            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
             android:src="@drawable/album_cover" />
 
@@ -27,7 +29,8 @@
             android:id="@+id/imageView"
             android:layout_width="380dp"
             android:layout_height="380dp"
-            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
             android:src="@drawable/album_cover" />
     </RelativeLayout>

@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Blur;
+import com.rharshit.winddown.Util.Scale;
 import com.rharshit.winddown.Util.Theme;
 
 import java.io.IOException;
@@ -397,7 +398,12 @@ public class Music extends AppCompatActivity {
 
         if (cursor.moveToFirst()) {
             String path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART));
-            return BitmapFactory.decodeFile(path);
+
+            Bitmap bmp = BitmapFactory.decodeFile(path);
+            if (bmp == null) {
+                return null;
+            }
+            return Scale.scaleBitmap(bmp, vWidth / 2, vWidth / 2);
         }
         return null;
     }

@@ -10,7 +10,8 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
 public class Blur {
-    private static float SCALE = 0.50f;
+    private static float BLUR_FACTOR = 3f;
+    private static float SCALE = 1 / BLUR_FACTOR;
 
     public static Bitmap transform(Context context, Bitmap source, float radius,
                                    float dimen, float dimenBlur) {
@@ -93,10 +94,12 @@ public class Blur {
 
     private static Bitmap addPadding(Bitmap source, float radius, float dimenX, float dimenY,
                                      float dimenBlurX, float dimenBlurY) {
-        Bitmap mutableBitmap = Bitmap.createBitmap((source.getWidth() + (int) (4 * radius / SCALE)),
-                (source.getHeight() + (int) (4 * radius / SCALE)), Bitmap.Config.ARGB_8888);
+        int dimen = Math.max(source.getWidth(), source.getHeight());
+        Bitmap mutableBitmap = Bitmap.createBitmap((dimen + (int) (4 * radius / SCALE)),
+                (dimen + (int) (4 * radius / SCALE)), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mutableBitmap);
-        canvas.drawBitmap(source, (int) (2 * radius / SCALE), (int) (2 * radius / SCALE), null);
+        canvas.drawBitmap(source, (int) (2 * radius / SCALE) + (dimen - source.getWidth()) / 2,
+                (int) (2 * radius / SCALE) + (dimen - source.getHeight()) / 2, null);
 
         return mutableBitmap;
     }
