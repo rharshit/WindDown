@@ -37,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class Music extends AppCompatActivity {
     private static final String TAG = "Music";
     private static final float albumArtMarginFactor = 0.1f;
+    private static final float albumArtShadowFactor = 0.15f;
     public static int oneTimeOnly = 0;
     private static MediaPlayer mediaPlayer;
     private static boolean isPlaying;
@@ -112,8 +113,9 @@ public class Music extends AppCompatActivity {
 
         ViewGroup.LayoutParams param2 = iv.getLayoutParams();
         param2.width = (int) (vWidth * (1 - 2 * albumArtMarginFactor));
-        param2.height = (int) (vWidth * (1 - 2 * albumArtMarginFactor));
+        param2.height = (int) (vWidth * (1 - 2 * (albumArtMarginFactor)));
 
+        ivB.setTranslationY(vWidth * albumArtShadowFactor);
         ivB.setLayoutParams(param);
         iv.setLayoutParams(param2);
 
@@ -410,7 +412,7 @@ public class Music extends AppCompatActivity {
             if (bmp == null) {
                 return null;
             }
-            return Scale.scaleBitmap(bmp, vWidth / 2, vWidth / 2);
+            return Scale.scaleBitmap(bmp, vWidth / 3, vWidth / 3);
         }
         return null;
     }
