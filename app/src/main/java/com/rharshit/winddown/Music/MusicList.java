@@ -18,10 +18,18 @@ import com.rharshit.winddown.R;
 import com.rharshit.winddown.Util.Theme;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MusicList extends AppCompatActivity {
 
     private static final String TAG = "MusicList";
+    public static Comparator<String[]> comparator = new Comparator<String[]>() {
+        @Override
+        public int compare(String[] a, String[] b) {
+            return a[0].compareTo(b[0]);
+        }
+    };
     ArrayList<String[]> list;
     ListView lv;
     private Context mContext;
@@ -86,7 +94,7 @@ public class MusicList extends AppCompatActivity {
                     String[] s = new String[]{path, name, album, id};
                     list.add(s);
                 }
-
+                Collections.sort(list, comparator);
             }
         }
 
