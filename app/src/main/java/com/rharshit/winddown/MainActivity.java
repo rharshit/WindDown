@@ -98,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Switching");
                 Theme.switchTheme();
+                for (int i = 0; i < gvNotification.getChildCount(); i++) {
+                    NotificationView nv = (NotificationView) gvNotification.getChildAt(i);
+                    nv.updateColor();
+                }
                 recreate();
             }
         });

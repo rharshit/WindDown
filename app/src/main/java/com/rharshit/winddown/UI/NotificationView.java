@@ -29,6 +29,12 @@ public class NotificationView extends LinearLayout {
 
     private final String appName;
     private final Drawable icon;
+    float dimen = getResources().getDimension(R.dimen.notification_icon_dimen);
+    float dimenBlur = getResources().getDimension(R.dimen.notification_icon_blur_dimen);
+    float dimenDiff = dimenBlur - dimen;
+    float radius = getResources().getInteger(R.integer.notification_icon_blur_radius);
+    float pad = getResources().getDimension(R.dimen.notification_icon_padding);
+    private TextView packageName;
     private Notification notification;
     private HashMap<String, ArrayList<String>> groupNotifications;
 
@@ -54,12 +60,6 @@ public class NotificationView extends LinearLayout {
 
         this.appName = appName;
         this.icon = icon;
-
-        float dimen = getResources().getDimension(R.dimen.notification_icon_dimen);
-        float dimenBlur = getResources().getDimension(R.dimen.notification_icon_blur_dimen);
-        float dimenDiff = dimenBlur - dimen;
-        float radius = getResources().getInteger(R.integer.notification_icon_blur_radius);
-        float pad = getResources().getDimension(R.dimen.notification_icon_padding);
 
         RelativeLayout rvIcon = new RelativeLayout(context);
         rvIcon.setLayoutParams(new LayoutParams((int) (dimenBlur + 2 * radius),
@@ -90,7 +90,7 @@ public class NotificationView extends LinearLayout {
         this.addView(rvIcon);
 
         Typeface typeface = getResources().getFont(R.font.light);
-        TextView packageName = new TextView(context);
+        packageName = new TextView(context);
         packageName.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         packageName.setText(appName);
         packageName.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -98,6 +98,7 @@ public class NotificationView extends LinearLayout {
         packageName.setTextSize(16.0f);
         packageName.setTypeface(typeface);
         packageName.setLines(2);
+        packageName.setTextColor(com.rharshit.winddown.Util.Color.getColor(icon, (int) dimen));
         packageName.setBackgroundColor(Color.argb(0, 0, 0, 0));
         this.addView(packageName);
         packageName.setTranslationY(-2 * radius);
@@ -159,5 +160,9 @@ public class NotificationView extends LinearLayout {
             }
         }
         return notifications;
+    }
+
+    public void updateColor() {
+        packageName.setTextColor(com.rharshit.winddown.Util.Color.getColor(icon, (int) dimen));
     }
 }
