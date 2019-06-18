@@ -65,6 +65,7 @@ public class Color {
         drawable.setBounds(0, 0, dimen, dimen);
         drawable.draw(canvas);
 
+
         return mutableBitmap;
     }
 

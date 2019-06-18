@@ -2,9 +2,11 @@ package com.rharshit.winddown.Music;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -60,6 +62,7 @@ public class Music extends AppCompatActivity {
     private int backwardTime = 5000;
     private SeekBar seekbar;
     private TextView tx1, tx2, tx3, tx4, tx5;
+    private int accentColor = Color.parseColor("#808080");
     private Context mContext;
     private Runnable UpdateSongTime = new Runnable() {
         public void run() {
@@ -96,6 +99,9 @@ public class Music extends AppCompatActivity {
         tx2 = findViewById(R.id.textView3);
         tx4 = findViewById(R.id.textView4);
         tx5 = findViewById(R.id.textView5);
+
+        seekbar = findViewById(R.id.seekBar);
+        seekbar.setClickable(false);
 
         arrow = findViewById(R.id.arrow_open_music_list);
         arrow.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +153,10 @@ public class Music extends AppCompatActivity {
             Bitmap albumArt = getAlbumArt(id);
             if (albumArt != null) {
                 iv.setImageBitmap(albumArt.copy(albumArt.getConfig(), false));
+
+                accentColor = com.rharshit.winddown.Util.Color.getColor(albumArt);
+                setColor();
+
                 Bitmap albumArtScaled = Scale.scaleBitmap(albumArt,
                         (int) (albumArt.getWidth() / albumArtBLurFactor), (int) (albumArt.getHeight() / albumArtBLurFactor));
                 s = (float) albumArtScaled.getHeight() / vWidth;
@@ -162,11 +172,11 @@ public class Music extends AppCompatActivity {
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
                 ivB.setImageDrawable(getDrawable(android.R.color.transparent));
+                accentColor = Color.parseColor("#808080");
+                setColor();
             }
         }
         isPlaying = mediaPlayer.isPlaying();
-        seekbar = findViewById(R.id.seekBar);
-        seekbar.setClickable(false);
 
         bPlayPause.setImageDrawable(getDrawable(isPlaying
                 ? R.drawable.ic_pause_black
@@ -183,51 +193,6 @@ public class Music extends AppCompatActivity {
                 updateIsPlaying();
             }
         });
-
-//        b3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "Playing sound",Toast.LENGTH_SHORT).show();
-//                mediaPlayer.start();
-//
-//                finalTime = mediaPlayer.getDuration();
-//                startTime = mediaPlayer.getCurrentPosition();
-//
-//                if (oneTimeOnly == 0) {
-//                    seekbar.setMax((int) finalTime);
-//                    oneTimeOnly = 1;
-//                }
-//
-//                tx2.setText(String.format("%d:%d",
-//                        TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
-//                        TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
-//                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
-//                                        finalTime)))
-//                );
-//
-//                tx1.setText(String.format("%d:%d",
-//                        TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-//                        TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-//                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long)
-//                                        startTime)))
-//                );
-//
-//                seekbar.setProgress((int)startTime);
-//                myHandler.postDelayed(UpdateSongTime,100);
-//                b2.setEnabled(true);
-//                b3.setEnabled(false);
-//            }
-//        });
-//
-//        b2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "Pausing sound",Toast.LENGTH_SHORT).show();
-//                mediaPlayer.pause();
-//                b2.setEnabled(false);
-//                b3.setEnabled(true);
-//            }
-//        });
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,7 +224,7 @@ public class Music extends AppCompatActivity {
             }
         });
 
-        final TextView seekBarHint = findViewById(R.id.seekbarhint);
+//        final TextView seekBarHint = findViewById(R.id.seekbarhint);
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int y = 0;
@@ -267,7 +232,7 @@ public class Music extends AppCompatActivity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
-                seekBarHint.setVisibility(View.VISIBLE);
+//                seekBarHint.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -275,23 +240,23 @@ public class Music extends AppCompatActivity {
                 if (!mediaPlayer.isPlaying()) {
                     return;
                 }
-                seekBarHint.setVisibility(View.VISIBLE);
+//                seekBarHint.setVisibility(View.VISIBLE);
                 startTime = mediaPlayer.getCurrentPosition();
-                seekBarHint.setText(String.format("%d:%d",
-                        TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-                        TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
-                                        toMinutes((long) startTime))));
+//                seekBarHint.setText(String.format("%d:%d",
+//                        TimeUnit.MILLISECONDS.toMinutes((long) startTime),
+//                        TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+//                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
+//                                        toMinutes((long) startTime))));
 
 
                 double percent = progress / (double) seekBar.getMax();
                 int offset = seekBar.getThumbOffset();
                 int seekWidth = seekBar.getWidth();
                 int val = (int) Math.round(percent * (seekWidth - 2 * offset));
-                int labelWidth = seekBarHint.getWidth();
-                seekBarHint.setX(offset + seekBar.getX() + val
-                        - Math.round(percent * offset)
-                        - Math.round(percent * labelWidth / 2));
+//                int labelWidth = seekBarHint.getWidth();
+//                seekBarHint.setX(offset + seekBar.getX() + val
+//                        - Math.round(percent * offset)
+//                        - Math.round(percent * labelWidth / 2));
 
                 if (progress > 0 && mediaPlayer != null && !mediaPlayer.isPlaying()) {
 
@@ -312,6 +277,19 @@ public class Music extends AppCompatActivity {
         });
 
 
+    }
+
+    private void setColor() {
+        tx1.setTextColor(accentColor);
+        tx2.setTextColor(accentColor);
+        tx4.setTextColor(accentColor);
+        tx5.setTextColor(accentColor);
+
+        b1.setImageTintList(ColorStateList.valueOf(accentColor));
+        b4.setImageTintList(ColorStateList.valueOf(accentColor));
+        bPlayPause.setImageTintList(ColorStateList.valueOf(accentColor));
+        seekbar.setProgressTintList(ColorStateList.valueOf(accentColor));
+        arrow.setImageTintList(ColorStateList.valueOf(accentColor));
     }
 
     private void updateIsPlaying() {
@@ -382,6 +360,10 @@ public class Music extends AppCompatActivity {
             Bitmap albumArt = getAlbumArt(id);
             if (albumArt != null) {
                 iv.setImageBitmap(albumArt.copy(albumArt.getConfig(), false));
+
+                accentColor = com.rharshit.winddown.Util.Color.getColor(albumArt);
+                setColor();
+
                 Bitmap albumArtScaled = Scale.scaleBitmap(albumArt,
                         (int) (albumArt.getWidth() / albumArtBLurFactor), (int) (albumArt.getHeight() / albumArtBLurFactor));
                 float s = (float) albumArtScaled.getHeight() / vWidth;
@@ -397,6 +379,8 @@ public class Music extends AppCompatActivity {
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
                 ivB.setImageDrawable(getDrawable(android.R.color.transparent));
+                accentColor = Color.parseColor("#808080");
+                setColor();
             }
             playSong();
             updateIsPlaying();
