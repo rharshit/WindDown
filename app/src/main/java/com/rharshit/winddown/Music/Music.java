@@ -172,7 +172,8 @@ public class Music extends AppCompatActivity {
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
                 ivB.setImageDrawable(getDrawable(android.R.color.transparent));
-                accentColor = Color.parseColor("#808080");
+                accentColor = com.rharshit.winddown.Util.Color.getColor(
+                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_music));
                 setColor();
             }
         }
@@ -379,7 +380,8 @@ public class Music extends AppCompatActivity {
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
                 ivB.setImageDrawable(getDrawable(android.R.color.transparent));
-                accentColor = Color.parseColor("#808080");
+                accentColor = com.rharshit.winddown.Util.Color.getColor(
+                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_music));
                 setColor();
             }
             playSong();

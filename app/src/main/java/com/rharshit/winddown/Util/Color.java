@@ -24,19 +24,28 @@ public class Color {
         switch (theme) {
             case R.style.AppThemeDark:
                 swatch = palette.getDarkVibrantSwatch();
+                if (swatch == null) {
+                    swatch = palette.getDarkMutedSwatch();
+                }
                 break;
             case R.style.AppThemeLight:
                 swatch = palette.getLightVibrantSwatch();
+                if (swatch == null) {
+                    swatch = palette.getLightMutedSwatch();
+                }
                 break;
             default:
                 swatch = palette.getVibrantSwatch();
+                if (swatch == null) {
+                    swatch = palette.getMutedSwatch();
+                }
                 break;
         }
         if (swatch != null) {
             float[] hsl = swatch.getHsl();
             hsl[2] = (theme == R.style.AppThemeDark
                     ? max(0.75f, hsl[2])
-                    : min(0.60f, hsl[2]));
+                    : min(0.75f, hsl[2]));
             return android.graphics.Color.HSVToColor(hsl);
         } else {
             switch (theme) {
@@ -53,7 +62,16 @@ public class Color {
             hsl[2] = 1 - hsl[2];
             hsl[2] = (theme == R.style.AppThemeDark
                     ? max(0.75f, hsl[2])
-                    : min(0.60f, hsl[2]));
+                    : min(0.75f, hsl[2]));
+            return android.graphics.Color.HSVToColor(hsl);
+        }
+        swatch = palette.getDominantSwatch();
+        if (swatch != null) {
+            float[] hsl = swatch.getHsl();
+            hsl[2] = 1 - hsl[2];
+            hsl[2] = (theme == R.style.AppThemeDark
+                    ? max(0.75f, hsl[2])
+                    : min(0.75f, hsl[2]));
             return android.graphics.Color.HSVToColor(hsl);
         }
         return android.graphics.Color.parseColor("#808080");
