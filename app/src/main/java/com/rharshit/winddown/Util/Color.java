@@ -13,6 +13,10 @@ import static java.lang.Math.min;
 
 public class Color {
 
+    private static final float LIGHT_THRESHOLD = 0.60f;
+    private static final float DARK_THRESHOLD = 0.75f;
+    private static final float SATURATION_FACTOR = 0.50f;
+
     public static int getColor(Drawable img, int dimen) {
         return getColor(convertToBitmap(img, dimen));
     }
@@ -44,8 +48,9 @@ public class Color {
         if (swatch != null) {
             float[] hsl = swatch.getHsl();
             hsl[2] = (theme == R.style.AppThemeDark
-                    ? max(0.75f, hsl[2])
-                    : min(0.75f, hsl[2]));
+                    ? max(DARK_THRESHOLD, hsl[2])
+                    : min(LIGHT_THRESHOLD, hsl[2]));
+            hsl[1] = hsl[1] * SATURATION_FACTOR;
             return android.graphics.Color.HSVToColor(hsl);
         } else {
             switch (theme) {
@@ -61,17 +66,18 @@ public class Color {
             float[] hsl = swatch.getHsl();
             hsl[2] = 1 - hsl[2];
             hsl[2] = (theme == R.style.AppThemeDark
-                    ? max(0.75f, hsl[2])
-                    : min(0.75f, hsl[2]));
+                    ? max(DARK_THRESHOLD, hsl[2])
+                    : min(LIGHT_THRESHOLD, hsl[2]));
+            hsl[1] = hsl[1] * SATURATION_FACTOR;
             return android.graphics.Color.HSVToColor(hsl);
         }
         swatch = palette.getDominantSwatch();
         if (swatch != null) {
             float[] hsl = swatch.getHsl();
-            hsl[2] = 1 - hsl[2];
             hsl[2] = (theme == R.style.AppThemeDark
-                    ? max(0.75f, hsl[2])
-                    : min(0.75f, hsl[2]));
+                    ? max(DARK_THRESHOLD, hsl[2])
+                    : min(LIGHT_THRESHOLD, hsl[2]));
+            hsl[1] = hsl[1] * SATURATION_FACTOR;
             return android.graphics.Color.HSVToColor(hsl);
         }
         return android.graphics.Color.parseColor("#808080");
