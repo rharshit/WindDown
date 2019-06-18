@@ -10,7 +10,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
 public class Blur {
-    private static float BLUR_FACTOR = 3f;
+    private static float BLUR_FACTOR = 2f;
     private static float SCALE = 1 / BLUR_FACTOR;
 
     public static Bitmap transform(Context context, Bitmap source, float radius,

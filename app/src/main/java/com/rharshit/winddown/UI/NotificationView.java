@@ -46,6 +46,9 @@ public class NotificationView extends LinearLayout {
         super(context);
 
         this.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        this.setClipChildren(false);
+        this.setClipToOutline(false);
+        this.setClipToPadding(false);
         this.setOrientation(VERTICAL);
         this.notification = notification;
 

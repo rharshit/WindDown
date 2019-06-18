@@ -37,7 +37,8 @@ import java.util.concurrent.TimeUnit;
 public class Music extends AppCompatActivity {
     private static final String TAG = "Music";
     private static final float albumArtMarginFactor = 0.1f;
-    private static final float albumArtShadowFactor = 0.15f;
+    private static final float albumArtShadowFactor = 0.075f;
+    private static final float albumArtBLurFactor = 2.5f;
     public static int oneTimeOnly = 0;
     private static MediaPlayer mediaPlayer;
     private static boolean isPlaying;
@@ -146,14 +147,16 @@ public class Music extends AppCompatActivity {
             Bitmap albumArt = getAlbumArt(id);
             if (albumArt != null) {
                 iv.setImageBitmap(albumArt.copy(albumArt.getConfig(), false));
-                s = (float) albumArt.getHeight() / vWidth;
+                Bitmap albumArtScaled = Scale.scaleBitmap(albumArt,
+                        (int) (albumArt.getWidth() / albumArtBLurFactor), (int) (albumArt.getHeight() / albumArtBLurFactor));
+                s = (float) albumArtScaled.getHeight() / vWidth;
                 if (s > 1) {
                     s = 1 / s;
                 }
                 Log.d(TAG, "onActivityResult: " + s);
 
-                Bitmap blur = Blur.transform(mContext, albumArt, 25,
-                        albumArt.getHeight(), vWidth,
+                Bitmap blur = Blur.transform(mContext, albumArtScaled, 25,
+                        albumArtScaled.getHeight(), vWidth,
                         s);
                 ivB.setImageBitmap(blur.copy(blur.getConfig(), false));
             } else {
@@ -379,14 +382,16 @@ public class Music extends AppCompatActivity {
             Bitmap albumArt = getAlbumArt(id);
             if (albumArt != null) {
                 iv.setImageBitmap(albumArt.copy(albumArt.getConfig(), false));
-                float s = (float) albumArt.getHeight() / vWidth;
+                Bitmap albumArtScaled = Scale.scaleBitmap(albumArt,
+                        (int) (albumArt.getWidth() / albumArtBLurFactor), (int) (albumArt.getHeight() / albumArtBLurFactor));
+                float s = (float) albumArtScaled.getHeight() / vWidth;
                 if (s > 1) {
                     s = 1 / s;
                 }
                 Log.d(TAG, "onActivityResult: " + s);
 
-                Bitmap blur = Blur.transform(mContext, albumArt, 25,
-                        albumArt.getHeight(), vWidth,
+                Bitmap blur = Blur.transform(mContext, albumArtScaled, 25,
+                        albumArtScaled.getHeight(), vWidth,
                         s);
                 ivB.setImageBitmap(blur.copy(blur.getConfig(), false));
             } else {
@@ -412,7 +417,7 @@ public class Music extends AppCompatActivity {
             if (bmp == null) {
                 return null;
             }
-            return Scale.scaleBitmap(bmp, vWidth / 3, vWidth / 3);
+            return Scale.scaleBitmap(bmp, vWidth, vWidth);
         }
         return null;
     }

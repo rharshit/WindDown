@@ -18,7 +18,7 @@ public class AppIconAdapter extends RecyclerView.Adapter<AppIconViewHolder> {
     AppIconViewHolder[] appViewHolder;
     Context mContext;
 
-    public AppIconAdapter(List<AppIconData> apps, Context context){
+    public AppIconAdapter(List<AppIconData> apps, Context context) {
         this.apps = apps;
         this.mContext = context;
         appViewHolder = new AppIconViewHolder[apps.size()];

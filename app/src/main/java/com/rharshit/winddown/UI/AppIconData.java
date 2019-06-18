@@ -9,7 +9,7 @@ public class AppIconData {
     String name;
     View.OnClickListener onClick;
 
-    public AppIconData(Drawable icon, String name, View.OnClickListener onClick){
+    public AppIconData(Drawable icon, String name, View.OnClickListener onClick) {
         this.icon = icon;
         this.name = name;
         this.onClick = onClick;

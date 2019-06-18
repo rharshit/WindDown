@@ -9,14 +9,14 @@
     tools:showIn="@layout/app_bar_notes">
 
     <ListView
+        android:id="@+id/notes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="8dp"
-        android:divider="@android:color/transparent"
         android:clipToPadding="false"
-        app:layout_constraintVertical_bias="0"
-        android:id="@+id/notes_list"/>
+        android:divider="@android:color/transparent"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
