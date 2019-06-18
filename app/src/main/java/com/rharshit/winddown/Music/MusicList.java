@@ -80,6 +80,9 @@ public class MusicList extends AppCompatActivity {
                     String album = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.ALBUM));
                     String id = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
                     Log.d(TAG, "getSongList: " + path + " " + name + " " + album + " " + id);
+                    while (name.contains(".mp3") && name.length() > 4) {
+                        name = name.substring(0, name.length() - 4);
+                    }
                     String[] s = new String[]{path, name, album, id};
                     list.add(s);
                 }
