@@ -15,6 +15,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -47,8 +48,9 @@ public class Gallery extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        galleryGridView = findViewById(R.id.galleryGridView);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        galleryGridView = findViewById(R.id.galleryGridView);
 
         int iDisplayWidth = getResources().getDisplayMetrics().widthPixels;
         Resources resources = getApplicationContext().getResources();

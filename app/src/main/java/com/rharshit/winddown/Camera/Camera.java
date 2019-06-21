@@ -2,6 +2,7 @@ package com.rharshit.winddown.Camera;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +17,8 @@ public class Camera extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         decorView = getWindow().getDecorView();
         hideUI();

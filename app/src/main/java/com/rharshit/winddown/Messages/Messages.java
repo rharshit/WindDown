@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -53,6 +54,8 @@ public class Messages extends AppCompatActivity {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         CacheUtils.configureCache(this);
 

@@ -3,6 +3,7 @@ package com.rharshit.winddown.Messages;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ public class NewSmsActivity extends AppCompatActivity {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_new);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
 
         address = findViewById(R.id.address);

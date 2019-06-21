@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +34,9 @@ public class Signup extends AppCompatActivity {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         mContext = this;
 
         etUser = findViewById(R.id.notes_signup_et_username);

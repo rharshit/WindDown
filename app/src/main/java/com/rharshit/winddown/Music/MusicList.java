@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -39,6 +40,9 @@ public class MusicList extends AppCompatActivity {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_list);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         mContext = this;
 
         setResult(0);

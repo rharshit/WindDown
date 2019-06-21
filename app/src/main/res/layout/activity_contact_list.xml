@@ -6,6 +6,7 @@
     android:background="@drawable/list_item_bg"
     android:orientation="horizontal"
     android:padding="8dp"
+    android:paddingTop="24dp"
     android:translationZ="4dp">
 
     <LinearLayout

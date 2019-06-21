@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -48,6 +49,8 @@ public class Chat extends AppCompatActivity {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");

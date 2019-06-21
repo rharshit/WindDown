@@ -2,7 +2,6 @@ package com.rharshit.winddown.Music;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +16,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,8 +26,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.rharshit.winddown.R;
+import com.rharshit.winddown.UI.GradientBackground;
 import com.rharshit.winddown.Util.Blur;
 import com.rharshit.winddown.Util.Scale;
 import com.rharshit.winddown.Util.Theme;
@@ -50,6 +52,8 @@ public class Music extends AppCompatActivity {
     private static String uri;
     private static String id;
     int vWidth;
+    private ConstraintLayout clBg;
+    private GradientBackground bg;
     private ImageButton b1, b4;
     private ImageView iv;
     private ImageView ivB;
@@ -84,6 +88,14 @@ public class Music extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         mContext = this;
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+
+        clBg = findViewById(R.id.music_bg);
+        bg = new GradientBackground();
+
+        clBg.setBackground(bg);
 
         b1 = findViewById(R.id.button);
 //        b2 = (ImageButton) findViewById(R.id.button2);
@@ -171,6 +183,7 @@ public class Music extends AppCompatActivity {
                 ivB.setImageBitmap(blur.copy(blur.getConfig(), false));
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
+                iv.setBackgroundColor(0);
                 ivB.setImageDrawable(getDrawable(android.R.color.transparent));
                 accentColor = com.rharshit.winddown.Util.Color.getColor(
                         BitmapFactory.decodeResource(getResources(), R.drawable.ic_music));
@@ -281,16 +294,18 @@ public class Music extends AppCompatActivity {
     }
 
     private void setColor() {
-        tx1.setTextColor(accentColor);
-        tx2.setTextColor(accentColor);
-        tx4.setTextColor(accentColor);
-        tx5.setTextColor(accentColor);
+//        tx1.setTextColor(accentColor);
+//        tx2.setTextColor(accentColor);
+//        tx4.setTextColor(accentColor);
+//        tx5.setTextColor(accentColor);
+//
+//        b1.setImageTintList(ColorStateList.valueOf(accentColor));
+//        b4.setImageTintList(ColorStateList.valueOf(accentColor));
+//        bPlayPause.setImageTintList(ColorStateList.valueOf(accentColor));
+//        seekbar.setProgressTintList(ColorStateList.valueOf(accentColor));
+//        arrow.setImageTintList(ColorStateList.valueOf(accentColor));
 
-        b1.setImageTintList(ColorStateList.valueOf(accentColor));
-        b4.setImageTintList(ColorStateList.valueOf(accentColor));
-        bPlayPause.setImageTintList(ColorStateList.valueOf(accentColor));
-        seekbar.setProgressTintList(ColorStateList.valueOf(accentColor));
-        arrow.setImageTintList(ColorStateList.valueOf(accentColor));
+        bg.setColor(accentColor);
     }
 
     private void updateIsPlaying() {
@@ -379,6 +394,7 @@ public class Music extends AppCompatActivity {
                 ivB.setImageBitmap(blur.copy(blur.getConfig(), false));
             } else {
                 iv.setImageDrawable(getDrawable(R.drawable.ic_music));
+                iv.setBackgroundColor(0);
                 ivB.setImageDrawable(getDrawable(android.R.color.transparent));
                 accentColor = com.rharshit.winddown.Util.Color.getColor(
                         BitmapFactory.decodeResource(getResources(), R.drawable.ic_music));

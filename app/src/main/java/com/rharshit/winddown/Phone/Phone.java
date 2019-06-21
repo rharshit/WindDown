@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -34,6 +35,9 @@ public class Phone extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         Intent intent = getIntent();
 
         setContentView(R.layout.activity_phone);

@@ -18,6 +18,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -55,6 +56,9 @@ public class Contacts extends AppCompatActivity {
         setTheme(Theme.getTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         mContext = this;
         list_contacts = findViewById(R.id.list_contacts);
         search = findViewById(R.id.search_name);
