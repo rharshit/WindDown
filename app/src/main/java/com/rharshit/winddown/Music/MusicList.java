@@ -28,7 +28,7 @@ public class MusicList extends AppCompatActivity {
     public static Comparator<String[]> comparator = new Comparator<String[]>() {
         @Override
         public int compare(String[] a, String[] b) {
-            return a[0].compareTo(b[0]);
+            return a[0].toLowerCase().compareTo(b[0].toLowerCase());
         }
     };
     ArrayList<String[]> list;
