@@ -28,10 +28,10 @@ public class MusicList extends AppCompatActivity {
     public static Comparator<String[]> comparator = new Comparator<String[]>() {
         @Override
         public int compare(String[] a, String[] b) {
-            return a[0].toLowerCase().compareTo(b[0].toLowerCase());
+            return a[1].toLowerCase().compareTo(b[1].toLowerCase());
         }
     };
-    ArrayList<String[]> list;
+    static ArrayList<String[]> list;
     ListView lv;
     private Context mContext;
 
@@ -49,8 +49,10 @@ public class MusicList extends AppCompatActivity {
 
         lv = findViewById(R.id.list_music);
 
-        list = new ArrayList<>();
-        getSongList();
+        if (list == null) {
+            list = new ArrayList<>();
+            getSongList();
+        }
         populate();
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,9 +93,34 @@ public class MusicList extends AppCompatActivity {
                     String name = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
                     String album = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.ALBUM));
                     String id = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
+
+                    Cursor cursor = getContentResolver().query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
+                            new String[]{MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART},
+                            MediaStore.Audio.Albums._ID + "=?", new String[]{String.valueOf(id)},
+                            null);
+
+                    if (cursor.moveToFirst()) {
+                        boolean albumArt = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)) != null;
+
+                        if (!albumArt) {
+                            continue;
+                        }
+                    }
                     Log.d(TAG, "getSongList: " + path + " " + name + " " + album + " " + id);
                     while (name.contains(".mp3") && name.length() > 4) {
                         name = name.substring(0, name.length() - 4);
+                    }
+                    while (name.length() > 0) {
+                        char x = name.charAt(0);
+                        if (!((x >= 'a' && x <= 'z') || (x >= 'A' && x <= 'Z'))) {
+                            name = name.substring(1);
+                        } else {
+                            break;
+                        }
+                    }
+                    if (name.length() == 0) {
+                        Log.d(TAG, "getSongList: name length: " + name.length());
+                        continue;
                     }
                     String[] s = new String[]{path, name, album, id};
                     list.add(s);
