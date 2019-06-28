@@ -6,11 +6,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MusicAdapter extends BaseAdapter {
 
     private ArrayList<String[]> list;
     private Context mContext;
+
+    public static Comparator<String[]> comparator = new Comparator<String[]>() {
+        @Override
+        public int compare(String[] a, String[] b) {
+            return a[1].toLowerCase().compareTo(b[1].toLowerCase());
+        }
+    };
 
     public MusicAdapter(Context mContext, ArrayList<String[]> list) {
         this.mContext = mContext;
@@ -41,5 +50,13 @@ public class MusicAdapter extends BaseAdapter {
 
     public String[] getValues(int position) {
         return list.get(position);
+    }
+
+    public void add(String[] item) {
+        int index = Collections.binarySearch(list, item, comparator);
+        if (index < 0) {
+            index = -(index + 1);
+        }
+        list.add(index, item);
     }
 }
